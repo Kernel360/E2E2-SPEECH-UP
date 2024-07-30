@@ -19,19 +19,21 @@ public class ScriptController {
         return scriptService.getScriptList(userId);
     }
 
-    @PostMapping("/{scriptId}")
-    public ResponseEntity<ScriptEntity> addScript(ScriptEntity scriptEntity) {
+    @PostMapping("")
+    public ResponseEntity<ScriptEntity> addScript(@RequestBody ScriptEntity scriptEntity) {
         return scriptService.addScript(scriptEntity);
     }
 
-    @PutMapping("/{scriptId}")
-    public ResponseEntity<ScriptEntity> updateScript(Long scriptId, ScriptEntity scriptEntity) {
-        return scriptService.updateScript(scriptId, scriptEntity);
+    @PutMapping("")
+    public ResponseEntity<ScriptEntity> updateScript(
+        @RequestBody ScriptEntity scriptEntity) {
+        return scriptService.updateScript(scriptEntity);
     }
-
+    //
     @DeleteMapping("/{scriptId}")
     public ResponseEntity<ScriptEntity> deleteScript(@PathVariable Long scriptId) {
 
-        return scriptService.deleteScriptById(scriptId);
+         scriptService.deleteScriptById(scriptId);
+         return ResponseEntity.ok().build();
     }
 }

@@ -24,7 +24,7 @@ public class ScriptService {
     }
 
     public ResponseEntity<ScriptEntity> addScript(ScriptEntity scriptEntity) {
-        ScriptEntity resScriptEntity = scriptRepository.saveScript(scriptEntity);
+        ScriptEntity resScriptEntity = scriptRepository.save(scriptEntity);
 
         if(resScriptEntity!=null){
             return new ResponseEntity<>(resScriptEntity, HttpStatus.CREATED);
@@ -33,24 +33,15 @@ public class ScriptService {
         }
     }
 
-    public ResponseEntity<ScriptEntity> updateScript(Long scriptId, ScriptEntity scriptEntity) {
+    public ResponseEntity<ScriptEntity> updateScript( ScriptEntity scriptEntity ) {
 
-        ScriptEntity resScriptEntity = scriptRepository.updateScriptById(scriptId,scriptEntity);
-
-        if(resScriptEntity.equals(scriptEntity)){
-            return new ResponseEntity<>(resScriptEntity, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(scriptEntity,HttpStatus.BAD_REQUEST);
-        }
+        ScriptEntity resScriptEntity = scriptRepository.save(scriptEntity);
+        return new ResponseEntity<>(resScriptEntity, HttpStatus.OK);
 
     }
 
-    public ResponseEntity<ScriptEntity> deleteScriptById(Long scriptId) {
-        ScriptEntity scriptEntiy =  scriptRepository.deleteScriptById(scriptId);
+    public void deleteScriptById(Long scriptId) {
+        scriptRepository.deleteById(scriptId);
 
-        if(scriptEntiy == null){
-            return new ResponseEntity<>(scriptEntiy, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
