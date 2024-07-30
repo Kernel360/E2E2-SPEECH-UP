@@ -1,5 +1,6 @@
 package com.speech.up.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.speech.up.script.entity.ScriptEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,5 +35,6 @@ public class UserEntity {
     private String authorization;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<ScriptEntity> scriptEntity;
 }
