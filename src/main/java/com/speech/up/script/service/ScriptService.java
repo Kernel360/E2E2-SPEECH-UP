@@ -22,4 +22,35 @@ public class ScriptService {
         }
         return new ResponseEntity<>(scripts, HttpStatus.OK);
     }
+
+    public ResponseEntity<ScriptEntity> addScript(ScriptEntity scriptEntity) {
+        ScriptEntity resScriptEntity = scriptRepository.saveScript(scriptEntity);
+
+        if(resScriptEntity!=null){
+            return new ResponseEntity<>(resScriptEntity, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(resScriptEntity, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity<ScriptEntity> updateScript(Long scriptId, ScriptEntity scriptEntity) {
+
+        ScriptEntity resScriptEntity = scriptRepository.updateScriptById(scriptId,scriptEntity);
+
+        if(resScriptEntity.equals(scriptEntity)){
+            return new ResponseEntity<>(resScriptEntity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(scriptEntity,HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    public ResponseEntity<ScriptEntity> deleteScriptById(Long scriptId) {
+        ScriptEntity scriptEntiy =  scriptRepository.deleteScriptById(scriptId);
+
+        if(scriptEntiy == null){
+            return new ResponseEntity<>(scriptEntiy, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

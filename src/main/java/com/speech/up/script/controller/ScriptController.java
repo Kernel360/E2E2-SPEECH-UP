@@ -18,4 +18,20 @@ public class ScriptController {
     public ResponseEntity<List<ScriptEntity>> getScriptAll(@PathVariable Long userId){
         return scriptService.getScriptList(userId);
     }
+
+    @PostMapping("/{scriptId}")
+    public ResponseEntity<ScriptEntity> addScript(ScriptEntity scriptEntity) {
+        return scriptService.addScript(scriptEntity);
+    }
+
+    @PutMapping("/{scriptId}")
+    public ResponseEntity<ScriptEntity> updateScript(Long scriptId, ScriptEntity scriptEntity) {
+        return scriptService.updateScript(scriptId, scriptEntity);
+    }
+
+    @DeleteMapping("/{scriptId}")
+    public ResponseEntity<ScriptEntity> deleteScript(@PathVariable Long scriptId) {
+
+        return scriptService.deleteScriptById(scriptId);
+    }
 }
