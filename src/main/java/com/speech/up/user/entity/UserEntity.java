@@ -1,6 +1,9 @@
 package com.speech.up.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.speech.up.script.entity.ScriptEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
