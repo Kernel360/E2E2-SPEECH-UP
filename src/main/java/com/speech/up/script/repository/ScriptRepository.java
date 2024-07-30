@@ -8,4 +8,10 @@ import java.util.List;
 
 public interface ScriptRepository extends JpaRepository<ScriptEntity, Long> {
     List<ScriptEntity> findByUser_UserId(Long userId);
+
+    ScriptEntity saveScript(ScriptEntity scriptEntity);
+
+    ScriptEntity updateScriptById(Long scriptId, ScriptEntity scriptEntity);
+
+    ScriptEntity deleteScriptById(Long scriptId);
 }
