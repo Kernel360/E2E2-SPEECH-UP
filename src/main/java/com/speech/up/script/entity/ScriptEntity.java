@@ -32,4 +32,5 @@ public class ScriptEntity {
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
 	private UserEntity user;
+
 }

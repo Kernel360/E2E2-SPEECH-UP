@@ -21,6 +21,7 @@ public class ScriptController {
      */
     @GetMapping("/{userId}")
     public ResponseEntity<List<ScriptEntity>> getScriptAll(@PathVariable Long userId){
+
         return scriptService.getScriptList(userId);
     }
 
@@ -31,6 +32,7 @@ public class ScriptController {
      */
     @PostMapping("")
     public ResponseEntity<ScriptEntity> addScript(@RequestBody ScriptEntity scriptEntity) {
+
         return scriptService.addScript(scriptEntity);
     }
 
@@ -42,6 +44,7 @@ public class ScriptController {
     @PutMapping("")
     public ResponseEntity<ScriptEntity> updateScript(
         @RequestBody ScriptEntity scriptEntity) {
+
         return scriptService.updateScript(scriptEntity);
     } // 업데이트 시 내용 날아갈 수 있어 수정 필요
 
@@ -52,6 +55,7 @@ public class ScriptController {
      */
     @DeleteMapping("/{scriptId}")
     public ResponseEntity<ScriptEntity> deleteScript(@PathVariable Long scriptId) {
+
 
          scriptService.deleteScriptById(scriptId);
          return ResponseEntity.ok().build();
