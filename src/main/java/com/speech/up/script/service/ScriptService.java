@@ -39,19 +39,18 @@ public class ScriptService {
         return new ResponseEntity<>(resScriptEntity, HttpStatus.OK);
     }
 
-    public ResponseEntity<ScriptEntity> updateScript( ScriptEntity scriptEntity ) {
+    public ResponseEntity<ScriptEntity> updateScript(ScriptEntity scriptEntity) {
+        if (scriptEntity.getUser().getUserId() != null) {
+            UserEntity userEntity = userRepository.findById(scriptEntity.getUser().getUserId())
+                    .orElseThrow(() -> new RuntimeException("user not found"));
+            scriptEntity.setUser(userEntity);
+        }
 
         ScriptEntity script = scriptRepository.findById(scriptEntity.getScriptId())
                 .orElseThrow(() -> new RuntimeException("script not found"));
 
         script.setContent(scriptEntity.getContent());
         script.setModifiedAt(Timestamp.valueOf(LocalDateTime.now()));
-
-        if(scriptEntity.getUser().getUserId() != null){
-            UserEntity userEntity = userRepository.findById(scriptEntity.getUser().getUserId())
-                    .orElseThrow(() -> new RuntimeException("user not found"));
-            scriptEntity.setUser(userEntity);
-        }
 
         ScriptEntity resScriptEntity = scriptRepository.save(script);
         return new ResponseEntity<>(resScriptEntity, HttpStatus.OK);
