@@ -1,8 +1,6 @@
 package com.speech.up.user.entity;
 
-import com.speech.up.script.entity.ScriptEntity;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

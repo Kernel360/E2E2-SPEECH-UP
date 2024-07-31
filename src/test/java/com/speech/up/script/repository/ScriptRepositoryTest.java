@@ -24,7 +24,6 @@ public class ScriptRepositoryTest {
 
 	@BeforeEach
 	public void setUp() {
-		// UserEntity를 데이터베이스에 먼저 저장
 		userEntity = UserEntity.builder()
 			.address("123 Test St")
 			.rank("A")
