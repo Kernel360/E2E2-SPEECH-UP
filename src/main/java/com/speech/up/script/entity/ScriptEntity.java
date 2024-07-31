@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;
 
+
 @ToString
 @Builder
 @Getter
@@ -32,4 +33,5 @@ public class ScriptEntity {
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
 	private UserEntity user;
+
 }

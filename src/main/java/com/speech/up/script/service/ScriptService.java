@@ -20,7 +20,9 @@ public class ScriptService {
     private final UserRepository userRepository;
 
     public ResponseEntity<List<ScriptEntity>> getScriptList(Long userId) {
+
         List<ScriptEntity> scripts = scriptRepository.findByUser_UserId(userId);
+
         if (scripts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -28,6 +30,7 @@ public class ScriptService {
     }
 
     public ResponseEntity<ScriptEntity> addScript(ScriptEntity scriptEntity) {
+
         ScriptEntity script = ScriptEntity.builder()
                 .content(scriptEntity.getContent())
                 .createdAt(Timestamp.valueOf(LocalDateTime.now()))
@@ -40,14 +43,17 @@ public class ScriptService {
     }
 
     public ResponseEntity<ScriptEntity> updateScript(ScriptEntity scriptEntity) {
+
         if (scriptEntity.getUser().getUserId() != null) {
             UserEntity userEntity = userRepository.findById(scriptEntity.getUser().getUserId())
                     .orElseThrow(() -> new RuntimeException("user not found"));
             scriptEntity.setUser(userEntity);
         }
 
+
         ScriptEntity script = scriptRepository.findById(scriptEntity.getScriptId())
                 .orElseThrow(() -> new RuntimeException("script not found"));
+
 
         script.setContent(scriptEntity.getContent());
         script.setModifiedAt(Timestamp.valueOf(LocalDateTime.now()));
@@ -58,6 +64,7 @@ public class ScriptService {
     }
 
     public void deleteScriptById(Long scriptId) {
+
         scriptRepository.deleteById(scriptId);
     }
 }
