@@ -2,6 +2,9 @@ package com.speech.up.script.controller;
 
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.service.ScriptService;
+import com.speech.up.script.service.dto.ScriptAddDto;
+import com.speech.up.script.service.dto.ScriptGetDto;
+import com.speech.up.script.service.dto.ScriptUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,29 +23,30 @@ public class ScriptController {
      * @return 대본 리스트 반환
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<List<ScriptEntity>> getScriptAll(@PathVariable Long userId){
-        return scriptService.getScriptList(userId);
+    public ResponseEntity<List<ScriptGetDto.ScriptGetResponseDto>> getScriptAll(@PathVariable Long userId){
+        return ResponseEntity.ok(scriptService.getScriptList(userId));
     }
 
     /**
      * 대본 생성
-     * @param scriptEntity RequestBody 로 대본작성시 필요한 내용을 받아옴
+     * @param scriptAddRequestDto RequestBody 로 대본작성시 필요한 내용을 받아옴
      * @return 대본을 user 의 대본 목록에 추가
      */
     @PostMapping("")
-    public ResponseEntity<ScriptEntity> addScript(@RequestBody ScriptEntity scriptEntity) {
-        return scriptService.addScript(scriptEntity);
+    public ResponseEntity<ScriptAddDto.ScriptAddResponseDto> addScript(@RequestBody ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto) {
+        return ResponseEntity.ok(scriptService.addScript(scriptAddRequestDto));
     }
 
     /**
      * 대본 수정 기능
-     * @param scriptEntity RequestBody 로 수정할 내용을 받아옴
+     *
+     * @param scriptUpdateRequestDto RequestBody 로 수정할 내용을 받아옴
      * @return 수정된 대본 반환
      */
     @PutMapping("")
-    public ResponseEntity<ScriptEntity> updateScript(
-        @RequestBody ScriptEntity scriptEntity) {
-        return scriptService.updateScript(scriptEntity);
+    public ResponseEntity<ScriptUpdateDto.ScriptUpdateResponseDto> updateScript(
+        @RequestBody ScriptUpdateDto.ScriptUpdateRequestDto scriptUpdateRequestDto) {
+         return ResponseEntity.ok(scriptService.updateScript(scriptUpdateRequestDto));
     } // 업데이트 시 내용 날아갈 수 있어 수정 필요
 
     /**

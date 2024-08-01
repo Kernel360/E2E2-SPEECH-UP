@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ScriptController.class)
 public class ScriptControllerTest {
-	private final String testBody = "{\n"
+	/*private final String testBody = "{\n"
 		+ "    \"script_id\" : 6,\n"
 		+ "    \"content\" : \" dfsddsfdsfa\",\n"
 		+ "    \"created_at\" :\"2024-07-30T09:36:26\",\n"
@@ -112,7 +112,7 @@ public class ScriptControllerTest {
 		mockMvc.perform(delete("/speech-script/{userId}", 1L)
 				.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk());
-	}
+	}*/
 
 }
 

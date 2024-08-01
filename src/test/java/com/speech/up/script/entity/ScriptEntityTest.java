@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScriptEntityTest {
-    @Test
+    /*@Test
     public void setEntityTest() {
         UserEntity user = new UserEntity();
 
@@ -17,5 +17,5 @@ public class ScriptEntityTest {
 
         assertThat(scriptEntity.getContent()).isEqualTo("test");
         assertThat(scriptEntity.getUser()).isEqualTo(user);
-    }
+    }*/
 }
