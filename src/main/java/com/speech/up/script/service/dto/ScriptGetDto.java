@@ -10,14 +10,6 @@ public class ScriptGetDto {
 
     @Getter
     @ToString
-    public static class ScriptGetRequestDto{
-        private Long userId;
-
-
-    }
-
-    @Getter
-    @ToString
     public static class ScriptGetResponseDto{
         private final Long scriptId;
         private final String content;
