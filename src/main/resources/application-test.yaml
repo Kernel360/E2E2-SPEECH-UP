@@ -14,3 +14,17 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
+
+api:
+  voice:
+    url : ${API_VOICE_TO_TEXT_URL}
+    accessKey : ${API_VOICE_TO_TEXT_ACCESS_KEY}
+
+speech-flow:
+  api :
+    key :
+      id : ${SPEECH_FLOW_API_KEY_ID}
+      secret : ${SPEECH_FLOW_API_KEY_SECRET}
+  lang : ${SPEECH_FLOW_LANG}
+  result :
+    type : ${SPEECH_FLOW_RESULT_TYPE}
