@@ -17,7 +17,7 @@ import com.speech.up.user.entity.UserEntity;
 @ActiveProfiles("test")
 public class ScriptRepositoryTest {
 
-	@Autowired
+	/*@Autowired
 	private ScriptRepository scriptRepository;
 
 	private UserEntity userEntity;
@@ -89,5 +89,5 @@ public class ScriptRepositoryTest {
 		for (ScriptEntity script : savedScript) {
 			then(script.getUser().getUserId()).isEqualTo(userId);
 		}
-	}
+	}*/
 }

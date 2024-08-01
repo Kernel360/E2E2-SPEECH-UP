@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ScriptRepository extends JpaRepository<ScriptEntity, Long> {
-	List<ScriptEntity> findByUser_UserId(Long userId);
+	List<ScriptEntity> findByUserUserId(Long userId);
 }
