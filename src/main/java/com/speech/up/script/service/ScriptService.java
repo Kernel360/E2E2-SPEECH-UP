@@ -4,12 +4,9 @@ import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 import com.speech.up.script.service.dto.ScriptAddDto;
 import com.speech.up.script.service.dto.ScriptGetDto;
+import com.speech.up.script.service.dto.ScriptIsUseDto;
 import com.speech.up.script.service.dto.ScriptUpdateDto;
-import com.speech.up.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.internal.Collections;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +16,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ScriptService {
     private final ScriptRepository scriptRepository;
-    private final UserRepository userRepository;
 
     public List<ScriptGetDto.ScriptGetResponseDto> getScriptList(Long userId) {
 
-        return scriptRepository.findByUserUserId(userId).stream()
+        return scriptRepository.findByUserUserIdAndIsUseTrue(userId).stream()
                 .map(ScriptGetDto.ScriptGetResponseDto::getScripts).collect(Collectors.toList());
     }
 
@@ -37,7 +33,8 @@ public class ScriptService {
         return ScriptUpdateDto.ScriptUpdateResponseDto.updateScript(scriptRepository.save(scriptEntity));
     }
 
-    public void deleteScriptById(Long scriptId) {
-        scriptRepository.deleteById(scriptId);
+    public ScriptIsUseDto.ScriptIsUseResponseDto deleteScriptById(ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto) {
+        ScriptEntity scriptEntity = new ScriptEntity(scriptIsUseRequestDto);
+        return ScriptIsUseDto.ScriptIsUseResponseDto.deleteScript(scriptRepository.save(scriptEntity));
     }
 }

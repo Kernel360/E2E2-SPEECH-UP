@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.speech.up.script.service.dto.ScriptAddDto;
+import com.speech.up.script.service.dto.ScriptIsUseDto;
 import com.speech.up.script.service.dto.ScriptUpdateDto;
 import com.speech.up.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @ToString
@@ -28,6 +28,8 @@ public class ScriptEntity {
 
 	private LocalDateTime modifiedAt;
 
+	private boolean isUse;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
@@ -38,6 +40,7 @@ public class ScriptEntity {
         this.createdAt = LocalDateTime.now();
         this.modifiedAt = LocalDateTime.now();
 		this.user = scriptAddRequestDto.getUser();
+		this.isUse = true;
     }
 
 	public ScriptEntity(ScriptUpdateDto.ScriptUpdateRequestDto scriptUpdateRequestDto) {
@@ -46,5 +49,15 @@ public class ScriptEntity {
 		this.createdAt = scriptUpdateRequestDto.getCreatedAt();
 		this.modifiedAt = LocalDateTime.now();
 		this.user = scriptUpdateRequestDto.getUser();
+		this.isUse = true;
+	}
+
+	public ScriptEntity(ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto) {
+		this.scriptId = scriptIsUseRequestDto.getScriptId();
+		this.user = scriptIsUseRequestDto.getUser();
+		this.content = scriptIsUseRequestDto.getContent();
+		this.createdAt = scriptIsUseRequestDto.getCreatedAt();
+		this.modifiedAt = scriptIsUseRequestDto.getModifiedAt();
+		this.isUse = scriptIsUseRequestDto.isUse();
 	}
 }

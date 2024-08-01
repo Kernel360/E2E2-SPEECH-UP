@@ -1,9 +1,9 @@
 package com.speech.up.script.controller;
 
-import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.service.ScriptService;
 import com.speech.up.script.service.dto.ScriptAddDto;
 import com.speech.up.script.service.dto.ScriptGetDto;
+import com.speech.up.script.service.dto.ScriptIsUseDto;
 import com.speech.up.script.service.dto.ScriptUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,9 @@ public class ScriptController {
      * @return 대본을 user 의 대본 목록에 추가
      */
     @PostMapping("")
-    public ResponseEntity<ScriptAddDto.ScriptAddResponseDto> addScript(@RequestBody ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto) {
+    public ResponseEntity<ScriptAddDto.ScriptAddResponseDto> addScript(
+            @RequestBody ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto
+    ) {
         return ResponseEntity.ok(scriptService.addScript(scriptAddRequestDto));
     }
 
@@ -45,19 +47,20 @@ public class ScriptController {
      */
     @PutMapping("")
     public ResponseEntity<ScriptUpdateDto.ScriptUpdateResponseDto> updateScript(
-        @RequestBody ScriptUpdateDto.ScriptUpdateRequestDto scriptUpdateRequestDto) {
+        @RequestBody ScriptUpdateDto.ScriptUpdateRequestDto scriptUpdateRequestDto
+    ) {
          return ResponseEntity.ok(scriptService.updateScript(scriptUpdateRequestDto));
     } // 업데이트 시 내용 날아갈 수 있어 수정 필요
 
     /**
      * 대본 삭제 기능
-     * @param scriptId scriptId 에 해당하는 정보를 모두 삭제
+     *
+     * @param scriptIsUseRequestDto scriptId 에 해당하는 정보를 모두 삭제
      * @return 삭제 후 성공시 ok 응답
      */
-    @DeleteMapping("/{scriptId}")
-    public ResponseEntity<ScriptEntity> deleteScript(@PathVariable Long scriptId) {
-
-         scriptService.deleteScriptById(scriptId);
-         return ResponseEntity.ok().build();
+    @PatchMapping("")
+    public ResponseEntity<ScriptIsUseDto.ScriptIsUseResponseDto> deleteScript(@RequestBody ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto) {
+         scriptService.deleteScriptById(scriptIsUseRequestDto);
+         return ResponseEntity.ok(scriptService.deleteScriptById(scriptIsUseRequestDto));
     }
 }
