@@ -15,12 +15,10 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
 
-
 api:
   voice:
     url : ${API_VOICE_TO_TEXT_URL}
     accessKey : ${API_VOICE_TO_TEXT_ACCESS_KEY}
-    language-code: ${API_VOICE_TO_LANGUAGE_CODE}
 
 speech-flow:
   api :

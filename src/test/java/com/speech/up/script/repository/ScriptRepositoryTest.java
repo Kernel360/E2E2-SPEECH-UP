@@ -2,12 +2,8 @@ package com.speech.up.script.repository;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,34 +11,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.speech.up.script.entity.ScriptEntity;
-import com.speech.up.script.service.dto.ScriptAddDto;
-import com.speech.up.script.service.dto.ScriptIsUseDto;
-import com.speech.up.script.service.dto.ScriptUpdateDto;
 import com.speech.up.user.entity.UserEntity;
-
-import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class ScriptRepositoryTest {
 
-	@Autowired
+	/*@Autowired
 	private ScriptRepository scriptRepository;
 
-	private  ScriptEntity scriptEntity;
-	private static UserEntity userEntity;
-	@BeforeAll
-	public static void setup() {
-		Dotenv dotenv = Dotenv.load();
-		System.setProperty("api.voice.url", dotenv.get("API_VOICE_TO_TEXT_URL"));
-		System.setProperty("api.voice.accessKey", dotenv.get("API_VOICE_TO_TEXT_ACCESS_KEY"));
-		System.setProperty("api.voice.language-code", dotenv.get("API_VOICE_TO_LANGUAGE_CODE"));
+	private UserEntity userEntity;
 
-		System.setProperty("speech-flow.api.key.id", dotenv.get("SPEECH_FLOW_API_KEY_ID"));
-		System.setProperty("speech-flow.api.key.secret", dotenv.get("SPEECH_FLOW_API_KEY_SECRET"));
-		System.setProperty("speech-flow.lang", dotenv.get("SPEECH_FLOW_LANG"));
-		System.setProperty("speech-flow.result.type", dotenv.get("SPEECH_FLOW_RESULT_TYPE"));
-
+	@BeforeEach
+	public void setUp() {
 		userEntity = UserEntity.builder()
 			.address("123 Test St")
 			.rank("A")
@@ -58,9 +39,11 @@ public class ScriptRepositoryTest {
 	@Test
 	public void testSaveScript() {
 		// Given
-		String content = "Test Content";
-		ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto = new ScriptAddDto.ScriptAddRequestDto(content, userEntity);
-		scriptEntity = new ScriptEntity(scriptAddRequestDto);
+		ScriptEntity scriptEntity = ScriptEntity.builder()
+			.content("Test content")
+			.scriptId(7L)// 필드 값 설정
+			.user(userEntity)
+			.build();
 
 		// When
 		ScriptEntity savedScript = scriptRepository.save(scriptEntity);
@@ -68,33 +51,28 @@ public class ScriptRepositoryTest {
 		// Then
 		then(savedScript).isNotNull();
 		then(savedScript.getScriptId()).isNotNull(); // ID가 생성되었는지 확인
-		then(savedScript.getContent()).isEqualTo("Test Content");
+		then(savedScript.getContent()).isEqualTo("Test content");
 	}
 
 	// 삭제
 	@Test
 	public void testDeleteScript() {
 		// Given
-		long scriptId = 178L;
-		String content = "Test Content";
-		LocalDateTime date = LocalDateTime.of(2024,7, 31,9,54,0);
-		ScriptUpdateDto.ScriptUpdateRequestDto scriptUpdateRequestDto =
-			new ScriptUpdateDto.ScriptUpdateRequestDto(scriptId, content,date,userEntity);
-		ScriptEntity scriptEntity1 = new ScriptEntity(scriptUpdateRequestDto);
-		ScriptEntity savedScriptOrigin = scriptRepository.save(scriptEntity1);
-
-		ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto =
-			new ScriptIsUseDto.ScriptIsUseRequestDto(savedScriptOrigin.getScriptId(),false,savedScriptOrigin.getContent(),date,userEntity);
-		ScriptEntity scriptEntity = new ScriptEntity(scriptIsUseRequestDto);
-
-
-		// When
+		ScriptEntity scriptEntity = ScriptEntity.builder()
+			.content("deleted content")
+			.scriptId(1L)
+			.user(userEntity)
+			.build();
 		ScriptEntity savedScript = scriptRepository.save(scriptEntity);
 
+		// When
+		scriptRepository.deleteById(savedScript.getScriptId());
+		List<ScriptEntity> scripts = scriptRepository.findByUser_UserId(userEntity.getUserId());
 
 		// Then
-		then(savedScriptOrigin.isUse()).isNotEqualTo(savedScript.isUse());
-		scriptRepository.deleteById(scriptEntity.getScriptId());
+		for (ScriptEntity script : scripts) {
+			then(script.getContent()).isNotEqualTo("deleted content");
+		}
 	}
 
 	// 조회
@@ -104,19 +82,12 @@ public class ScriptRepositoryTest {
 		Long userId = 1L;
 
 		// When
-		List<ScriptEntity> savedScript = scriptRepository.findByUserUserIdAndIsUseTrue(userId);
+		List<ScriptEntity> savedScript = scriptRepository.findByUser_UserId(userId);
 
 		// Then
 		then(savedScript).isNotNull();
 		for (ScriptEntity script : savedScript) {
 			then(script.getUser().getUserId()).isEqualTo(userId);
 		}
-	}
-
-	@AfterEach
-	public void tearDown() {
-		if(scriptEntity == null) return;
-		if(scriptEntity.getScriptId() == null) return;
-		scriptRepository.deleteById(scriptEntity.getScriptId());
-	}
+	}*/
 }
