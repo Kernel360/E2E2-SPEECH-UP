@@ -5,6 +5,9 @@
 - 내 1분 스피치 녹음을 AI 가 점수 책정
 - 여러 사람들과 내 녹음에 대한 공유 및 피드백
 
+## 컨벤션
+[네이버 코딩 컨벤션](https://naver.github.io/hackday-conventions-java/)
+
 ### 화면설계
 ![스크린샷 2024-07-31 10 36 25](https://github.com/user-attachments/assets/6c47baf1-2169-45a5-8bff-c2f2ae587e83)
 
