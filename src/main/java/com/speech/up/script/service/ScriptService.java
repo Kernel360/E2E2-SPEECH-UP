@@ -19,8 +19,10 @@ public class ScriptService {
 
     public List<ScriptGetDto.ScriptGetResponseDto> getScriptList(Long userId) {
 
-        return scriptRepository.findByUserUserIdAndIsUseTrue(userId).stream()
-                .map(ScriptGetDto.ScriptGetResponseDto::getScripts).collect(Collectors.toList());
+        return scriptRepository.findByUserUserIdAndIsUseTrue(userId)
+                .stream()
+                .map(ScriptGetDto.ScriptGetResponseDto::getScripts)
+                .collect(Collectors.toList());
     }
 
     public ScriptAddDto.ScriptAddResponseDto addScript(ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto) {

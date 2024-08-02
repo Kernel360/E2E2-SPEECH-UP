@@ -59,8 +59,9 @@ public class ScriptController {
      * @return 삭제 후 성공시 ok 응답
      */
     @PatchMapping("")
-    public ResponseEntity<ScriptIsUseDto.ScriptIsUseResponseDto> deleteScript(@RequestBody ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto) {
-         scriptService.deleteScriptById(scriptIsUseRequestDto);
+    public ResponseEntity<ScriptIsUseDto.ScriptIsUseResponseDto> deleteScript(
+            @RequestBody ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto
+    ) {
          return ResponseEntity.ok(scriptService.deleteScriptById(scriptIsUseRequestDto));
     }
 }

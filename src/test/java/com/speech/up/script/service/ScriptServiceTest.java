@@ -1,26 +1,6 @@
 package com.speech.up.script.service;
 
-import com.speech.up.script.entity.ScriptEntity;
-import com.speech.up.script.repository.ScriptRepository;
-import com.speech.up.script.service.dto.ScriptAddDto;
-import com.speech.up.user.entity.UserEntity;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 public class ScriptServiceTest {
 
