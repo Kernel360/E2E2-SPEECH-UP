@@ -10,11 +10,8 @@ import lombok.*;
 import java.util.List;
 
 @Getter
-@Setter
 @ToString
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "user")
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -41,9 +38,9 @@ public class UserEntity {
     @JsonManagedReference
     private List<ScriptEntity> scriptEntity;
 
-    public UserEntity(long l, String name, String socialId, String password, String token, String address,
+    public UserEntity(Long userId, String name, String socialId, String password, String token, String address,
                       String rank, String authorization) {
-        this.userId = l;
+        this.userId = userId;
         this.name = name;
         this.socialId = socialId;
         this.password = password;
@@ -52,4 +49,5 @@ public class UserEntity {
         this.rank = rank;
         this.authorization = authorization;
     }
+
 }
