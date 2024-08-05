@@ -1,6 +1,7 @@
 package com.speech.up.globalException;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 
 import org.apache.coyote.BadRequestException;
@@ -15,6 +16,14 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 
 @ControllerAdvice
 public class GlobalException extends Exception{
+
+
+	@ExceptionHandler(MalformedURLException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public ResponseEntity<ErrorResponse> handleMalformedURLException(MalformedURLException malformedURLException) {
+		return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "URL 확인 필요! : " + malformedURLException.getMessage());
+	}
+
 
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
