@@ -9,18 +9,22 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RecordAddDto {
     @Getter
     @ToString
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public static class RecordAddRequestDto{
+    public static class  RecordAddRequestDto{
+        private final MultipartFile file;
         private final String audioPath;
         private final String languageCode;
         private final ScriptEntity script;
 
-        public RecordAddRequestDto(String audioPath, String languageCode, ScriptEntity script) {
-            this.audioPath = audioPath;
-            this.languageCode = languageCode;
+        public RecordAddRequestDto(MultipartFile file, String audioPath, String languageCode, ScriptEntity script) {
+			this.file = file;
+			this.audioPath = audioPath;
+			this.languageCode = languageCode;
             this.script = script;
         }
     }

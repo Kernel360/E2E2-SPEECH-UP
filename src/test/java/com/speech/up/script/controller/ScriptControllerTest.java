@@ -7,15 +7,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.speech.up.script.service.ScriptService;
 
 @WebMvcTest(ScriptController.class)
 public class ScriptControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@MockBean
+	private ScriptService scriptService;
 
 	private String body = "{\n"
 		+ "    \"content\" : \" dfsddsfdsfa\",\n"

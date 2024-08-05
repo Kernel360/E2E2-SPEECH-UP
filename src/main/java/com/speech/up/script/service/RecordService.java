@@ -5,9 +5,12 @@ import com.speech.up.script.repository.RecordRepository;
 import com.speech.up.script.service.dto.RecordAddDto;
 import com.speech.up.script.service.dto.RecordGetDto;
 import com.speech.up.script.service.dto.RecordIsUseDto;
+import com.speech.up.script.service.recordFile.RecordFile;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +26,11 @@ public class RecordService {
                 .collect(Collectors.toList());
     }
 
-    public RecordAddDto.RecordAddResponseDto addRecord(RecordAddDto.RecordAddRequestDto recordAddRequestDto) {
+    public RecordAddDto.RecordAddResponseDto addRecord(RecordAddDto.RecordAddRequestDto recordAddRequestDto) throws
+		IllegalAccessException, IOException {
         RecordEntity recordEntity = new RecordEntity(recordAddRequestDto);
+        RecordFile recordFile = new RecordFile(recordAddRequestDto.getFile());
+        recordFile.createFile(recordAddRequestDto.getAudioPath());
         return RecordAddDto.RecordAddResponseDto.addRecord(recordRepository.save(recordEntity));
     }
 
@@ -32,4 +38,6 @@ public class RecordService {
         RecordEntity recordEntity = new RecordEntity(recordIsUseRequestDto);
         return RecordIsUseDto.RecordIsUseResponseDto.deleteRecord(recordRepository.save(recordEntity));
     }
+
+
 }
