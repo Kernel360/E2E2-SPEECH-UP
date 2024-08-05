@@ -1,21 +1,25 @@
 package com.speech.up.script.entity;
 
-import com.speech.up.user.entity.UserEntity;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.speech.up.script.service.dto.ScriptAddDto;
+import com.speech.up.user.entity.UserEntity;
 
 public class ScriptEntityTest {
-    /*@Test
+    @Test
     public void setEntityTest() {
-        UserEntity user = new UserEntity();
 
-        ScriptEntity scriptEntity = ScriptEntity.builder()
-                .content("test")
-                .user(user)
-                .build();
+        //given
+		UserEntity user = new UserEntity(  1001L, "test", "zxcv@zxcv.com", "pw", "token", "address", "bronze", "authorization");
 
+        String content = "test";
+		ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto = new ScriptAddDto.ScriptAddRequestDto(content, user);
+        ScriptEntity scriptEntity = new ScriptEntity(scriptAddRequestDto);
+
+		//when & then
         assertThat(scriptEntity.getContent()).isEqualTo("test");
         assertThat(scriptEntity.getUser()).isEqualTo(user);
-    }*/
+    }
 }
