@@ -15,13 +15,13 @@ public class RecordAddDto {
     @Getter
     @ToString
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public static class  RecordAddRequestDto{
+    public static class Request {
         private final MultipartFile file;
         private final String audioPath;
         private final String languageCode;
         private final ScriptEntity script;
 
-        public RecordAddRequestDto(MultipartFile file, String audioPath, String languageCode, ScriptEntity script) {
+        public Request(MultipartFile file, String audioPath, String languageCode, ScriptEntity script) {
 			this.file = file;
 			this.audioPath = audioPath;
 			this.languageCode = languageCode;
@@ -32,23 +32,23 @@ public class RecordAddDto {
     @Getter
     @ToString
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public static class RecordAddResponseDto{
+    public static class Response {
         private final Long scriptId;
         private final String audioPath;
         private final String languageCode;
         private final LocalDateTime createdAt;
         private final ScriptEntity script;
 
-        public RecordAddResponseDto(RecordEntity recordEntity) {
+        public Response(RecordEntity recordEntity) {
             this.scriptId = recordEntity.getRecordId();
             this.audioPath = recordEntity.getAudioPath();
             this.languageCode = recordEntity.getLanguageCode();
             this.createdAt = recordEntity.getCreatedAt();
             this.script = recordEntity.getScript();
         }
+    }
 
-        public static RecordAddResponseDto addRecord(RecordEntity recordEntity){
-            return new RecordAddResponseDto(recordEntity);
-        }
+    public static Response addRecord(RecordEntity recordEntity){
+        return new Response(recordEntity);
     }
 }

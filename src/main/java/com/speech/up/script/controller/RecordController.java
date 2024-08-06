@@ -6,7 +6,9 @@ import com.speech.up.script.service.RecordService;
 import com.speech.up.script.service.dto.RecordAddDto;
 import com.speech.up.script.service.dto.RecordGetDto;
 import com.speech.up.script.service.dto.RecordIsUseDto;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,30 +20,30 @@ import java.util.List;
 @RequestMapping("/speech-record")
 @RequiredArgsConstructor
 public class RecordController {
-    private final RecordService recordService;
-    private final ObjectMapper objectMapper;
+	private final RecordService recordService;
+	private final ObjectMapper objectMapper;
 
-    @GetMapping("/{scriptId}")
-    public ResponseEntity<List<RecordGetDto.RecordGetResponseDto>> getRecordALl(@PathVariable Long scriptId){
-        return ResponseEntity.ok(recordService.getRecordList(scriptId));
-    }
+	@GetMapping("/{scriptId}")
+	public ResponseEntity<List<RecordGetDto.Response>> getRecordALl(@PathVariable Long scriptId) {
+		return ResponseEntity.ok(recordService.getRecordList(scriptId));
+	}
 
-    @PostMapping("")
-    public ResponseEntity<RecordAddDto.RecordAddResponseDto> addRecord(
-        @RequestPart("file") MultipartFile file,
-        @RequestParam("audioPath") String audioPath,
-        @RequestParam("languageCode") String languageCode,
-        @RequestParam("script") String scriptJson
-    ) throws IllegalAccessException, IOException {
-        ScriptEntity script = objectMapper.readValue(scriptJson, ScriptEntity.class);
-        RecordAddDto.RecordAddRequestDto recordAddRequestDto = new RecordAddDto.RecordAddRequestDto(file,audioPath,languageCode,script);
-        return ResponseEntity.ok(recordService.addRecord(recordAddRequestDto));
-    }
+	@PostMapping("")
+	public ResponseEntity<RecordAddDto.Response> addRecord(
+		@RequestPart("file") MultipartFile file,
+		@RequestParam("audioPath") String audioPath,
+		@RequestParam("languageCode") String languageCode,
+		@RequestParam("script") String scriptJson
+	) throws IllegalAccessException, IOException {
+		ScriptEntity script = objectMapper.readValue(scriptJson, ScriptEntity.class);
+		RecordAddDto.Request recordAddRequestDto = new RecordAddDto.Request(file, audioPath, languageCode, script);
+		return ResponseEntity.ok(recordService.addRecord(recordAddRequestDto));
+	}
 
-    @PatchMapping("")
-    public ResponseEntity<RecordIsUseDto.RecordIsUseResponseDto> deleteRecord(
-            @RequestBody RecordIsUseDto.RecordIsUseRequestDto recordIsUseRequestDto
-    ) {
-        return ResponseEntity.ok(recordService.deleteRecord(recordIsUseRequestDto));
-    }
+	@PatchMapping("")
+	public ResponseEntity<RecordIsUseDto.Response> deleteRecord(
+		@RequestBody RecordIsUseDto.Request recordIsUseRequestDto
+	) {
+		return ResponseEntity.ok(recordService.deleteRecord(recordIsUseRequestDto));
+	}
 }

@@ -15,8 +15,8 @@ public class ScriptEntityTest {
 		UserEntity user = new UserEntity(  1001L, "test", "zxcv@zxcv.com", "pw", "token", "address", "bronze", "authorization");
 
         String content = "test";
-		ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto = new ScriptAddDto.ScriptAddRequestDto(content, user);
-        ScriptEntity scriptEntity = new ScriptEntity(scriptAddRequestDto);
+		ScriptAddDto.Request scriptAddRequestDto = new ScriptAddDto.Request(content, user);
+        ScriptEntity scriptEntity = ScriptEntity.create(scriptAddRequestDto);
 
 		//when & then
         assertThat(scriptEntity.getContent()).isEqualTo("test");

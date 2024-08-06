@@ -12,21 +12,21 @@ public class RecordGetDto {
     @Getter
     @ToString
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public static class RecordGetResponseDto {
+    public static class Response {
         private final Long recordId;
         private final String audioPath;
         private final String languageCode;
         private final LocalDateTime createdAt;
 
-        public RecordGetResponseDto(RecordEntity recordEntity) {
+        public Response(RecordEntity recordEntity) {
             this.recordId = recordEntity.getRecordId();
             this.audioPath = recordEntity.getAudioPath();
             this.languageCode = recordEntity.getLanguageCode();
             this.createdAt = recordEntity.getCreatedAt();
         }
 
-        public static RecordGetResponseDto getRecords(RecordEntity recordEntity) {
-            return new RecordGetResponseDto(recordEntity);
+        public static Response getRecords(RecordEntity recordEntity) {
+            return new Response(recordEntity);
         }
     }
 }
