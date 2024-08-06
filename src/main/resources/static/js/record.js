@@ -58,7 +58,6 @@ function addRecordingToList(url, blob) {
 // 오디오 분석
 function analyzeAudio(blob) {
     // blob 을 FormData 에 직접 추가
-    console.log(typeof blob);
     const formData = new FormData();
     formData.append('script', document.getElementById('script-text').value);
     formData.append('audioPath', chosenDirectory); // 선택된 경로를 사용
@@ -105,11 +104,6 @@ function chooseDirectory() {
             })
             .catch(error => {
                 console.error('디렉토리 선택 오류:', error);
-                if (error.name === 'AbortError') {
-                    console.log('디렉토리 선택이 취소되었습니다.');
-                } else {
-                    alert('디렉토리 선택에 실패했습니다. 오류: ' + error.message);
-                }
                 isDirectoryPickerActive = false; // 오류 발생 후 상태 초기화
             });
     } else {
