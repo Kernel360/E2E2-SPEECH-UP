@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @ControllerAdvice
-public class GlobalException extends Exception{
-
+public class GlobalException extends Exception {
 
 	@ExceptionHandler(MalformedURLException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResponseEntity<ErrorResponse> handleMalformedURLException(MalformedURLException malformedURLException) {
 		return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "URL 확인 필요! : " + malformedURLException.getMessage());
 	}
-
 
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -33,34 +31,39 @@ public class GlobalException extends Exception{
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException
-		missingServletRequestParameterException) {
-		return buildResponse(HttpStatus.BAD_REQUEST, "요청 값을 확인하세요 : " + missingServletRequestParameterException.getMessage());
+	public ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
+		MissingServletRequestParameterException
+			missingServletRequestParameterException) {
+		return buildResponse(HttpStatus.BAD_REQUEST,
+			"요청 값을 확인하세요 : " + missingServletRequestParameterException.getMessage());
 	}
 
 	@ExceptionHandler(MissingServletRequestPartException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<ErrorResponse> handleMissingServletRequestPartException(MissingServletRequestPartException
 		missingServletRequestPartException) {
-		return buildResponse(HttpStatus.BAD_REQUEST, "파일 값을 확인하세요 : " + missingServletRequestPartException.getMessage());
+		return buildResponse(HttpStatus.BAD_REQUEST,
+			"파일 값을 확인하세요 : " + missingServletRequestPartException.getMessage());
 	}
 
 	@ExceptionHandler(BadRequestException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException badRequestException) {
-		return buildResponse(HttpStatus.BAD_REQUEST, "요청이 잘못되었습니다 : " +badRequestException.getMessage());
+		return buildResponse(HttpStatus.BAD_REQUEST, "요청이 잘못되었습니다 : " + badRequestException.getMessage());
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
-		return buildResponse(HttpStatus.BAD_REQUEST, "매개변수가 정확하지 않습니다 : " +illegalArgumentException.getMessage());
+	public ResponseEntity<ErrorResponse> handleIllegalArgumentException(
+		IllegalArgumentException illegalArgumentException) {
+		return buildResponse(HttpStatus.BAD_REQUEST, "매개변수가 정확하지 않습니다 : " + illegalArgumentException.getMessage());
 	}
 
 	@ExceptionHandler(ConfigDataResourceNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ConfigDataResourceNotFoundException resourceNotFoundException){
-		return buildResponse(HttpStatus.NOT_FOUND,"해당 파일이 존재하지 않습니다 : " + resourceNotFoundException.getMessage());
+	public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+		ConfigDataResourceNotFoundException resourceNotFoundException) {
+		return buildResponse(HttpStatus.NOT_FOUND, "해당 파일이 존재하지 않습니다 : " + resourceNotFoundException.getMessage());
 	}
 
 	@ExceptionHandler(SQLException.class)
@@ -72,7 +75,8 @@ public class GlobalException extends Exception{
 	@ExceptionHandler(NullPointerException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException nullPointerException) {
-		return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "자료에 Null 값이 있습니다!! : " + nullPointerException.getMessage());
+		return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+			"자료에 Null 값이 있습니다!! : " + nullPointerException.getMessage());
 	}
 
 	@ExceptionHandler(IOException.class)

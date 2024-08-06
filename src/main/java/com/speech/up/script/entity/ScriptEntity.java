@@ -8,65 +8,72 @@ import com.speech.up.script.service.dto.ScriptAddDto;
 import com.speech.up.script.service.dto.ScriptIsUseDto;
 import com.speech.up.script.service.dto.ScriptUpdateDto;
 import com.speech.up.user.entity.UserEntity;
+
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+
 import java.util.List;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@DynamicUpdate
 @Table(name = "script")
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ScriptEntity {
+public class ScriptEntity extends BaseScriptEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long scriptId;
 
 	private String content;
 
-	private LocalDateTime createdAt;
-
-	private LocalDateTime modifiedAt;
-
-	private boolean isUse;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonBackReference
 	private UserEntity user;
 
+	private boolean isUse;
+
 	@OneToMany(mappedBy = "script", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<RecordEntity> recordEntity;
+	private List<RecordEntity> recordEntity; // => 어따 쓰는건지 확인해봐야함
+
+	public ScriptEntity(String content, UserEntity user, boolean isUse) {
+		this.content = content;
+		this.user = user;
+		this.isUse = isUse;
+	}
 
 	// 대본 생성
-    public ScriptEntity(ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto) {
-        this.content = scriptAddRequestDto.getContent();
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
-		this.user = scriptAddRequestDto.getUser();
-		this.isUse = true;
-    }
+	private ScriptEntity(ScriptAddDto.Request scriptAddRequestDto) {
+		this(scriptAddRequestDto.getContent(), scriptAddRequestDto.getUser(), true);
+	}
 
 	// 대본 업데이트
-	public ScriptEntity(ScriptUpdateDto.ScriptUpdateRequestDto scriptUpdateRequestDto) {
+	private ScriptEntity(ScriptUpdateDto.Request scriptUpdateRequestDto) {
+		this(scriptUpdateRequestDto.getContent(), scriptUpdateRequestDto.getUser(), true);
 		this.scriptId = scriptUpdateRequestDto.getScriptId();
-		this.content = scriptUpdateRequestDto.getContent();
-		this.createdAt = scriptUpdateRequestDto.getCreatedAt();
-		this.modifiedAt = LocalDateTime.now();
-		this.user = scriptUpdateRequestDto.getUser();
-		this.isUse = true;
 	}
 
 	// 대본 삭제
-	public ScriptEntity(ScriptIsUseDto.ScriptIsUseRequestDto scriptIsUseRequestDto) {
+	private ScriptEntity(ScriptIsUseDto.Request scriptIsUseRequestDto) {
+		this(scriptIsUseRequestDto.getContent(), scriptIsUseRequestDto.getUser(), false);
 		this.scriptId = scriptIsUseRequestDto.getScriptId();
-		this.user = scriptIsUseRequestDto.getUser();
-		this.content = scriptIsUseRequestDto.getContent();
-		this.createdAt = scriptIsUseRequestDto.getCreatedAt();
-		this.modifiedAt = scriptIsUseRequestDto.getModifiedAt();
-		this.isUse = scriptIsUseRequestDto.isUse();
+	}
+
+	public static ScriptEntity create(ScriptAddDto.Request scriptAddRequestDto) {
+		return new ScriptEntity(scriptAddRequestDto);
+	}
+
+	public static ScriptEntity update(ScriptUpdateDto.Request scriptUpdateRequestDto) {
+
+		return new ScriptEntity(scriptUpdateRequestDto);
+	}
+
+	public static ScriptEntity delete(ScriptIsUseDto.Request scriptIsUseRequestDto) {
+		return new ScriptEntity(scriptIsUseRequestDto);
 	}
 }
