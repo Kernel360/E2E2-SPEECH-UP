@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Script Board</title>
+    <link rel="stylesheet" type="text/css" href="/scriptPage/css/script-style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/home" class="nav-button">홈</a>
+        <a href="/logout" class="nav-button">로그아웃</a>
+    </nav>
+</header>
+<h1>Script Board</h1>
+<div class="container">
+    <div class="scripts-list-section">
+        <h2>대본 목록</h2>
+        <button id="create-script-btn" class="create-script-btn">대본 작성</button>
+        <table id="scripts-table" class="scripts-table">
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>내용 미리보기</th>
+                <th>작성일</th>
+                <th>수정일</th>
+            </tr>
+            </thead>
+            <tbody id="scripts-list">
+            <!-- 대본 항목이 여기에 동적으로 추가됩니다 -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/scriptPage/js/scriptList.js"></script>
+</body>
+</html>

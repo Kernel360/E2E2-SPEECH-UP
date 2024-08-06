@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class RecordFile {
 	private final MultipartFile audioFile;
-
 	// 파일 네이밍 형식 정해야됨
 	public RecordFile(MultipartFile audioFile) {
 		if (audioFile == null) {
@@ -15,12 +14,13 @@ public class RecordFile {
 		this.audioFile = audioFile;
 	}
 
-	public void createFile(final String directoryPath) throws IOException {
+	public String createFile(final String directoryPath) throws IOException {
 		final String BASE_DIRECTORY = "uploads/data";
 		final String fullDirectoryPath = directoryPath + File.separator + BASE_DIRECTORY;
 		makeDirectory(fullDirectoryPath);
 		File destFile = new File(fullDirectoryPath + File.separator + audioFile.getOriginalFilename());
 		audioFile.transferTo(destFile);
+		return fullDirectoryPath + File.separator + audioFile.getOriginalFilename();
 	}
 
 	private void makeDirectory(final String directoryPath) throws IOException {

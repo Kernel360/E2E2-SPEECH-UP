@@ -39,6 +39,9 @@ dependencies {
 	// testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	//use dropbox sdk for record file save.
+	implementation 'com.dropbox.core:dropbox-core-sdk:4.0.1'
+
 }
 
 tasks.named('test') {

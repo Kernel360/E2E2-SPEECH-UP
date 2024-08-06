@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>대본 작성</title>
+    <link rel="stylesheet" type="text/css" href="/scriptPage/css/script-style.css">
+    <link rel="stylesheet" type="text/css" href="/scriptPage/css/script-write.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/home" class="nav-button">홈</a>
+        <a href="/logout" class="nav-button">로그아웃</a>
+    </nav>
+</header>
+<h1>대본 작성</h1>
+<div class="container">
+    <div class="script-create-section">
+        <h2>새 대본 작성</h2>
+        <form id="script-form">
+            <label for="script-title">제목:</label>
+            <input type="text" id="script-title" name="title" required>
+
+            <label for="script-content">내용:</label>
+            <textarea id="script-content" name="content" rows="10" required></textarea>
+
+            <button type="submit">저장</button>
+        </form>
+    </div>
+</div>
+<script src="/scriptPage/js/scriptWrite.js"></script>
+</body>
+</html>

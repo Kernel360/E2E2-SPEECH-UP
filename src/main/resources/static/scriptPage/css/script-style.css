@@ -41,7 +41,11 @@ nav {
     background-color: #495057;
     border-color: #ffffff;
 }
-
+button:disabled {
+    background-color: #d3d3d3; /* 비활성화 시 배경색 */
+    color: #a9a9a9;            /* 비활성화 시 텍스트 색상 */
+    cursor: not-allowed;       /* 비활성화 시 커서 스타일 */
+}
 h1 {
     margin: 80px auto 80px;
     text-align: center;
@@ -118,6 +122,27 @@ button:hover {
 input[type="file"] {
     font-size: 16px;
     margin-right: 10px;
+}
+/* script-style.css 파일에 추가 */
+.nav-button {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.nav-button:hover {
+    background-color: #45a049;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
 }
 
 /* 반응형 스타일 */
