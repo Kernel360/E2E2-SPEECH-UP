@@ -3,59 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Script</title>
-    <link rel="stylesheet" type="text/css" href="/css/script-style.css">
+    <link rel="stylesheet" type="text/css" href="/scriptPage/css/script-style.css">
 </head>
 <body>
 <header>
     <nav>
         <a href="/home" class="nav-button">홈</a>
         <a href="/logout" class="nav-button">로그아웃</a>
+        <a href="#" class="nav-button" id="record-tab" onclick="showSection('record-section')">녹음하기</a>
+        <a href="#" class="nav-button" id="analyze-tab" onclick="showSection('analyze-section')">분석하기</a>
     </nav>
 </header>
 <h1>SpeechUp!</h1>
 <div class="container">
-    <div class="script-section">
-        <h2>대본 작성</h2>
-        <label>
-            <textarea id="script-text" placeholder="1분 스피치 대본을 작성하세요..."></textarea>
+    <div id="analyze-section" class="section" style="display:none;">
+        <h2>분석하기</h2>
+        <!-- 분석하기 섹션 내용 -->
+    </div>
+    <div id="record-section" class="section">
+        <div class="script-section">
+            <h2>대본</h2>
+            <div id="script-detail">
+                <ul id="analyze-recordings-list">
+                    <!-- 분석하기 섹션에 녹음 목록과 분석 버튼이 여기에 동적으로 추가됩니다 -->
+                </ul>
+            </div>
             <div class="recording-controls">
                 <button id="record-btn" onclick="startRecording()">녹음 추가</button>
             </div>
-        </label>
-        <label for="language-select">언어 선택:</label>
-        <select id="language-select">
-            <option value="ko">한국어</option>
-            <option value="en">영어</option>
-            <option value="fr">프랑스어</option>
-            <option value="de">독일어</option>
-            <option value="id">인도네시아어</option>
-            <option value="it">이탈리아어</option>
-            <option value="ja">일본어</option>
-            <option value="zh">중국어(만다린)</option>
-            <option value="pt">포르투갈어</option>
-            <option value="ru">러시아어</option>
-            <option value="es">스페인어</option>
-            <option value="zht">중국어(번체)</option>
-            <option value="tr">터키어</option>
-            <option value="vi">베트남어</option>
-        </select>
-    </div>
-    <div class="recordings-section">
-        <h2>녹음 목록</h2>
-        <ul id="recordings-list">
-            <!-- 녹음 항목이 여기에 동적으로 추가됩니다 -->
-        </ul>
+            <label for="language-select">언어 선택:</label>
+            <select id="language-select">
+                <option value="ko">한국어</option>
+                <option value="en">영어</option>
+                <option value="fr">프랑스어</option>
+                <option value="de">독일어</option>
+                <option value="id">인도네시아어</option>
+                <option value="it">이탈리아어</option>
+                <option value="ja">일본어</option>
+                <option value="zh">중국어(만다린)</option>
+                <option value="pt">포르투갈어</option>
+                <option value="ru">러시아어</option>
+                <option value="es">스페인어</option>
+                <option value="zht">중국어(번체)</option>
+                <option value="tr">터키어</option>
+                <option value="vi">베트남어</option>
+            </select>
+        </div>
+        <div class="recordings-section">
+            <h2>녹음 목록</h2>
+            <ul id="recordings-list">
+                <!-- 녹음 항목이 여기에 동적으로 추가됩니다 -->
+            </ul>
+        </div>
+        <div class="file-upload">
+            <h2>파일 업로드</h2>
+            <input type="file" id="file-input" />
+            <button id="upload-btn" >업로드</button>
+        </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="storage-section">
-        <h2>저장할 로컬 저장소</h2>
-        <button id="choose-directory-btn" onclick="chooseDirectory()">저장할 로컬 저장소 찾기</button>
-        <p id="chosen-directory">선택된 경로: 없음</p>
-    </div>
-</div>
-<button id="view-analysis-btn" class="hidden" onclick="analyzeAudio()">분석 내용 보러가기</button>
-<script src="/js/record.js"></script>
+<script src="/scriptPage/js/scriptDetail.js"></script>
+<script src="/scriptPage/js/record.js"></script>
+<script src="/scriptPage/js/saveRecord.js"></script>
+<script src="/scriptPage/js/loadLocalRecord.js"></script>
+<script src="/scriptPage/js/addRecordingToList.js"></script>
+<script src="/scriptPage/js/analyticRecord.js"></script>
+<script>
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+        document.getElementById(sectionId).style.display = 'block';
+    }
+    showSection('record-section');
+</script>
 </body>
 </html>

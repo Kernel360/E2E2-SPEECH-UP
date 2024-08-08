@@ -45,8 +45,8 @@ public class  RecordEntity extends BaseRecordEntity {
 	}
 
 	// 녹음 생성
-	private RecordEntity(RecordAddDto.Request recordAddRequestDto) {
-		this(recordAddRequestDto.getAudioPath(), recordAddRequestDto.getLanguageCode(), recordAddRequestDto.getScript(),
+	private RecordEntity(RecordAddDto.Request recordAddRequestDto, String filePath) {
+		this(filePath, recordAddRequestDto.getLanguageCode(), recordAddRequestDto.getScript(),
 			true);
 	}
 
@@ -57,8 +57,8 @@ public class  RecordEntity extends BaseRecordEntity {
 		this.recordId = recordIsUseRequestDto.getRecordId();
 	}
 
-	public static RecordEntity create(RecordAddDto.Request recordAddRequestDto) {
-		return new RecordEntity(recordAddRequestDto);
+	public static RecordEntity create(RecordAddDto.Request recordAddRequestDto, String filePath) {
+		return new RecordEntity(recordAddRequestDto, filePath);
 	}
 
 	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {

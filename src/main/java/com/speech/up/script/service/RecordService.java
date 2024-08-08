@@ -38,10 +38,10 @@ public class RecordService {
 	}
 
 	public RecordAddDto.Response addRecord(RecordAddDto.Request recordAddRequestDto) throws
-		IllegalAccessException, IOException {
-		RecordEntity recordEntity = RecordEntity.create(recordAddRequestDto);
+		IOException {
 		RecordFile recordFile = new RecordFile(recordAddRequestDto.getFile());
-		recordFile.createFile(recordAddRequestDto.getAudioPath());
+		String filePath = recordFile.createFile(recordAddRequestDto.getAudioPath());
+		RecordEntity recordEntity = RecordEntity.create(recordAddRequestDto, filePath);
 		return RecordAddDto.addRecord(recordRepository.save(recordEntity));
 	}
 
