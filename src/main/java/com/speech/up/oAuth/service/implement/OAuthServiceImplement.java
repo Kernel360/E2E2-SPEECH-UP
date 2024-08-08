@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class OAuthServiceImplement implements OAuthService {
 
+	// OAuth 아님
 	private final UserRepository userRepository;
 	private final JwtProvider jwtProvider;
 	private final CertificationRepository certificationRepository;
@@ -66,8 +67,8 @@ public class OAuthServiceImplement implements OAuthService {
 			String encodePassword = passwordEncoder.encode(password);
 			dto.setPassword(encodePassword);
 			UserEntity userEntity = new UserEntity(dto);
-			userRepository.save(userEntity);
 
+			userRepository.save(userEntity);
 			certificationRepository.deleteBySocialId(socialId);
 		}catch (Exception exception){
 			return ResponseDto.databaseError();
@@ -84,12 +85,7 @@ public class OAuthServiceImplement implements OAuthService {
 			if(userEntity == null) {
 				return SignInResponseDto.signInFail();
 			}
-			String password = dto.getPassword();
-			String encodePassword = userEntity.getPassword();
-			boolean isMatched = passwordEncoder.matches(password, encodePassword);
-			if(!isMatched) {
-				return SignInResponseDto.signInFail();
-			}
+
 			token = jwtProvider.createToken(socialId);
 		}catch (Exception exception){;
 			log.info("OAuthServiceImplement 가 잘못됨 : ", exception.fillInStackTrace());

@@ -25,7 +25,8 @@ async function loadScripts() {
 }
 
 async function getScriptsFromData() {
-    return fetch('/speech-scripts/users/1')
+
+    return fetch('/speech-scripts/users/me')
         .then(response => response.json())
         .then(scripts => scripts)
         .catch(error => console.error('Error loading scripts:', error));
