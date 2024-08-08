@@ -3,7 +3,6 @@ package com.speech.up.user.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.speech.up.oAuth.service.dto.SignUpRequestDto;
 import com.speech.up.script.entity.ScriptEntity;
 
 import jakarta.persistence.*;
@@ -50,10 +49,6 @@ public class UserEntity {
         this.authorization = authorization;
     }
 
-    public UserEntity(SignUpRequestDto dto) {
-        this.name = dto.getEmail();
-        this.socialId = dto.getId();
-    }
 
     public UserEntity(String socialId, String email, String  name, String authorization) {
         this.userId = 1L;
