@@ -27,13 +27,8 @@ public class UserEntity {
 
     private String socialId;
 
-    @Null
-    private String password;
 
     private String email;
-
-    @Null
-    private String address;
 
     @Null
     private String level;
@@ -45,14 +40,12 @@ public class UserEntity {
     @JsonManagedReference
     private List<ScriptEntity> scriptEntity;
 
-    public UserEntity(Long userId, String name, String socialId, String password, String email, String address,
+    public UserEntity(Long userId, String name, String socialId,  String email,
                       String level, String authorization) {
         this.userId = userId;
         this.name = name;
         this.socialId = socialId;
-        this.password = password;
         this.email = email;
-        this.address = address;
         this.level = level;
         this.authorization = authorization;
     }

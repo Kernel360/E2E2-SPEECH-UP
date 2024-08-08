@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/me")
     public ResponseEntity<UserGetInfoDto.UserGetInfoResponseDto> getUserInfo(
-            @PathVariable Long userId
     ) {
-        return ResponseEntity.ok(userService.getUserInfo(userId));
+        return ResponseEntity.ok(userService.getUserInfo());
     }
 }

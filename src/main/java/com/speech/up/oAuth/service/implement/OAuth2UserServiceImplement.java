@@ -43,7 +43,9 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 		}
 
 		assert userEntity != null;
-		userRepository.save(userEntity);
+		if(!userRepository.existsBySocialId(userEntity.getSocialId())){
+			userRepository.save(userEntity);
+		}
 		return new CustomOAuth2User(socialId);
 	}
 
