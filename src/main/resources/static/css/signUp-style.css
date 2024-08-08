@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #343a40;
+    padding: 10px 20px;
+    color: #ffffff;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+h1 {
+    margin: 80px auto 20px;
+    text-align: center;
+    color: deepskyblue;
+    font-size: 4em;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding: 20px;
+}
+
+h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.social-login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+}
+
+.social-button {
+    display: inline-block;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.google-button {
+    background-color: #db4437;
+}
+
+.google-button:hover {
+    background-color: #c33d2d;
+}
+
+.facebook-button {
+    background-color: #3b5998;
+}
+
+.facebook-button:hover {
+    background-color: #324b81;
+}
+
+.github-button {
+    background-color: #333;
+}
+
+.github-button:hover {
+    background-color: #2b2b2b;
+}

@@ -3,8 +3,11 @@ package com.speech.up.user.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.speech.up.oAuth.service.dto.SignUpRequestDto;
 import com.speech.up.script.entity.ScriptEntity;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 
 import java.util.List;
@@ -24,30 +27,46 @@ public class UserEntity {
 
     private String socialId;
 
+    @Null
     private String password;
 
-    private String token;
+    private String email;
 
+    @Null
     private String address;
 
-    private String rank;
+    @Null
+    private String level;
 
     private String authorization;
 
+    @Null
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ScriptEntity> scriptEntity;
 
-    public UserEntity(Long userId, String name, String socialId, String password, String token, String address,
-                      String rank, String authorization) {
+    public UserEntity(Long userId, String name, String socialId, String password, String email, String address,
+                      String level, String authorization) {
         this.userId = userId;
         this.name = name;
         this.socialId = socialId;
         this.password = password;
-        this.token = token;
+        this.email = email;
         this.address = address;
-        this.rank = rank;
+        this.level = level;
         this.authorization = authorization;
     }
 
+    public UserEntity(SignUpRequestDto dto) {
+        this.name = dto.getEmail();
+        this.socialId = dto.getId();
+    }
+
+    public UserEntity(String socialId, String email, String  name, String authorization) {
+        this.userId = 1L;
+        this.socialId = socialId;
+        this.email = email;
+        this.name = name;
+        this.authorization = authorization;
+    }
 }

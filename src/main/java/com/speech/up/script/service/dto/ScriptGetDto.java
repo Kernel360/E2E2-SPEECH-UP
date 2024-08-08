@@ -24,7 +24,7 @@ public class ScriptGetDto {
 			this.modifiedAt = scriptEntity.getModifiedAt();
 		}
 
-		public static Response getScripts(ScriptEntity scriptEntity) {
+		public static Response toResponse(ScriptEntity scriptEntity) {
 			return new Response(scriptEntity);
 		}
 	}

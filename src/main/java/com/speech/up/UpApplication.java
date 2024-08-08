@@ -24,6 +24,11 @@ public class UpApplication {
 		System.setProperty("speech-flow.lang", dotenv.get("SPEECH_FLOW_LANG"));
 		System.setProperty("speech-flow.result.type", dotenv.get("SPEECH_FLOW_RESULT_TYPE"));
 
+		System.setProperty("jwt.secret.key", dotenv.get("JWT_SECRET_KEY"));
+
+		System.setProperty("spring.security.oauth2.client.registration.google.client-id", dotenv.get("GOOGLE_CLIENT_ID"));
+		System.setProperty("spring.security.oauth2.client.registration.google.client-secret", dotenv.get("GOOGLE_CLIENT_SECRET"));
+
 		SpringApplication.run(UpApplication.class, args);
 	}
 
