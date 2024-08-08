@@ -1,85 +1,192 @@
 package com.speech.up.script.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.speech.up.script.entity.ScriptEntity;
+import com.speech.up.script.repository.ScriptRepository;
+import com.speech.up.script.service.dto.ScriptAddDto;
+import com.speech.up.script.service.dto.ScriptGetDto;
+import com.speech.up.script.service.dto.ScriptIsUseDto;
+import com.speech.up.script.service.dto.ScriptUpdateDto;
+import com.speech.up.user.entity.UserEntity;
+import com.speech.up.user.repository.UserRepository;
+
+import jakarta.persistence.EntityListeners;
+import jakarta.transaction.Transactional;
+
+@EntityListeners(AuditingEntityListener.class)
 public class ScriptServiceTest {
 
-    /*@Mock
-    private ScriptRepository scriptRepository;
+	// private Scrip
 
-    @InjectMocks
-    private ScriptService scriptService;
+	@Mock
+	private ScriptRepository scriptRepository;
 
-    private ScriptEntity scriptEntity;
+	@Mock
+	private UserRepository userRepository;
 
-    private ScriptAddDto.ScriptAddRequestDto scriptAddRequestDto;
+	@InjectMocks
+	private static ScriptService scriptService;
 
-    public ScriptServiceTest() {
-        MockitoAnnotations.openMocks(this);
-    }
 
-    @BeforeEach
-    public void setUp() {
-        UserEntity userEntity = UserEntity.builder()
-            .socialId("fds")
-            .name("fds")
-            .password("fds")
-            .rank("fds")
-            .authorization("fds")
-            .token("fds")
-            .userId(1L)
-            .build();
+	private static ScriptEntity scriptEntity;
+	private static UserEntity userEntity;
 
-        scriptEntity = ScriptEntity.builder()
-            .scriptId(1L) // 테스트용 ID 설정
-            .content("Test Content")
-            .createdAt(Timestamp.valueOf(LocalDateTime.now()))
-            .modifiedAt(Timestamp.valueOf(LocalDateTime.now()))
-            .user(userEntity)
-            .build();
-    }
+	private static ScriptAddDto.Request scriptAddRequestDto;
+	private static ScriptAddDto.Response scriptAddResponseDto;
 
-    @DisplayName("대본을 조회하는 기능을 테스트")
-    @Test
-    public void getAllScripts() {
-        // Given
-        Long id = 1L;
-        List<ScriptEntity> scriptEntities = Collections.singletonList(scriptEntity);
-        when(scriptRepository.findByUser_UserId(id)).thenReturn(scriptEntities);
-        // When
-        ResponseEntity<List<ScriptEntity>> response = scriptService.getScriptList(id);
-        // Then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(scriptEntities);
-    }
+	private static ScriptUpdateDto.Request scriptUpdateRequestDto;
+	private static ScriptUpdateDto.Response scriptUpdateDtoResponse;
 
-    @DisplayName("대본을 생성하는 기능 테스트")
-    @Test
-    public void createScript() {
-        // Given
-        when(scriptRepository.save(scriptEntity)).thenReturn(scriptEntity);
-        // When
-        ResponseEntity<ScriptEntity> response = scriptService.addScript(scriptAddRequestDto);
-        // Then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getContent()).isEqualTo("Test Content");
-        assertThat(response.getBody().getUser()).isEqualTo(scriptEntity.getUser());
-    }
 
-    @DisplayName("대본을 삭제하는 기능 테스트")
-    @Test
-    public void deleteScript() {
-        // Given
-        Long scriptId = scriptEntity.getScriptId();
-        doNothing().when(scriptRepository).deleteById(scriptId);
+	private static ScriptIsUseDto.Request scriptIsUseRequestDto;
 
-        // When
-        scriptService.deleteScriptById(scriptId);
+	private static ScriptIsUseDto.Response scriptIsUseResponseDto;
 
-        // Then
-        verify(scriptRepository, times(1)).deleteById(scriptId);
+	private static ScriptGetDto.Response scriptGetDtoResponse;
 
-    }*/
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+
+		userEntity = new UserEntity(
+			1L,
+			"name",
+			"social",
+			"pw",
+			"token",
+			"address",
+			"rank",
+			"auth"
+		);
+		scriptEntity = new ScriptEntity(
+			"content",userEntity,false
+		);
+
+
+		scriptUpdateRequestDto = new ScriptUpdateDto.Request(
+			1L,
+			"content",
+			userEntity,
+			true
+		);
+
+		scriptAddRequestDto = new ScriptAddDto.Request(
+			"content",
+			userEntity
+		);
+
+		scriptIsUseRequestDto = new ScriptIsUseDto.Request(
+			1L,
+			true,
+			"content",
+			userEntity
+		);
+
+		// scriptEntity = new ScriptEntity(
+		// 	"content",
+		// 	userEntity,
+		// 	true
+		// );
+
+	}
+
+	// @DisplayName("getActiveScriptsByUserIdTest")
+	// @Test
+	// void getActiveScriptsByUserIdTest() {
+	// 	Long userId = 1L;
+	// 	ScriptEntity scriptEntity = ScriptEntity.create(scriptAddRequestDto); // 필요한 필드 초기화
+	// 	when(scriptRepository.findByUserUserIdAndIsUseTrue(userId)).thenReturn(Collections.singletonList(scriptEntity));
+	//
+	// 	List<ScriptGetDto.Response> result = scriptService.getScriptList(userId);
+	//
+	// 	assertNotNull(result);
+	// 	assertEquals(1, result.size());
+	// 	verify(scriptRepository).findByUserUserIdAndIsUseTrue(userId);
+	// }
+
+	@DisplayName("대본을 조회하는 기능을 테스트")
+	@Test
+	public void getScriptListTest() {
+	    // Given
+	    Long id = 1L;
+		Long userId = 1L;
+		ScriptEntity scriptEntity = new ScriptEntity("test", userEntity, true);
+		List<ScriptEntity> activeScripts = Collections.singletonList(scriptEntity);
+		given(scriptRepository.findByUserUserIdAndIsUseTrue(userId)).willReturn(activeScripts);
+
+		// When
+	    List<ScriptGetDto.Response> response = scriptService.getScriptList(id);
+
+		// Then
+	    // assertThat(response.get(0).getScriptId()).isEqualTo(id);
+	    assertThat(response.get(0).getScriptId()).isEqualTo(1L);
+	}
+
+	@DisplayName("대본 수정 기능 테스트")
+	@Test
+	public void updateScriptTest(){
+		//given
+		given(userRepository.findById(anyLong())).willReturn(Optional.of(userEntity));
+		given(scriptRepository.save(any(ScriptEntity.class))).willReturn(scriptEntity);
+
+		//when
+		scriptUpdateDtoResponse = scriptService.updateScript(scriptUpdateRequestDto);
+
+		//then
+		assertThat(scriptUpdateDtoResponse.getContent()).isEqualTo("content");
+	}
+
+	@DisplayName("대본을 생성하는 기능 테스트")
+	@Test
+	public void addScriptTest() {
+	    // Given
+		given(scriptRepository.save(any(ScriptEntity.class))).willReturn((scriptEntity));
+		// When
+		scriptAddResponseDto = scriptService.addScript(scriptAddRequestDto);
+
+		// Then
+	    assertThat(scriptAddResponseDto).isNotNull();
+	    assertThat(scriptAddResponseDto.getContent()).isEqualTo("content");
+	}
+
+
+
+	@DisplayName("대본을 삭제하는 기능 테스트")
+	@Test
+	public void deleteScriptByIdTest() {
+	    // Given
+		given(scriptRepository.save(any(ScriptEntity.class))).willReturn((scriptEntity));
+		// When
+		scriptIsUseResponseDto = scriptService.deleteScriptById(scriptIsUseRequestDto);
+
+		// Then
+		assertThat(scriptIsUseResponseDto).isNotNull();
+		assertThat(scriptIsUseResponseDto.isUse()).isFalse();
+		verify(scriptRepository, times(1)).save(any(ScriptEntity.class));
+
+	}
 
 }

@@ -41,7 +41,7 @@ public class ScriptControllerTest {
 		//given
 		Long scriptId = 7L;
 		//when & then
-		mockMvc.perform(get("/speech-script/{scriptId}",scriptId)).andExpect(status().isOk());
+		mockMvc.perform(get("/speech-script/users/{userId}",scriptId)).andExpect(status().isOk());
 	}
 
 	@DisplayName("대본 생성 PostMapping 테스트")
