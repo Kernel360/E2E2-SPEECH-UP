@@ -33,6 +33,9 @@ public class ScriptAddDto {
 		}
 	}
 
+	public static Request toEntity(String content, UserEntity user) {
+		return new Request(content, user);
+	}
 	public static Response toResponse(ScriptEntity scriptEntity) {
 		return new Response(scriptEntity);
 	}

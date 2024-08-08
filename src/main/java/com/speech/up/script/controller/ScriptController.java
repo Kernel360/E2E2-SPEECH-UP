@@ -30,6 +30,16 @@ public class ScriptController {
 	}
 
 	/**
+	 * 대본 하나만 조회
+	 * @param scriptId 유저가 가지고 있는 script id
+	 * @return scriptGetDto 의 ResponseEntity 로 반환
+	 */
+	@GetMapping("/users/{userId}/scripts/{scriptId}")
+	public ResponseEntity<ScriptGetDto.Response> getScript(@PathVariable Long userId, @PathVariable Long scriptId) {
+		return ResponseEntity.ok(scriptService.getScript(userId, scriptId));
+	}
+
+	/**
 	 * 대본 생성
 	 * @param scriptAddRequestDto RequestBody 로 대본작성시 필요한 내용을 받아옴
 	 * @return 대본을 user 의 대본 목록에 추가

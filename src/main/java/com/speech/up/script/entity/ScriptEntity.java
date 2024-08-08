@@ -12,6 +12,7 @@ import com.speech.up.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -39,7 +40,7 @@ public class ScriptEntity extends BaseScriptEntity {
 
 	@OneToMany(mappedBy = "script", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<RecordEntity> recordEntity; // => 어따 쓰는건지 확인해봐야함
+	private List<RecordEntity> recordEntity;
 
 	public ScriptEntity(String content, UserEntity user, boolean isUse) {
 		this.content = content;
@@ -68,8 +69,12 @@ public class ScriptEntity extends BaseScriptEntity {
 		return new ScriptEntity(scriptAddRequestDto);
 	}
 
-	public static ScriptEntity update(ScriptUpdateDto.Request scriptUpdateRequestDto) {
+	/*// 정적 메서드 사용시 기존 엔티티 값을 받아올 수 없어 response 에 있는 createdAt 이 null 로 뜨게됨
+	public ScriptEntity update(ScriptUpdateDto.Request scriptUpdateRequestDto) {
+		return new ScriptEntity(scriptUpdateRequestDto);
+	}*/
 
+	public static ScriptEntity update(ScriptUpdateDto.Request scriptUpdateRequestDto) {
 		return new ScriptEntity(scriptUpdateRequestDto);
 	}
 

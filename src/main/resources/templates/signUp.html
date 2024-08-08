@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" href="/css/signUp-style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/home" class="nav-button">홈</a>
+        <a href="/logout" class="nav-button">로그아웃</a>
+    </nav>
+</header>
+<h1>SpeechUp!</h1>
+<section>
+    <h2>소셜 계정으로 회원가입</h2>
+    <div class="social-login-buttons">
+        <a href="/oauth2/authorization/google" class="social-button google-button">Google로 로그인</a>
+        <a href="/oauth2/authorization/kakao" class="social-button facebook-button">Facebook으로 로그인</a>
+        <a href="/oauth2/authorization/github" class="social-button github-button">GitHub로 로그인</a>
+    </div>
+</section>
+</body>
+</html>
