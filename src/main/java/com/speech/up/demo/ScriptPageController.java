@@ -34,11 +34,13 @@ public class ScriptPageController {
 	@GetMapping("/script-write")
 	public String scriptWrite(HttpSession httpSession, Model model){
 		String socialId = (String) httpSession.getAttribute("socialId");
+		String userId = (String) httpSession.getAttribute("userId");
 		boolean isLoggedIn = (socialId != null && !socialId.isEmpty());
 		if(!isLoggedIn){
 			return "signIn";
 		}
 		model.addAttribute("isLoggedIn", isLoggedIn);
+		model.addAttribute("userId", userId);
 		return "script-write";
 	}
 

@@ -18,12 +18,14 @@ public class ScriptUpdateDto {
 	public static class Request {
 		private final Long scriptId;
 		private final String content;
+		private final String title;
 		private final UserEntity user;
 		private final boolean isUse;
 
-		public Request(Long scriptId, String content, UserEntity user, boolean isUse) {
+		public Request(Long scriptId, String content, String title, UserEntity user, boolean isUse) {
 			this.scriptId = scriptId;
 			this.content = content;
+			this.title = title;
 			this.isUse = isUse;
 			this.user = user;
 		}
@@ -32,11 +34,13 @@ public class ScriptUpdateDto {
 	@Getter
 	@ToString
 	public static class Response {
+		private final String title;
 		private final String content;
 		private final LocalDateTime createdAt;
 		private final LocalDateTime modifiedAt;
 
 		public Response(ScriptEntity scriptEntity) {
+			this.title = scriptEntity.getTitle();
 			this.content = scriptEntity.getContent();
 			this.createdAt = scriptEntity.getCreatedAt();
 			this.modifiedAt = scriptEntity.getModifiedAt();

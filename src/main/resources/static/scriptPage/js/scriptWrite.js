@@ -4,27 +4,20 @@ document.getElementById('script-form').addEventListener('submit', async function
     // 폼 데이터 가져오기
     const title = document.getElementById('script-title').value;
     const content = document.getElementById('script-content').value;
-
+    const userId = document.getElementById('script-user-id').name;
+    console.log(userId);
     // 대본 데이터 객체 생성
     const scriptData = {
         title: title,
         content: content,
-        createdAt: new Date().toISOString(), // 현재 시간
-        modifiedAt: new Date().toISOString(),
         user :{
-            user_id : 1,
-            name : "ss",
-            social_id : "fds",
-            password : "121",
-            token : "fds",
-            address : "fdsfs",
-            rank : "fds",
-            authorization: "dfsaf"
+            user_id : userId
         }// 현재 시간
     };
 
     try {
-        const response = await fetch('/speech-scripts/users/1', {
+        const response = await fetch(
+            '/speech-scripts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

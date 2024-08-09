@@ -29,6 +29,8 @@ public class ScriptEntity extends BaseScriptEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long scriptId;
 
+	private String title;
+
 	private String content;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -42,26 +44,27 @@ public class ScriptEntity extends BaseScriptEntity {
 	@JsonManagedReference
 	private List<RecordEntity> recordEntity;
 
-	public ScriptEntity(String content, UserEntity user, boolean isUse) {
+	public ScriptEntity(String content, UserEntity user, String title, boolean isUse) {
 		this.content = content;
 		this.user = user;
+		this.title = title;
 		this.isUse = isUse;
 	}
 
 	// 대본 생성
 	private ScriptEntity(ScriptAddDto.Request scriptAddRequestDto) {
-		this(scriptAddRequestDto.getContent(), scriptAddRequestDto.getUser(), true);
+		this(scriptAddRequestDto.getContent(), scriptAddRequestDto.getUser(), scriptAddRequestDto.getTitle(), true);
 	}
 
 	// 대본 업데이트
 	private ScriptEntity(ScriptUpdateDto.Request scriptUpdateRequestDto) {
-		this(scriptUpdateRequestDto.getContent(), scriptUpdateRequestDto.getUser(), true);
+		this(scriptUpdateRequestDto.getContent(), scriptUpdateRequestDto.getUser(), scriptUpdateRequestDto.getTitle(),true);
 		this.scriptId = scriptUpdateRequestDto.getScriptId();
 	}
 
 	// 대본 삭제
 	private ScriptEntity(ScriptIsUseDto.Request scriptIsUseRequestDto) {
-		this(scriptIsUseRequestDto.getContent(), scriptIsUseRequestDto.getUser(), false);
+		this(scriptIsUseRequestDto.getContent(), scriptIsUseRequestDto.getUser(), scriptIsUseRequestDto.getTitle(), false);
 		this.scriptId = scriptIsUseRequestDto.getScriptId();
 	}
 

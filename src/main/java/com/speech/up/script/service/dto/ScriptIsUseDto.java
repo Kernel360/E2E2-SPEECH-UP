@@ -17,12 +17,14 @@ public class ScriptIsUseDto {
 		private final Long scriptId;
 		private final String content;
 		private final boolean isUse;
+		private final String title;
 		private final UserEntity user;
 
-		public Request(Long scriptId, boolean isUse, String content, UserEntity user) {
+		public Request(Long scriptId, boolean isUse, String content, String title, UserEntity user) {
 			this.scriptId = scriptId;
 			this.isUse = isUse;
 			this.content = content;
+			this.title = title;
 			this.user = user;
 		}
 	}
@@ -32,10 +34,11 @@ public class ScriptIsUseDto {
 	public static class Response {
 		private final Long scriptId;
 		private final boolean isUse;
-
+		private final String title;
 		public Response(ScriptEntity scriptEntity) {
 			this.scriptId = scriptEntity.getScriptId();
 			this.isUse = scriptEntity.isUse();
+			this.title = scriptEntity.getTitle();
 		}
 	}
 

@@ -27,7 +27,7 @@ public class ScriptController {
 	 */
 	@GetMapping("/users/me")
 	public ResponseEntity<List<ScriptGetDto.Response>> getScriptAll() {
-		Long userId = (Long)session.getAttribute("userId");
+		Long userId = Long.parseLong(session.getAttribute("userId").toString());
 		return ResponseEntity.ok(scriptService.getScriptList(userId));
 	}
 
