@@ -26,7 +26,6 @@ public class UserEntity {
 
     private String socialId;
 
-
     private String email;
 
     @Null
@@ -39,7 +38,7 @@ public class UserEntity {
     @JsonManagedReference
     private List<ScriptEntity> scriptEntity;
 
-    public UserEntity(Long userId, String name, String socialId,  String email,
+    public UserEntity(Long userId, String name, String socialId, String email,
                       String level, String authorization) {
         this.userId = userId;
         this.name = name;
@@ -50,10 +49,10 @@ public class UserEntity {
     }
 
 
-    public UserEntity(String socialId, String email, String  name, String authorization) {
-        this.userId = 1L;
+    public UserEntity(String socialId, String email, String level, String name, String authorization) {
         this.socialId = socialId;
         this.email = email;
+        this.level = level;
         this.name = name;
         this.authorization = authorization;
     }

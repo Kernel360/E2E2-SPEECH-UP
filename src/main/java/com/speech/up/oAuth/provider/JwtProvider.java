@@ -42,7 +42,7 @@ public class JwtProvider {
 
 		} catch (NullPointerException nullPointerException) {
 			throw new IllegalArgumentException("JwtProvider 클래스에 문제 있으니 확인해라.");
-		} catch (Exception exception){
+		} catch (Exception exception) {
 			throw new IllegalArgumentException(exception);
 		}
 		return subject;

@@ -5,15 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
@@ -34,7 +27,6 @@ import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
 import jakarta.persistence.EntityListeners;
-import jakarta.transaction.Transactional;
 
 @EntityListeners(AuditingEntityListener.class)
 public class ScriptServiceTest {
@@ -75,12 +67,11 @@ public class ScriptServiceTest {
 			1L,
 			"name",
 			"social",
-			"pw",
-			"token",
-			"address",
+			"email",
 			"rank",
 			"auth"
 		);
+
 		scriptEntity = new ScriptEntity(
 			"content",userEntity,false
 		);

@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/speech-record")
 @RequiredArgsConstructor
-public class RecordController {
+public class 	RecordController {
 	private final RecordService recordService;
 	private final ObjectMapper objectMapper;
 

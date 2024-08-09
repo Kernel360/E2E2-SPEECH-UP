@@ -34,12 +34,14 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 		String socialId = null;
 		String email = null;
 		String name = "";
+		String level = "";
 		if(oauthClientName.equals("Google")){
 			socialId = "google_" + oAuth2User.getAttributes().get("sub");
 			email = oAuth2User.getAttributes().get("email").toString();
 			name = oAuth2User.getAttributes().get("name").toString();
+			level = "bronze";
 			String authorization = "GENERAL_USER";
-			userEntity = new UserEntity(socialId, email, name,authorization);
+			userEntity = new UserEntity(socialId, email, level, name,authorization);
 		}
 
 		assert userEntity != null;

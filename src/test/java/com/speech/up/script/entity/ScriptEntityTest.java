@@ -12,7 +12,7 @@ public class ScriptEntityTest {
     public void setEntityTest() {
 
         //given
-		UserEntity user = new UserEntity(  1001L, "test", "zxcv@zxcv.com", "pw", "token", "address", "bronze", "authorization");
+		UserEntity user = new UserEntity(  1001L, "test", "zxcv@zxcv.com", "token", "bronze", "authorization");
 
         String content = "test";
 		ScriptAddDto.Request scriptAddRequestDto = new ScriptAddDto.Request(content, user);
