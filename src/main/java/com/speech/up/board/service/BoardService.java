@@ -22,12 +22,12 @@ public class BoardService {
 	private final UserRepository userRepository;
 
 	public List<BoardGetDto.Response> getAllBoardList(){
-		List<BoardEntity> boardList = boardRepository.findAll();
+		List<BoardEntity> boardList = boardRepository.findAllByIsUseTrue();
 		return BoardGetDto.Response.of(boardList);
 	}
 
 	public BoardGetDto.Response getBoardById(Long id){
-		return BoardGetDto.Response.toResponse(boardRepository.findByBoardId(id));
+		return BoardGetDto.Response.toResponse(boardRepository.findByBoardIdAndIsUseTrue(id));
 	}
 
 	public BoardAddDto.Response addBoard(BoardAddDto.Request boardRequest){
