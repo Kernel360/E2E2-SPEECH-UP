@@ -24,6 +24,7 @@ public class UserEntity {
 
     private String name;
 
+    @Column(name = "social_id")
     private String socialId;
 
     private String email;
