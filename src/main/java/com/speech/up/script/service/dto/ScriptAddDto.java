@@ -14,10 +14,12 @@ public class ScriptAddDto {
 	public static class Request {
 		private final String content;
 		private final UserEntity user;
+		private final String title;
 
-		public Request(String content, UserEntity user) {
+		public Request(String content, UserEntity user, String title) {
 			this.content = content;
 			this.user = user;
+			this.title = title;
 		}
 	}
 
@@ -26,16 +28,15 @@ public class ScriptAddDto {
 	public static class Response {
 		private final String content;
 		private final LocalDateTime createdAt;
+		private final String title;
 
 		public Response(ScriptEntity scriptEntity) {
+			this.title = scriptEntity.getTitle();
 			this.content = scriptEntity.getContent();
 			this.createdAt = scriptEntity.getCreatedAt();
 		}
 	}
 
-	public static Request toEntity(String content, UserEntity user) {
-		return new Request(content, user);
-	}
 	public static Response toResponse(ScriptEntity scriptEntity) {
 		return new Response(scriptEntity);
 	}

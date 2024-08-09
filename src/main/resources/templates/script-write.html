@@ -31,11 +31,11 @@
         <h2>새 대본 작성</h2>
         <form id="script-form">
             <label for="script-title">제목:</label>
-            <input type="text" id="script-title" name="title" required>
-
+            <input type="text" id="script-title" name="title" required/>
+            <label for="script-user-id"></label>
+            <input hidden="hidden" id="script-user-id" th:name="${userId}"/>
             <label for="script-content">내용:</label>
             <textarea id="script-content" name="content" rows="10" required></textarea>
-
             <button type="submit">저장</button>
         </form>
     </div>

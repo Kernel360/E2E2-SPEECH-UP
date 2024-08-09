@@ -8,9 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -20,9 +17,14 @@ public class UserService {
     public UserGetInfoDto.UserGetInfoResponseDto getUserInfo() {
         String socialId = httpSession.getAttribute("socialId").toString();
         UserEntity userEntity = userRepository.findBySocialId(socialId);
-        httpSession.setAttribute("userId", userEntity.getUserId());
+        httpSession.setAttribute("userId", userEntity.getUserId().toString());
         return UserGetInfoDto.UserGetInfoResponseDto.getUserInfo(userEntity);
     }
 
+    // 조회?
+    // 탈퇴
 
+    public void deleteUser(String socialId) {
+        userRepository.deleteBySocialId(socialId);
+    }
 }

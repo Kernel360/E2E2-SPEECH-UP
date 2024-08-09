@@ -11,8 +11,8 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
 @ToString
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "user")
@@ -28,10 +28,9 @@ public class UserEntity {
 
     private String email;
 
-    @Null
-    private String level;
+    private String level; // => ENUM 값으로 대체 필요
 
-    private String authorization;
+    private String authorization; // => ENUM 값으로 대체 필요
 
     @Null
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -56,4 +55,5 @@ public class UserEntity {
         this.name = name;
         this.authorization = authorization;
     }
+
 }
