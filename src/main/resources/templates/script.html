@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Script</title>
-    <link rel="stylesheet" type="text/css" href="/scriptPage/css/script-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/home-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/script-style.css">
 </head>
 <body>
 <header>
     <nav>
         <a href="/" class="nav-button">홈</a>
         <a href="/logout" class="nav-button" id="logout-button">로그아웃</a>
-        <a href="#" class="nav-button" id="record-tab" onclick="showSection('record-section')">녹음하기</a>
         <a href="#" class="nav-button" id="analyze-tab" onclick="showSection('analyze-section')">분석하기</a>
-    </nav>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var logoutButton = document.getElementById('logout-button');
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const logoutButton = document.getElementById('logout-button');
 
-            if (logoutButton) {
-                logoutButton.addEventListener('click', function(event) {
-                    if (!confirm('로그아웃 하시겠습니까?')) {
-                        event.preventDefault(); // 확인을 누르지 않으면 로그아웃 중단
-                    }
-                });
-            }
-        });
-    </script>
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', function(event) {
+                        if (!confirm('로그아웃 하시겠습니까?')) {
+                            event.preventDefault(); // 확인을 누르지 않으면 로그아웃 중단
+                        }
+                    });
+                }
+            });
+        </script>
+    </nav>
 </header>
 <h1>SpeechUp!</h1>
 <div class="container">
-    <div id="analyze-section" class="section" style="display:none;">
+    <div id="analyze-section" class="section hidden">
         <h2>분석하기</h2>
         <!-- 분석하기 섹션 내용 -->
     </div>
-    <div id="record-section" class="section">
+    <div id="script-and-record-section" class="script-and-record-section section">
         <div class="script-section">
             <h2>대본</h2>
             <div id="script-detail">
@@ -41,8 +41,10 @@
                     <!-- 분석하기 섹션에 녹음 목록과 분석 버튼이 여기에 동적으로 추가됩니다 -->
                 </ul>
             </div>
-            <div class="recording-controls">
-                <button id="record-btn" onclick="startRecording()">녹음 추가</button>
+            <div class="file-upload">
+                <h2>파일 업로드</h2>
+                <input type="file" id="file-input" />
+                <button id="upload-btn" >업로드</button>
             </div>
             <label for="language-select">언어 선택:</label>
             <select id="language-select">
@@ -68,11 +70,6 @@
                 <!-- 녹음 항목이 여기에 동적으로 추가됩니다 -->
             </ul>
         </div>
-        <div class="file-upload">
-            <h2>파일 업로드</h2>
-            <input type="file" id="file-input" />
-            <button id="upload-btn" >업로드</button>
-        </div>
     </div>
 </div>
 
@@ -90,7 +87,7 @@
         });
         document.getElementById(sectionId).style.display = 'block';
     }
-    showSection('record-section');
+    showSection('script-and-record-section');
 </script>
 </body>
 </html>

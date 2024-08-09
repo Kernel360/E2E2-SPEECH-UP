@@ -13,7 +13,7 @@
     <a th:if="${isLoggedIn}" href="/script-list" class="nav-button">스피치 분석</a>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var logoutButton = document.getElementById('logout-button');
+            const logoutButton = document.getElementById('logout-button');
 
             if (logoutButton) {
                 logoutButton.addEventListener('click', function(event) {

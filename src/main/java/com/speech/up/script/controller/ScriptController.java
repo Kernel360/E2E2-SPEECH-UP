@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/speech-scripts") // => 도메인 수정 필요 /user/{userId}/speech-scripts ??
+@RequestMapping("/speech-scripts")
 @RequiredArgsConstructor
 public class ScriptController {
 	private final ScriptService scriptService;

@@ -12,13 +12,22 @@ async function loadScripts() {
         row.addEventListener('click', () => {
             goToScriptDetails(script);
         });
-
-        row.innerHTML = `
-            <td>스크립션 넘버 ${script.scriptId}</td>
+        if(script.content.length > 50){
+            row.innerHTML = `
+            <td>${script.title}</td>
             <td>${script.content.substring(0, 50)}...</td>
-            <td>${script.createdAt}</td>
-            <td>${script.modifiedAt}</td>
-        `;
+            <td>${script.createdAt.replace("T", " ")}</td>
+            <td>${script.modifiedAt.replace("T", " ")}</td>
+            `;
+        } else {
+            row.innerHTML = `
+            <td>${script.title}</td>
+            <td>${script.content}</td>
+            <td>${script.createdAt.replace("T", " ")}</td>
+            <td>${script.modifiedAt.replace("T", " ")}</td>
+            `;
+        }
+        
 
         list.appendChild(row);
     });
@@ -33,7 +42,7 @@ async function getScriptsFromData() {
 }
 
 function goToScriptDetails(script) {
-  window.location.href = `script?scriptId=${script.scriptId}&content=${script.content}&modifiedAt=${script.modifiedAt}&createdAt=${script.createdAt}`;
+  window.location.href = `script?title=${script.title}&content=${script.content}&modifiedAt=${script.modifiedAt}&createdAt=${script.createdAt}`;
 }
 
 document.getElementById('create-script-btn').addEventListener('click', () => {

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Script Board</title>
-    <link rel="stylesheet" type="text/css" href="/scriptPage/css/script-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/script-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/home-style.css">
 </head>
 <body>
 <header>
@@ -13,7 +14,7 @@
     <a th:if="${isLoggedIn}" href="/log-out" class="nav-button" id="logout-button">로그아웃</a>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var logoutButton = document.getElementById('logout-button');
+            const logoutButton = document.getElementById('logout-button');
 
             if (logoutButton) {
                 logoutButton.addEventListener('click', function(event) {
@@ -30,17 +31,19 @@
     <div class="scripts-list-section">
         <h2>대본 목록</h2>
         <button id="create-script-btn" class="create-script-btn">대본 작성</button>
-        <table id="scripts-table" class="scripts-table">
+        <table class="script-table">
             <thead>
             <tr>
                 <th>제목</th>
-                <th>내용 미리보기</th>
-                <th>작성일</th>
+                <th>내용</th>
+                <th>생성일</th>
                 <th>수정일</th>
             </tr>
             </thead>
             <tbody id="scripts-list">
-            <!-- 대본 항목이 여기에 동적으로 추가됩니다 -->
+            <tr>
+                <!--대본 리스트-->
+            </tr>
             </tbody>
         </table>
     </div>
