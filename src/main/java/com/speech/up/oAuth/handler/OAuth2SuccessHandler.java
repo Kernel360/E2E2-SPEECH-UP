@@ -27,9 +27,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		Authentication authentication) throws IOException, ServletException {
 		CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 		String socialId = oAuth2User.getName();
-		String token = jwtProvider.createToken(socialId);
-		System.out.println(oAuth2User);
-		System.out.println(token);
+		jwtProvider.createToken(socialId);
 		httpSession.setAttribute("socialId", socialId);
 		response.sendRedirect("http://localhost:8080/");
 	}

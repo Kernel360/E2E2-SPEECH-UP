@@ -8,6 +8,6 @@ public class RegisterPageController {
 
 	@GetMapping("/sign-up")
 	public String signUp(){
-		return "signUp";
+		return "signIn";
 	}
 }

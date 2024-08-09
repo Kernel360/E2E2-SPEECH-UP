@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Profile;
 @Profile("test")
 public class VoiceToTextTest {
 
-	@Value(value = "${api.voice.accessKey}")
+	@Value(value = "test")
 	private String accessKey;
 
 	@Test
 	public void testVoiceToText() {
-		final String accessKey = "${api.voice.accessKey}";
+		final String accessKey = "test";
 		assertThat(accessKey).isEqualTo(this.accessKey);
 	}
 }

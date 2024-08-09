@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" href="/css/signIn-style.css">
+</head>
+<body>
+<header>
+    <a href="/" class="nav-button">홈</a>
+    <a th:if="${isLoggedIn}" href="/log-out" class="nav-button">로그아웃</a>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var logoutButton = document.getElementById('logout-button');
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(event) {
+                    if (!confirm('로그아웃 하시겠습니까?')) {
+                        event.preventDefault(); // 확인을 누르지 않으면 로그아웃 중단
+                    }
+                });
+            }
+        });
+    </script>
+</header>
+<h1>SpeechUp!</h1>
+<section>
+    <h2>소셜 계정으로 계속하기</h2>
+    <div class="social-login-buttons">
+        <a href="/oauth2/authorization/google" class="social-button google-button">
+            <img src="/images/google-logo.png" alt="Google Logo" class="social-logo">Google로 로그인
+        </a>
+        <a href="/oauth2/authorization/kakao" class="social-button kakao-button">
+            <img src="/images/kakao-logo.png" alt="Kakao Logo" class="social-logo"> Kakao로 로그인
+        </a>
+        <a href="/oauth2/authorization/github" class="social-button github-button">
+            <img src="/images/github-logo.png" alt="GitHub Logo" class="social-logo">GitHub로 로그인
+        </a></div>
+</section>
+</body>
+</html>

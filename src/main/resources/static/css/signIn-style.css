@@ -1,0 +1,122 @@
+/* Reset 기본 설정 */
+body, h1, h2, p, a, table, th, td, ul, li, button {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+header a:hover {
+    background-color: #495057;
+}
+
+h1 {
+    margin: 100px auto 20px;
+    text-align: center;
+    color: deepskyblue;
+    font-size: 2.5em;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding: 20px;
+}
+
+h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* 소셜 로그인 섹션 스타일 */
+.social-login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 버튼 사이의 간격 */
+}
+
+.social-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px; /* 이미지와 텍스트 사이의 간격 */
+    background-color: transparent; /* 배경을 투명하게 설정 */
+    border: none; /* 이미지에 불필요한 테두리가 있을 경우 제거 */
+    display: inline-block; /* 기본 display 설정 */
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    background-color: transparent; /* 버튼의 배경을 투명하게 설정 */
+    border: none; /* 버튼의 테두리를 제거 */
+}
+
+.google-button {
+    background-color: #dfe0e1;
+    color: black;
+}
+
+.google-button:hover {
+    background-color: #b5b6b7;
+}
+
+.kakao-button {
+    background-color: #fedc3f;
+    color: black;
+}
+
+.kakao-button:hover {
+    background-color: #cdb336;
+}
+
+.github-button {
+    background-color: #434343;
+}
+
+.github-button:hover {
+    background-color: #373738;
+}
+
+/* 이미지에만 투명 배경을 설정하는 코드 */
+.social-button img {
+    background-color: transparent;
+    border: none;
+}

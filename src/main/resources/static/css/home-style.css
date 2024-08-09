@@ -1,34 +1,92 @@
-body {
+/* Reset 기본 설정 */
+body, h1, h2, p, a, table, th, td, ul, li, button {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
+}
+
+/* 기본적인 스타일 설정 */
+body {
     background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
+/* 헤더 스타일 */
+header {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+header a:hover {
+    background-color: #495057;
+}
+
+/* 제목 스타일 */
 h1 {
-    width: 80%;
-    margin: 50px auto;
+    margin: 100px auto 20px;
     text-align: center;
     color: deepskyblue;
-    font-size: 3em;
+    font-size: 2.5em;
 }
+
+/* 컨테이너 스타일 */
 .container {
-    width: 80%;
+    max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    padding: 20px;
 }
-.title {
-    margin: 50px 0;
-}
+
+/* 테이블 스타일 */
 .board {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .board th, .board td {
+    padding: 12px;
     border: 1px solid #ddd;
-    padding: 8px;
+    text-align: left;
 }
+
 .board th {
-    background-color: #f2f2f2;
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    header a {
+        font-size: 1em;
+        padding: 6px 12px;
+    }
+
+    .board th, .board td {
+        padding: 8px;
+    }
 }

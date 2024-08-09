@@ -22,7 +22,7 @@ public class ScriptController {
 	private final HttpSession session;
 	/**
 	 * 유저의 대본 목록 조회
-	 * @param userId 유저의 PK ID
+	 *
 	 * @return 대본 리스트 반환
 	 */
 	@GetMapping("/users/me")
