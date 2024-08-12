@@ -46,6 +46,182 @@
 .
 ---
 
+## Tree
+```
+📦 
+├─ .github
+│  └─ ISSUE_TEMPLATE
+│     ├─ 기능-구현.md
+│     └─ 버그-리포트.md
+├─ .gitignore
+├─ .idea
+│  └─ .gitignore
+├─ Dockerfile
+├─ HELP.md
+├─ README.md
+├─ build.gradle
+├─ build
+│  └─ resources
+│     └─ main
+│        └─ application.yaml
+├─ gradle
+│  └─ wrapper
+│     ├─ gradle-wrapper.jar
+│     └─ gradle-wrapper.properties
+├─ gradlew
+├─ gradlew.bat
+├─ settings.gradle
+└─ src
+   ├─ main
+   │  ├─ java
+   │  │  └─ com
+   │  │     └─ speech
+   │  │        └─ up
+   │  │           ├─ UpApplication.java
+   │  │           ├─ api
+   │  │           │  └─ speechFlow
+   │  │           │     ├─ controller
+   │  │           │     │  └─ SpeechFlowAPIController.java
+   │  │           │     └─ service
+   │  │           │        └─ VoiceToTextSpeechFlowService.java
+   │  │           ├─ board
+   │  │           │  ├─ controller
+   │  │           │  │  └─ BoardController.java
+   │  │           │  ├─ entity
+   │  │           │  │  ├─ BaseBoardEntity.java
+   │  │           │  │  └─ BoardEntity.java
+   │  │           │  ├─ repository
+   │  │           │  │  └─ BoardRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ BoardService.java
+   │  │           │     └─ dto
+   │  │           │        ├─ BoardAddDto.java
+   │  │           │        ├─ BoardGetDto.java
+   │  │           │        ├─ BoardIsUseDto.java
+   │  │           │        └─ BoardUpdateDto.java
+   │  │           ├─ customException
+   │  │           │  ├─ ResponseContentIsNullException.java
+   │  │           │  └─ TaskIdIsNullException.java
+   │  │           ├─ demo
+   │  │           │  ├─ HomePageController.java
+   │  │           │  ├─ RegisterPageController.java
+   │  │           │  └─ ScriptPageController.java
+   │  │           ├─ globalException
+   │  │           │  ├─ ErrorResponse.java
+   │  │           │  └─ GlobalException.java
+   │  │           ├─ oAuth
+   │  │           │  ├─ common
+   │  │           │  │  ├─ ResponseCode.java
+   │  │           │  │  └─ ResponseMessage.java
+   │  │           │  ├─ config
+   │  │           │  │  └─ WebSecurityConfig.java
+   │  │           │  ├─ entity
+   │  │           │  │  └─ CustomOAuth2User.java
+   │  │           │  ├─ filter
+   │  │           │  │  └─ JwtAuthenticationFilter.java
+   │  │           │  ├─ handler
+   │  │           │  │  └─ OAuth2SuccessHandler.java
+   │  │           │  ├─ provider
+   │  │           │  │  └─ JwtProvider.java
+   │  │           │  └─ service
+   │  │           │     └─ implement
+   │  │           │        └─ OAuth2UserServiceImplement.java
+   │  │           ├─ script
+   │  │           │  ├─ controller
+   │  │           │  │  ├─ RecordController.java
+   │  │           │  │  └─ ScriptController.java
+   │  │           │  ├─ entity
+   │  │           │  │  ├─ BaseRecordEntity.java
+   │  │           │  │  ├─ BaseScriptEntity.java
+   │  │           │  │  ├─ RecordEntity.java
+   │  │           │  │  └─ ScriptEntity.java
+   │  │           │  ├─ repository
+   │  │           │  │  ├─ RecordRepository.java
+   │  │           │  │  └─ ScriptRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ RecordService.java
+   │  │           │     ├─ ScriptService.java
+   │  │           │     ├─ dto
+   │  │           │     │  ├─ RecordAddDto.java
+   │  │           │     │  ├─ RecordGetDto.java
+   │  │           │     │  ├─ RecordIsUseDto.java
+   │  │           │     │  ├─ ScriptAddDto.java
+   │  │           │     │  ├─ ScriptGetDto.java
+   │  │           │     │  ├─ ScriptIsUseDto.java
+   │  │           │     │  └─ ScriptUpdateDto.java
+   │  │           │     └─ recordFile
+   │  │           │        └─ RecordFile.java
+   │  │           └─ user
+   │  │              ├─ controller
+   │  │              │  └─ UserController.java
+   │  │              ├─ entity
+   │  │              │  └─ UserEntity.java
+   │  │              ├─ repository
+   │  │              │  └─ UserRepository.java
+   │  │              └─ service
+   │  │                 ├─ UserService.java
+   │  │                 └─ dto
+   │  │                    └─ UserGetInfoDto.java
+   │  └─ resources
+   │     ├─ application-test.yaml
+   │     ├─ application.yaml
+   │     ├─ static
+   │     │  ├─ css
+   │     │  │  ├─ home-style.css
+   │     │  │  └─ signIn-style.css
+   │     │  ├─ images
+   │     │  │  ├─ github-logo.png
+   │     │  │  ├─ google-logo.png
+   │     │  │  └─ kakao-logo.png
+   │     │  └─ scriptPage
+   │     │     ├─ css
+   │     │     │  ├─ script-style.css
+   │     │     │  └─ script-write.css
+   │     │     └─ js
+   │     │        ├─ addRecordingToList.js
+   │     │        ├─ analyticRecord.js
+   │     │        ├─ loadLocalRecord.js
+   │     │        ├─ localStoragePath.js
+   │     │        ├─ record.js
+   │     │        ├─ saveRecord.js
+   │     │        ├─ scriptDetail.js
+   │     │        ├─ scriptList.js
+   │     │        ├─ scriptWrite.js
+   │     │        └─ userMe.js
+   │     └─ templates
+   │        ├─ home.html
+   │        ├─ script-list.html
+   │        ├─ script-write.html
+   │        ├─ script.html
+   │        └─ signIn.html
+   └─ test
+      └─ java
+         └─ com
+            └─ speech
+               └─ up
+                  ├─ UpApplicationTests.java
+                  ├─ api
+                  │  └─ speechFlow
+                  │     └─ VoiceToTextTest.java
+                  ├─ script
+                  │  ├─ controller
+                  │  │  └─ ScriptControllerTest.java
+                  │  ├─ entity
+                  │  │  └─ ScriptEntityTest.java
+                  │  ├─ repository
+                  │  │  └─ ScriptRepositoryTest.java
+                  │  └─ service
+                  │     └─ ScriptServiceTest.java
+                  └─ user
+                     ├─ controller
+                     │  └─ UserControllerTest.java
+                     ├─ entity
+                     │  └─ UserEntityTest.java
+                     └─ service
+                        └─ UserServiceTest.java
+```
+---
+
 ## 컨벤션
 [코딩 컨벤션](https://naver.github.io/hackday-conventions-java/)
 ---
