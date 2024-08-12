@@ -2,11 +2,11 @@ package com.speech.up.api.etri.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.speech.up.api.etri.dto.AiRequest;
 import com.speech.up.api.etri.dto.ResponseVoiceToTextApiDto;
-import com.speech.up.api.etri.service.ApiType;
 import com.speech.up.api.etri.service.VoiceToTextService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,9 +18,9 @@ public class TestController {
 
 	@PostMapping("/api")
 	public ResponseEntity<ResponseVoiceToTextApiDto> createTask(
-		@RequestParam String filePath, @RequestParam ApiType apiType) {
+		@RequestBody AiRequest aiRequest) {
 
-		return voiceToTextService.callRecognitionApi(filePath,apiType);
+		return voiceToTextService.callRecognitionApi(aiRequest);
 	}
 
 }
