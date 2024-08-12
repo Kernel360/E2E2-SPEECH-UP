@@ -35,7 +35,6 @@ public class VoiceToTextService {
 
 	private final Gson gson = new Gson();
 
-
 	// 음성인식
 	public ResponseEntity<ResponseVoiceToTextApiDto> callRecognitionApi(AiRequest aiRequest) {
 		try {
@@ -46,10 +45,10 @@ public class VoiceToTextService {
 			// 요청 객체 생성
 			RequestVoiceToTextApiDto requestDTO = RequestVoiceToTextApiDto.builder().request_id(
 				aiRequest.getRequestId()).argument(
-					ArgumentDTO.builder()
-						.language_code(aiRequest.getLanguageCode())
-							.audio(audioContents)
-								.script(aiRequest.getScript()).build()).build();
+				ArgumentDTO.builder()
+					.language_code(aiRequest.getLanguageCode())
+					.audio(audioContents)
+					.script(aiRequest.getScript()).build()).build();
 
 			ResponseEntity<ResponseVoiceToTextApiDto> responseDTO = sendPostRequest(requestDTO, aiRequest.getApiType());
 			if (responseDTO.getStatusCode() != HttpStatus.OK) {
@@ -69,9 +68,10 @@ public class VoiceToTextService {
 		return urlCollector.getApiUrl(apiType);
 	}
 
-	ResponseEntity<ResponseVoiceToTextApiDto> sendPostRequest(RequestVoiceToTextApiDto requestDTO, ApiType apiType) throws IOException {
+	ResponseEntity<ResponseVoiceToTextApiDto> sendPostRequest(RequestVoiceToTextApiDto requestDTO,
+		ApiType apiType) throws IOException {
 		URL url = getUrl(apiType);
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("POST");
 		con.setDoOutput(true);
 		con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
