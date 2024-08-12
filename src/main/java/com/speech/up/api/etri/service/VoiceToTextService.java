@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.speech.up.api.etri.dto.AiRequest;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto.ArgumentDTO;
 import com.speech.up.api.etri.dto.ResponseVoiceToTextApiDto;
@@ -27,8 +28,6 @@ public class VoiceToTextService {
 
 	@Value(value = "${api.voice.accessKey}")
 	private String accessKey;
-	@Value(value = "${api.voice.language-code}")
-	private String languageCode;
 	@Value(value = "${api.voice.url}")
 	private String recognized;
 	@Value(value = "${api.voice.score}")
@@ -38,21 +37,21 @@ public class VoiceToTextService {
 
 
 	// 음성인식
-	public ResponseEntity<ResponseVoiceToTextApiDto> callRecognitionApi(String audioFilePath, ApiType apiType) {
+	public ResponseEntity<ResponseVoiceToTextApiDto> callRecognitionApi(AiRequest aiRequest) {
 		try {
 			// 녹음 파일
-			Path path = Paths.get(audioFilePath);
+			Path path = Paths.get(aiRequest.getFilePath());
 			byte[] audioBytes = Files.readAllBytes(path);
 			String audioContents = Base64.getEncoder().encodeToString(audioBytes);
 			// 요청 객체 생성
-			ArgumentDTO argumentDTO = new ArgumentDTO();
-			argumentDTO.setLanguage_code(languageCode);
-			argumentDTO.setAudio(audioContents);
-			RequestVoiceToTextApiDto requestDTO = new RequestVoiceToTextApiDto();
-			requestDTO.setRequest_id("reserved field");
-			requestDTO.setArgument(argumentDTO);
+			RequestVoiceToTextApiDto requestDTO = RequestVoiceToTextApiDto.builder().request_id(
+				aiRequest.getRequestId()).argument(
+					ArgumentDTO.builder()
+						.language_code(aiRequest.getLanguageCode())
+							.audio(audioContents)
+								.script(aiRequest.getScript()).build()).build();
 
-			ResponseEntity<ResponseVoiceToTextApiDto> responseDTO = sendPostRequest(requestDTO, apiType);
+			ResponseEntity<ResponseVoiceToTextApiDto> responseDTO = sendPostRequest(requestDTO, aiRequest.getApiType());
 			if (responseDTO.getStatusCode() != HttpStatus.OK) {
 				return new ResponseEntity<>(responseDTO.getBody(), HttpStatus.BAD_REQUEST);
 			}
@@ -89,8 +88,6 @@ public class VoiceToTextService {
 
 		try (InputStream is = con.getInputStream()) {
 			String responseBody = new String(is.readAllBytes());
-			System.out.println(responseBody);
-			// Deserialize response into ResponseDTO
 			ResponseVoiceToTextApiDto responseDTO = gson.fromJson(responseBody, ResponseVoiceToTextApiDto.class);
 
 			if (responseDTO.getResult() != 0) {
