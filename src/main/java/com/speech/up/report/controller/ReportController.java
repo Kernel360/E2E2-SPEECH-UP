@@ -13,7 +13,7 @@ import com.speech.up.report.service.dto.ReportAddDto;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/reports")
 @RequiredArgsConstructor
 public class ReportController {
 	private final ReportService reportService;

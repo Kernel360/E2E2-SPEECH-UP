@@ -41,7 +41,7 @@ public class ReportEntity extends BaseReportEntity{
 
 	private boolean isUse;
 
-	public ReportEntity(ReportContentAndScore reportContentAndScore, ReportAddDto.Request request) {
+	private ReportEntity(ReportContentAndScore reportContentAndScore, ReportAddDto.Request request) {
 		this.score = reportContentAndScore.getScore();
 		this.content = reportContentAndScore.getContent();
 		this.isUse = true;
