@@ -26,6 +26,7 @@ spring:
               - email
 api:
   voice:
+    score : ${API_VOICE_TO_SCORE}
     url : ${API_VOICE_TO_TEXT_URL}
     accessKey : ${API_VOICE_TO_TEXT_ACCESS_KEY}
     language-code: ${API_VOICE_TO_LANGUAGE_CODE}
