@@ -124,7 +124,7 @@ public class ScriptServiceTest {
 	    // Given
 	    Long id = 1L;
 		Long userId = 1L;
-		ScriptEntity scriptEntity = new ScriptEntity("test", userEntity, true);
+		ScriptEntity scriptEntity = new ScriptEntity("test", userEntity,  "", true);
 		List<ScriptEntity> activeScripts = Collections.singletonList(scriptEntity);
 		given(scriptRepository.findByUserUserIdAndIsUseTrue(userId)).willReturn(activeScripts);
 

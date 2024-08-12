@@ -15,7 +15,7 @@ public class ScriptEntityTest {
 		UserEntity user = new UserEntity(  1001L, "test", "zxcv@zxcv.com", "token", "bronze", "authorization");
 
         String content = "test";
-		ScriptAddDto.Request scriptAddRequestDto = new ScriptAddDto.Request(content, user);
+		ScriptAddDto.Request scriptAddRequestDto = new ScriptAddDto.Request(content, user, "");
         ScriptEntity scriptEntity = ScriptEntity.create(scriptAddRequestDto);
 
 		//when & then

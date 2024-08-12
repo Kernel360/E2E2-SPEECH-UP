@@ -1,45 +1,6 @@
-/* Reset 기본 설정 */
-body, h1, h2, p, a, table, th, td, ul, li, button {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #343a40;
-    color: #ffffff;
-    padding: 15px 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.2em;
-    padding: 8px 16px;
-    margin-right: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-header a:hover {
-    background-color: #495057;
-}
-
 nav {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -62,21 +23,32 @@ nav {
     background-color: #495057;
     border-color: #ffffff;
 }
+
 button:disabled {
     background-color: #d3d3d3; /* 비활성화 시 배경색 */
     color: #a9a9a9;            /* 비활성화 시 텍스트 색상 */
     cursor: not-allowed;       /* 비활성화 시 커서 스타일 */
 }
-h1 {
-    margin: 100px auto 20px;
-    text-align: center;
-    color: deepskyblue;
-    font-size: 2.5em;
+
+/* 컨테이너 스타일 */
+.script-container {
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 20px; /* 내부 패딩 */
+    border-radius: 8px; /* 모서리를 부드럽게 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
+    max-width: 800px; /* 최대 너비 */
+    margin: 20px auto; /* 가운데 정렬 및 여백 */
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
+/* 텍스트 컨텐츠 스타일 */
+#script-content {
+    background-color: #f8f9fa; /* 연한 배경 */
+    padding: 15px; /* 내부 패딩 */
+    border-radius: 4px; /* 모서리를 부드럽게 */
+    color: #555; /* 텍스트 색상 */
+    white-space: pre-wrap; /* 줄바꿈을 유지 */
+    font-family: "Courier New", Courier, monospace; /* 고정폭 글꼴 */
+    line-height: 1.5; /* 줄 간격 */
 }
 
 .script-section, .recordings-section {
@@ -153,25 +125,7 @@ input[type="file"] {
     display: block;
 }
 
-/* 반응형 스타일 */
-@media (max-width: 1200px) {
-    .container {
-        width: 90%;
-    }
-
-    h1 {
-        font-size: 2.5em;
-    }
-}
-
 @media (max-width: 992px) {
-    .container {
-        width: 95%;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
 
     .script-section, .recordings-section {
         padding: 15px;
@@ -189,14 +143,6 @@ input[type="file"] {
 }
 
 @media (max-width: 768px) {
-    .container {
-        width: 100%;
-    }
-
-    h1 {
-        font-size: 1.8em;
-        margin: 30px auto;
-    }
 
     .script-section, .recordings-section {
         padding: 10px;
@@ -214,10 +160,6 @@ input[type="file"] {
 }
 
 @media (max-width: 576px) {
-    h1 {
-        font-size: 1.5em;
-        margin: 20px auto;
-    }
 
     .script-section textarea {
         height: 120px;
@@ -277,4 +219,62 @@ input[type="file"] {
 /* 글자 크기 조정 */
 label, select, button {
     font-size: 1.5em;  /* 글자 크기 키움 */
+}
+
+/* 테이블 스타일 */
+.script-table {
+    width: 100%;
+    border-collapse: collapse; /* 경계선이 겹치지 않도록 */
+    margin: 20px 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+}
+
+/* 테이블 헤더 스타일 */
+.script-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    padding: 12px; /* 여백 */
+    border: 1px solid #ddd; /* 경계선 */
+    text-align: left; /* 텍스트 정렬 */
+}
+
+/* 테이블 셀 스타일 */
+.script-table td {
+    padding: 12px;
+    border: 1px solid #ddd; /* 셀 사이 경계선 */
+    text-align: left;
+}
+
+/* 내용 칸 너비 조정 */
+.script-table td:nth-child(2) {
+    width: 50%; /* 내용 칸의 너비를 전체 테이블의 50%로 설정 */
+}
+
+/* 날짜 칸 너비 조정 */
+.script-table td:nth-child(3),
+.script-table td:nth-child(4) {
+    width: 20%; /* 날짜 칸의 너비를 각각 20%로 설정 */
+}
+
+/* 번호 칸 너비 조정 */
+.script-table td:nth-child(1) {
+    width: 10%; /* 번호 칸의 너비를 10%로 설정 */
+}
+
+/* 기본 스타일 설정 */
+p {
+    display: flex; /* 내용 정렬 */
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 강조된 텍스트 스타일 */
+strong {
+    font-weight: bold;
+    color: #343a40; /* 어두운 색으로 강조 */
 }

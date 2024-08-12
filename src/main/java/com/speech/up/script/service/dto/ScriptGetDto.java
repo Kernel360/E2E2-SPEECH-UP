@@ -13,6 +13,7 @@ public class ScriptGetDto {
 	@ToString
 	public static class Response {
 		private final Long scriptId;
+		private final String title;
 		private final String content;
 		private final LocalDateTime createdAt;
 		private final LocalDateTime modifiedAt;
@@ -20,6 +21,7 @@ public class ScriptGetDto {
 		Response(ScriptEntity scriptEntity) {
 			this.scriptId = scriptEntity.getScriptId();
 			this.content = scriptEntity.getContent();
+			this.title = scriptEntity.getTitle();
 			this.createdAt = scriptEntity.getCreatedAt();
 			this.modifiedAt = scriptEntity.getModifiedAt();
 		}
