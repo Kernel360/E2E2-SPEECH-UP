@@ -52,7 +52,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	implementation 'com.google.code.gson:gson:2.8.9' // JSON 처리를 위한 예시 (필요 시 삭제)
 	implementation 'javazoom:jlayer:1.0.1' // JLayer (javazoom) 라이브러리 추가
 
 }
