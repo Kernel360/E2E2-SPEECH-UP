@@ -7,24 +7,12 @@
 </head>
 <body>
 <header>
-    <a th:if="${isLoggedIn}" href="/" class="nav-button">마이페이지</a>
-    <a th:if="${!isLoggedIn}" href="/login" class="nav-button">로그인</a>
-    <a th:if="${isLoggedIn}" href="/log-out" class="nav-button" id="logout-button">로그아웃</a>
-    <a th:if="${isLoggedIn}" href="/script-list" class="nav-button">스피치 분석</a>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const logoutButton = document.getElementById('logout-button');
 
-            if (logoutButton) {
-                logoutButton.addEventListener('click', function(event) {
-                    if (!confirm('로그아웃 하시겠습니까?')) {
-                        event.preventDefault(); // 확인을 누르지 않으면 로그아웃 중단
-                    }
-                });
-            }
-        });
-    </script>
     <script src="/scriptPage/js/userMe.js"></script>
+    <script src="/scriptPage/js/addTokenSession.js"></script>
+    <div id="nav-buttons">
+        <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+    </div>
 </header>
 <h1>SpeechUp!</h1>
 <div class="container">

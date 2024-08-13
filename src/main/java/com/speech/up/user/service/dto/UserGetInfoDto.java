@@ -8,13 +8,15 @@ public class UserGetInfoDto {
     @Getter
     @ToString
     public static class UserGetInfoResponseDto {
+        private final Long userId;
         private final String socialId;
         private final String name;
         private final String level;
         private final String authorization;
 
         public UserGetInfoResponseDto(UserEntity userEntity) {
-            this.socialId = userEntity.getSocialId();
+			this.userId = userEntity.getUserId();
+			this.socialId = userEntity.getSocialId();
             this.name = userEntity.getName();
             this.level = userEntity.getLevel();
             this.authorization = userEntity.getAuthorization();

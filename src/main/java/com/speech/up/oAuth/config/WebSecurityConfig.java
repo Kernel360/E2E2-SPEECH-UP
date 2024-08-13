@@ -46,8 +46,8 @@ public class WebSecurityConfig {
 			.sessionManagement(
 				sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(request -> request.requestMatchers("/", "api/v1/auth/**", "/oauth2/**", "/sign-up", "/css/**", "/js/**","/**","/logout", "/static/images/**").permitAll()
-				.requestMatchers("/api/v1/user/**").hasRole("USER")
-				.requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+				.requestMatchers("/script-list").hasRole("GENERAL_USER")
+				.requestMatchers("/script-write").hasRole("GENERAL_USER")
 				.anyRequest().authenticated())
 			.oauth2Login(oauth2 -> oauth2
 				.authorizationEndpoint(endpoint -> endpoint.baseUri("/oauth2/authorization/**"))

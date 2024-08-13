@@ -4,8 +4,8 @@ document.getElementById('script-form').addEventListener('submit', async function
     // 폼 데이터 가져오기
     const title = document.getElementById('script-title').value;
     const content = document.getElementById('script-content').value;
-    const userId = document.getElementById('script-user-id').name;
-    console.log(userId);
+    const userId = document.getElementById('user-id').value;
+    const jwtToken = getItemWithExpiry("jwtToken");
     // 대본 데이터 객체 생성
     const scriptData = {
         title: title,
@@ -20,7 +20,8 @@ document.getElementById('script-form').addEventListener('submit', async function
             '/speech-scripts', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : `${jwtToken}`
             },
             body: JSON.stringify(scriptData)
         });

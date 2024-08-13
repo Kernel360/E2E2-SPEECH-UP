@@ -6,7 +6,7 @@ import com.speech.up.script.service.dto.ScriptGetDto;
 import com.speech.up.script.service.dto.ScriptIsUseDto;
 import com.speech.up.script.service.dto.ScriptUpdateDto;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -19,16 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScriptController {
 	private final ScriptService scriptService;
-	private final HttpSession session;
 	/**
 	 * 유저의 대본 목록 조회
 	 *
 	 * @return 대본 리스트 반환
 	 */
 	@GetMapping("/users/me")
-	public ResponseEntity<List<ScriptGetDto.Response>> getScriptAll() {
-		Long userId = Long.parseLong(session.getAttribute("userId").toString());
-		return ResponseEntity.ok(scriptService.getScriptList(userId));
+	public ResponseEntity<List<ScriptGetDto.Response>> getScriptAll(HttpServletRequest request) {
+		return ResponseEntity.ok(scriptService.getScriptList(request));
 	}
 
 	/**

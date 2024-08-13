@@ -1,10 +1,11 @@
 package com.speech.up.user.service;
 
+import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 import com.speech.up.user.service.dto.UserGetInfoDto;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final HttpSession httpSession;
+    private final JwtProvider jwtProvider;
 
-    public UserGetInfoDto.UserGetInfoResponseDto getUserInfo() {
-        String socialId = httpSession.getAttribute("socialId").toString();
+    public UserGetInfoDto.UserGetInfoResponseDto getUserInfo(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if(authorization != null && authorization.startsWith("Bearer ")) {
+            authorization = authorization.substring(7);
+        }
+        String socialId = jwtProvider.validate(authorization);
         UserEntity userEntity = userRepository.findBySocialId(socialId);
-        httpSession.setAttribute("userId", userEntity.getUserId().toString());
+
         return UserGetInfoDto.UserGetInfoResponseDto.getUserInfo(userEntity);
     }
 

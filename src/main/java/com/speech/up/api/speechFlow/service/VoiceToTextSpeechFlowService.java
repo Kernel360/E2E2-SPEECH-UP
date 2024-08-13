@@ -173,11 +173,8 @@ public class VoiceToTextSpeechFlowService {
 			if (code == 11000) {
 				return jsonObject.getString("result");
 			} else if (code == 11001) {
-				System.out.println("waiting");
 				Thread.sleep(3000);
 			} else {
-				System.out.println(responseContent);
-				System.out.println("transcription error: " + jsonObject.getString("msg"));
 				return "";
 			}
 		}
