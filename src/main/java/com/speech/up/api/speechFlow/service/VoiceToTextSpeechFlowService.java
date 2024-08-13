@@ -17,9 +17,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.speech.up.customException.ResponseContentIsNullException;
-import com.speech.up.customException.TaskIdIsNullException;
-
+import com.speech.up.common.enums.StatusCode;
+import com.speech.up.common.exception.custom.CustomIOException;
+import com.speech.up.common.exception.custom.CustomIllegalArgumentException;
 
 @Service
 public class VoiceToTextSpeechFlowService {
@@ -137,14 +137,16 @@ public class VoiceToTextSpeechFlowService {
 		reader.close();
 		String responseContent = stringBuilder.toString();
 		if (responseContent.isEmpty()) {
-			throw new ResponseContentIsNullException("response content is null");
+			throw new CustomIOException(StatusCode.IO_ERROR) {
+			};
 		}
 		JSONObject jsonObject = new JSONObject(responseContent);
 		int code = jsonObject.getInt("code");
 		if (code == 10000) {
 			return jsonObject.getString("taskId");
 		}
-		throw new ResponseContentIsNullException("response content is null");
+		throw new CustomIOException(StatusCode.IO_ERROR) {
+		};
 	}
 
 	private void haveFiles(Map<String, String> params, OutputStream out) throws IOException {
@@ -158,7 +160,7 @@ public class VoiceToTextSpeechFlowService {
 	}
 
 
-	String queryTask(String taskId) throws Exception {
+	String queryTask(String taskId) throws IOException, InterruptedException {
 		if (taskId == null || taskId.isEmpty()) {
 			throw new IllegalArgumentException("taskId cannot be null or empty");
 		}
@@ -166,7 +168,8 @@ public class VoiceToTextSpeechFlowService {
 			String queryUrl = "https://api.speechflow.io/asr/file/v1/query";
 			String responseContent = getString(taskId, queryUrl);
 			if (responseContent.isEmpty()) {
-				throw new ResponseContentIsNullException("response content is null");
+				throw new CustomIOException(StatusCode.IO_ERROR) {
+				};
 			}
 			JSONObject jsonObject = new JSONObject(responseContent);
 			int code = jsonObject.getInt("code");
@@ -205,7 +208,8 @@ public class VoiceToTextSpeechFlowService {
 	public String getResult(String filepath) throws Exception {
 		String taskId = createTask(filepath);
 		if (taskId == null) {
-			throw new TaskIdIsNullException("taskId is null");
+			throw new CustomIllegalArgumentException(StatusCode.NO_FILES) {
+			};
 		}
 		return queryTask(taskId);
 	}

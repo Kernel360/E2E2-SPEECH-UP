@@ -34,7 +34,7 @@ public class 	RecordController {
 		@RequestParam("audioPath") String audioPath,
 		@RequestParam("languageCode") String languageCode,
 		@RequestParam("script") String scriptJson
-	) throws IllegalAccessException, IOException {
+	) throws IOException {
 		ScriptEntity script = objectMapper.readValue(scriptJson, ScriptEntity.class);
 		RecordAddDto.Request recordAddRequestDto = new RecordAddDto.Request(file, audioPath, languageCode, script);
 		return ResponseEntity.ok(recordService.addRecord(recordAddRequestDto));

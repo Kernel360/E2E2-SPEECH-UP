@@ -1,5 +1,6 @@
 package com.speech.up.script.service;
 
+import com.speech.up.common.exception.http.NotFoundException;
 import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
@@ -10,7 +11,6 @@ import com.speech.up.script.service.dto.ScriptUpdateDto;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class ScriptService {
 
 	public ScriptGetDto.Response getScript(Long userId, Long scriptId) {
 		if (!scriptRepository.findById(scriptId).get().getUser().getUserId().equals(userId)) {
-			throw new EntityNotFoundException();
+			throw new NotFoundException("Has No Script with Id: " + scriptId);
 		} else {
 			ScriptEntity scriptEntity = scriptRepository.findById(scriptId).get();
 			return ScriptGetDto.Response.toResponse(scriptEntity);
@@ -70,12 +70,9 @@ public class ScriptService {
 	public ScriptUpdateDto.Response updateScript(ScriptUpdateDto.Request scriptUpdateRequestDto) {
 		Optional<UserEntity> userEntity = userRepository.findById(scriptUpdateRequestDto.getUser().getUserId());
 		if (userEntity.isEmpty()) {
-			throw new EntityNotFoundException("User not found");
+			throw new NotFoundException("Has No User with Id: " + scriptUpdateRequestDto.getUser().getUserId());
 		}
-		/*
-		ScriptEntity script = scriptRepository.findById(scriptUpdateRequestDto.getScriptId()).get();
-		script.update(scriptUpdateRequestDto);
-		*/
+
 		ScriptEntity scriptEntity = ScriptEntity.update(scriptUpdateRequestDto);
 		return ScriptUpdateDto.toResponse(scriptRepository.save(scriptEntity));
 	}
