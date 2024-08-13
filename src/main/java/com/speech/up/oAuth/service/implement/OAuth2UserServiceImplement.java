@@ -27,11 +27,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 	public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(request);
 		String oauthClientName = request.getClientRegistration().getClientName();
-		try{
-			log.info("check This!! : {}", new ObjectMapper().writeValueAsString(oAuth2User.getAttributes()));
-		}catch (Exception exception){
-			exception.printStackTrace();
-		}
+
 		Provider provider = new Provider(oAuth2User);
 		UserEntity userEntity = provider.getUser(ProviderType.valueOf(oauthClientName.toUpperCase()));
 
