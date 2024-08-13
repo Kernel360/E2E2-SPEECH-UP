@@ -73,26 +73,29 @@ public class ScriptServiceTest {
 		);
 
 		scriptEntity = new ScriptEntity(
-			"content",userEntity,false
+			"content",userEntity,"",false
 		);
 
 
 		scriptUpdateRequestDto = new ScriptUpdateDto.Request(
 			1L,
 			"content",
+			"",
 			userEntity,
-			true
+			false
 		);
 
 		scriptAddRequestDto = new ScriptAddDto.Request(
 			"content",
-			userEntity
+			userEntity,
+			""
 		);
 
 		scriptIsUseRequestDto = new ScriptIsUseDto.Request(
 			1L,
 			true,
 			"content",
+			"",
 			userEntity
 		);
 
