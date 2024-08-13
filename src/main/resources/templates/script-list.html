@@ -8,10 +8,9 @@
 </head>
 <body>
 <header>
-    <a th:if="${isLoggedIn}" href="/" class="nav-button">마이페이지</a>
-    <a href="/" class="nav-button">홈</a>
-    <a th:if="${!isLoggedIn}" href="/login" class="nav-button">로그인</a>
-    <a th:if="${isLoggedIn}" href="/log-out" class="nav-button" id="logout-button">로그아웃</a>
+    <div id="nav-buttons">
+        <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const logoutButton = document.getElementById('logout-button');
@@ -48,6 +47,7 @@
         </table>
     </div>
 </div>
+<script src="/scriptPage/js/userMe.js"></script>
 <script src="/scriptPage/js/scriptList.js"></script>
 </body>
 </html>

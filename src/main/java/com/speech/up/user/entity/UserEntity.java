@@ -33,6 +33,8 @@ public class UserEntity {
 
     private String authorization; // => ENUM 값으로 대체 필요
 
+    private String providerType;
+
     @Null
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -57,4 +59,13 @@ public class UserEntity {
         this.authorization = authorization;
     }
 
+    public UserEntity(String socialId, String email, String level,
+        String name, String authorization, String providerType) {
+        this.socialId = socialId;
+        this.email = email;
+        this.level = level;
+        this.name = name;
+        this.authorization = authorization;
+        this.providerType = providerType;
+    }
 }

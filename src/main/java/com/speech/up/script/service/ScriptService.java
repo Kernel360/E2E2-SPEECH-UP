@@ -1,5 +1,6 @@
 package com.speech.up.script.service;
 
+import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 import com.speech.up.script.service.dto.ScriptAddDto;
@@ -10,6 +11,7 @@ import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 public class ScriptService {
 	private final ScriptRepository scriptRepository;
 	private final UserRepository userRepository;
+	private final JwtProvider jwtProvider;
+
 
 	private List<ScriptEntity> getActiveScriptsByUserId(Long userId) {
 		return scriptRepository.findByUserUserIdAndIsUseTrue(userId);
@@ -38,8 +42,15 @@ public class ScriptService {
 			.collect(Collectors.toList());
 	}
 
-	public List<ScriptGetDto.Response> getScriptList(Long userId) {
-		List<ScriptEntity> activeScripts = getActiveScriptsByUserId(userId);
+	public List<ScriptGetDto.Response> getScriptList(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+		if(authorization != null && authorization.startsWith("Bearer ")) {
+			authorization = authorization.substring(7);
+		}
+		String socialId = jwtProvider.validate(authorization);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+
+		List<ScriptEntity> activeScripts = getActiveScriptsByUserId(userEntity.getUserId());
 		return mapToResponse(activeScripts);
 	}
 
