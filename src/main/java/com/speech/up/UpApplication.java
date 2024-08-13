@@ -30,6 +30,12 @@ public class UpApplication {
 		System.setProperty("spring.security.oauth2.client.registration.google.client-id", dotenv.get("GOOGLE_CLIENT_ID"));
 		System.setProperty("spring.security.oauth2.client.registration.google.client-secret", dotenv.get("GOOGLE_CLIENT_SECRET"));
 
+		System.setProperty("spring.security.oauth2.client.registration.kakao.client-id", dotenv.get("KAKAO_CLIENT_ID"));
+		System.setProperty("spring.security.oauth2.client.registration.kakao.client-secret", dotenv.get("KAKAO_CLIENT_SECRET"));
+
+		System.setProperty("spring.security.oauth2.client.registration.github.client-id", dotenv.get("GITHUB_CLIENT_ID"));
+		System.setProperty("spring.security.oauth2.client.registration.github.client-secret", dotenv.get("GITHUB_CLIENT_SECRET"));
+
 		SpringApplication.run(UpApplication.class, args);
 	}
 
