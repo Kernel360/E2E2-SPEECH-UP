@@ -2,7 +2,7 @@ package com.speech.up.api.etri.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.speech.up.api.etri.service.ApiType;
+import com.speech.up.api.etri.type.ApiType;
 
 import lombok.Getter;
 import lombok.ToString;

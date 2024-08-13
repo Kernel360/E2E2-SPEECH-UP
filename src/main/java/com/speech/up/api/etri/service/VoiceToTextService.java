@@ -8,10 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.Base64;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -27,8 +25,8 @@ import com.speech.up.api.etri.dto.AiRequest;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto.ArgumentDTO;
 import com.speech.up.api.etri.dto.ResponseVoiceToTextApiDto;
-
-import javazoom.jl.decoder.JavaLayerException;
+import com.speech.up.api.etri.type.ApiType;
+import com.speech.up.api.etri.url.UrlCollector;
 
 @Service
 public class VoiceToTextService {

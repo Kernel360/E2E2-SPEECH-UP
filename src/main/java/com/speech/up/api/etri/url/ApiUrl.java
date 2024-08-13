@@ -1,4 +1,4 @@
-package com.speech.up.api.etri.service;
+package com.speech.up.api.etri.url;
 
 import java.net.MalformedURLException;
 import java.net.URL;

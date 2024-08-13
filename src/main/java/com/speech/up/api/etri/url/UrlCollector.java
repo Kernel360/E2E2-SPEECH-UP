@@ -1,20 +1,22 @@
-package com.speech.up.api.etri.service;
+package com.speech.up.api.etri.url;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.speech.up.api.etri.type.ApiType;
+
 public class UrlCollector {
 
 	final Map<ApiType, URL> aiApiUrl = new HashMap<>();
-	UrlCollector(String recognized, String pronunciation) throws MalformedURLException {
+	public UrlCollector(String recognized, String pronunciation) throws MalformedURLException {
 		PronunciationAI pronunciationAI = new PronunciationAI(pronunciation);
 		RecognizedAI recognizedAI = new RecognizedAI(recognized);
-		this.aiApiUrl.put(ApiType.pronunciation, pronunciationAI.getUrl());
-		this.aiApiUrl.put(ApiType.recognized, recognizedAI.getUrl());
+		this.aiApiUrl.put(ApiType.PRONUNCIATION, pronunciationAI.getUrl());
+		this.aiApiUrl.put(ApiType.RECOGNIZED, recognizedAI.getUrl());
 	}
-	URL getApiUrl(ApiType apiType){
+	public URL getApiUrl(ApiType apiType){
 		return aiApiUrl.get(apiType);
 	}
 }
