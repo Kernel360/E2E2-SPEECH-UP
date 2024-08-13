@@ -1,6 +1,7 @@
 package com.speech.up.api.etri.service;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -10,7 +11,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Base64;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,10 +22,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.speech.up.api.converter.WavToRaw;
 import com.speech.up.api.etri.dto.AiRequest;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto.ArgumentDTO;
 import com.speech.up.api.etri.dto.ResponseVoiceToTextApiDto;
+
+import javazoom.jl.decoder.JavaLayerException;
 
 @Service
 public class VoiceToTextService {
@@ -38,9 +45,11 @@ public class VoiceToTextService {
 	// 음성인식
 	public ResponseEntity<ResponseVoiceToTextApiDto> callRecognitionApi(AiRequest aiRequest) {
 		try {
+			WavToRaw wavToRaw = new WavToRaw();
 			// 녹음 파일
 			Path path = Paths.get(aiRequest.getFilePath());
-			byte[] audioBytes = Files.readAllBytes(path);
+			File file = new File(path.toFile().getAbsolutePath());
+			byte[] audioBytes = wavToRaw.convertToRawPcm(file);
 			String audioContents = Base64.getEncoder().encodeToString(audioBytes);
 			// 요청 객체 생성
 			RequestVoiceToTextApiDto requestDTO = RequestVoiceToTextApiDto.builder().request_id(
@@ -59,6 +68,8 @@ public class VoiceToTextService {
 
 		} catch (IOException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (UnsupportedAudioFileException e) {
+			throw new RuntimeException(e);
 		}
 
 	}

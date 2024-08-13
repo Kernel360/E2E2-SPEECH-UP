@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
@@ -27,6 +28,7 @@ import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
 import jakarta.persistence.EntityListeners;
+import jakarta.servlet.http.HttpServletRequest;
 
 @EntityListeners(AuditingEntityListener.class)
 public class ScriptServiceTest {
@@ -73,26 +75,29 @@ public class ScriptServiceTest {
 		);
 
 		scriptEntity = new ScriptEntity(
-			"content",userEntity,false
+			"content",userEntity,"",false
 		);
 
 
 		scriptUpdateRequestDto = new ScriptUpdateDto.Request(
 			1L,
 			"content",
+			"",
 			userEntity,
-			true
+			false
 		);
 
 		scriptAddRequestDto = new ScriptAddDto.Request(
 			"content",
-			userEntity
+			userEntity,
+			""
 		);
 
 		scriptIsUseRequestDto = new ScriptIsUseDto.Request(
 			1L,
 			true,
 			"content",
+			"",
 			userEntity
 		);
 
@@ -122,7 +127,7 @@ public class ScriptServiceTest {
 	@Test
 	public void getScriptListTest() {
 	    // Given
-	    Long id = 1L;
+	    HttpServletRequest id = new MockHttpServletRequest();
 		Long userId = 1L;
 		ScriptEntity scriptEntity = new ScriptEntity("test", userEntity,  "", true);
 		List<ScriptEntity> activeScripts = Collections.singletonList(scriptEntity);
