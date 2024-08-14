@@ -1,4 +1,12 @@
-document.addEventListener('DOMContentLoaded',uerMe);
+document.addEventListener('DOMContentLoaded',starter);
+
+function starter(){
+    const jwtToken =  getItemWithExpiry("jwtToken");
+    if(jwtToken != null){
+        return userMe().then((res)=> res.json()).catch((e) => console.error(e))
+    }
+    return  showLoggedOutNav();
+}
 
 function getItemWithExpiry(key) {
     const itemStr = localStorage.getItem(key);
@@ -19,7 +27,7 @@ function getItemWithExpiry(key) {
 
     return item.value;
 }
-async function uerMe() {
+async function userMe() {
    const jwtToken =  getItemWithExpiry("jwtToken");
     try {
         const response = await fetch("/users/me", {
@@ -32,9 +40,6 @@ async function uerMe() {
             const userData = await response.json();
             // 사용자 정보가 성공적으로 받아지면, 네비게이션 바에 로그인이 되어있음을 표시
             showLoggedInNav(userData);
-        } else {
-            // 인증 실패 또는 로그인이 안 되어있음
-            showLoggedOutNav();
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
@@ -54,6 +59,8 @@ function showLoggedInNav(userData) {
         <a href="/" class="nav-button">마이페이지</a>
         <a onclick=logout('/logout') class="nav-button" id="logout-button">로그아웃</a>
         <a onclick=navigateWithAuth('/script-list') class="nav-button">스피치 분석</a>
+        <a onclick=navigateWithAuth('/board') class="nav-button">게시판</a>
+       
     `;
 }
 
@@ -61,6 +68,7 @@ function showLoggedOutNav() {
     const navButtons = document.getElementById('nav-buttons');
     navButtons.innerHTML = `
         <a href="/login" class="nav-button">로그인</a>
+        <a onclick=navigateWithAuth('/board') class="nav-button">게시판</a>
     `;
 }
 function logout(url){

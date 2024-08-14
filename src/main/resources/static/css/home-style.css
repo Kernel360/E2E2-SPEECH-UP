@@ -14,32 +14,6 @@ body {
     padding: 0;
 }
 
-/* 헤더 스타일 */
-header {
-    background-color: #343a40;
-    color: #ffffff;
-    padding: 15px 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.2em;
-    padding: 8px 16px;
-    margin-right: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-header a:hover {
-    background-color: #495057;
-}
-
 /* 제목 스타일 */
 h1 {
     margin: 100px auto 20px;

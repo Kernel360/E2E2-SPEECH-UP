@@ -1,0 +1,47 @@
+
+/* 헤더 스타일 */
+header {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px 20px;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+header a:hover {
+    background-color: #495057;
+}
+
+.hidden {
+    display: none;
+}
+
+.nav-button {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 10px;
+    margin: 0 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: #495057;
+    border-color: #ffffff;
+    color:#ffffff;
+}
+

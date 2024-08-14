@@ -20,6 +20,7 @@ import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -34,6 +35,11 @@ public class BoardController {
 		@RequestParam int page, @RequestParam int size
 	) {
 		return ResponseEntity.ok(boardService.getAllBoardList(page, size));
+	}
+
+	@GetMapping("/{boardId}")
+	public ResponseEntity<BoardGetDto.Response> getBoard(@PathVariable("boardId") Long boardId, HttpServletRequest request){
+		return ResponseEntity.ok(boardService.getBoardById(boardId, request));
 	}
 
 	@PostMapping("")

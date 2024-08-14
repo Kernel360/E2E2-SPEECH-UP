@@ -20,17 +20,22 @@ public class BoardGetDto {
 		private final String content;
 		private final LocalDateTime createdAt;
 		private final LocalDateTime modifiedAt;
+		private final boolean isOwner;
 
-		Response(BoardEntity boardEntity) {
+		Response(BoardEntity boardEntity, boolean isOwner) {
 			this.boardId = boardEntity.getBoardId();
 			this.title = boardEntity.getTitle();
 			this.content = boardEntity.getContent();
 			this.createdAt = boardEntity.getCreatedAt();
 			this.modifiedAt = boardEntity.getModifiedAt();
+			this.isOwner = isOwner;
 		}
 
 		public static Response toResponse(BoardEntity boardEntity) {
-			return new Response(boardEntity);
+			return new Response(boardEntity, false);
+		}
+		public static Response toResponseIsOwner(BoardEntity boardEntity) {
+			return new Response(boardEntity, true);
 		}
 
 		public static List<Response> of(Page<BoardEntity> boardEntities) {

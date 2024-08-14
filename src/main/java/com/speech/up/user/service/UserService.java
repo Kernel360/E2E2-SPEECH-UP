@@ -20,6 +20,7 @@ public class UserService {
         if(authorization != null && authorization.startsWith("Bearer ")) {
             authorization = authorization.substring(7);
         }
+
         String socialId = jwtProvider.validate(authorization);
         UserEntity userEntity = userRepository.findBySocialId(socialId);
 

@@ -45,7 +45,7 @@ public class WebSecurityConfig {
 			.httpBasic(HttpBasicConfigurer::disable)
 			.sessionManagement(
 				sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(request -> request.requestMatchers("/", "api/v1/auth/**", "/oauth2/**", "/sign-up", "/css/**", "/js/**","/**","/logout", "/static/images/**").permitAll()
+			.authorizeHttpRequests(request -> request.requestMatchers("/", "api/v1/auth/**", "/oauth2/**", "/sign-up", "/css/**", "/js/**","/**","/logout", "/static/images/**","/boards/**").permitAll()
 				.requestMatchers("/script-list").hasRole("GENERAL_USER")
 				.requestMatchers("/script-write").hasRole("GENERAL_USER")
 				.anyRequest().authenticated())
