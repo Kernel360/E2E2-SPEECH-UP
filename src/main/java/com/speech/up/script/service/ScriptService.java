@@ -1,6 +1,7 @@
 package com.speech.up.script.service;
 
 import com.speech.up.common.exception.http.NotFoundException;
+import com.speech.up.log.CustomLogger;
 import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
@@ -30,7 +31,7 @@ public class ScriptService {
 	private final ScriptRepository scriptRepository;
 	private final UserRepository userRepository;
 	private final JwtProvider jwtProvider;
-
+	private final CustomLogger customLogger;
 
 	private List<ScriptEntity> getActiveScriptsByUserId(Long userId) {
 		return scriptRepository.findByUserUserIdAndIsUseTrue(userId);
@@ -63,6 +64,7 @@ public class ScriptService {
 		}
 	}
 	public ScriptAddDto.Response addScript(ScriptAddDto.Request scriptAddRequestDto) {
+		customLogger.requestLog(scriptAddRequestDto);
 		ScriptEntity scriptEntity = ScriptEntity.create(scriptAddRequestDto);
 		return ScriptAddDto.toResponse(scriptRepository.save(scriptEntity));
 	}

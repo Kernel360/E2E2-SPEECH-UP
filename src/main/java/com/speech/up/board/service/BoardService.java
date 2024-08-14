@@ -17,6 +17,7 @@ import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 import com.speech.up.common.exception.http.InternalServerErrorException;
+import com.speech.up.log.CustomLogger;
 import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
@@ -30,6 +31,7 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	private final UserRepository userRepository;
 	private final JwtProvider jwtProvider;
+	private final CustomLogger customLogger;
 
 	public List<BoardGetDto.Response> getAllBoardList(int page, int size) {
 		//Check value of page and size!
@@ -62,6 +64,7 @@ public class BoardService {
 	}
 
 	public BoardAddDto.Response addBoard(BoardAddDto.Request boardRequest){
+		customLogger.requestLog(boardRequest);
 		return BoardAddDto.toResponse(boardRepository.save(BoardEntity.create(boardRequest)));
 	}
 

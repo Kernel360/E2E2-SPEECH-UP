@@ -1,5 +1,6 @@
 package com.speech.up.script.service;
 
+import com.speech.up.log.CustomLogger;
 import com.speech.up.script.entity.RecordEntity;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.RecordRepository;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RecordService {
 	private final RecordRepository recordRepository;
+	private final CustomLogger customLogger;
 
 	private List<RecordEntity> getActiveRecordsByScriptId(Long scriptId){
 		return recordRepository.findByScriptScriptIdAndIsUseTrue(scriptId);
@@ -39,6 +41,7 @@ public class RecordService {
 
 	public RecordAddDto.Response addRecord(RecordAddDto.Request recordAddRequestDto) throws
 		IOException {
+		customLogger.requestLog(recordAddRequestDto);
 		RecordFile recordFile = new RecordFile(recordAddRequestDto.getFile());
 		String filePath = recordFile.createFile(recordAddRequestDto.getAudioPath());
 		RecordEntity recordEntity = RecordEntity.create(recordAddRequestDto, filePath);
