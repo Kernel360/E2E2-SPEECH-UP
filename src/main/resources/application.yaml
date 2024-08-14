@@ -63,11 +63,11 @@ speech-flow:
   result :
     type : ${SPEECH_FLOW_RESULT_TYPE}
 
-#logging:
-#  level:
-#    root: INFO                         # 기본 로그 레벨을 INFO로 설정
-#    com.example: DEBUG                  # com.example 패키지의 로그 레벨을 DEBUG로 설정
-#    org.hibernate.SQL: DEBUG            # Hibernate SQL 로그 레벨을 DEBUG로 설정
+logging:
+  level:
+    root: DEBUG                         # 기본 로그 레벨을 INFO로 설정
+    com.speech.up: DEBUG                  # com.example 패키지의 로그 레벨을 DEBUG로 설정
+    org.hibernate.SQL: DEBUG            # Hibernate SQL 로그 레벨을 DEBUG로 설정
 #  pattern:
 #    console: "%d{yyyy-MM-dd HH:mm:ss} - [%thread] %-5level %logger{36} - %msg%n"  # 콘솔 로그 포맷 설정
 #  file:
