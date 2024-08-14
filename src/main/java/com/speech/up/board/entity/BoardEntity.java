@@ -34,7 +34,7 @@ public class BoardEntity extends BaseBoardEntity{
 	private Long boardId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "social_id", referencedColumnName = "social_id")
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@JsonBackReference
 	private UserEntity user;
 
@@ -42,7 +42,7 @@ public class BoardEntity extends BaseBoardEntity{
 
 	private String content;
 
-	private boolean isUse;
+	private Boolean isUse;
 
 	private BoardEntity(UserEntity user, boolean isUse) {
 		this.user = user;

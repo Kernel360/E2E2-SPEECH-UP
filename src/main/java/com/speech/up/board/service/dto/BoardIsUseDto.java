@@ -38,7 +38,7 @@ public class BoardIsUseDto {
 
 		public Response(BoardEntity boardEntity) {
 			this.boardId = boardEntity.getBoardId();
-			this.isUse = boardEntity.isUse();
+			this.isUse = boardEntity.getIsUse();
 		}
 	}
 
