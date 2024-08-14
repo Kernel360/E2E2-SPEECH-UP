@@ -33,20 +33,24 @@
 - 세션을 이용한 페이지 구현
   - ex) 로그인 시 홈페이지 로그인 버튼이 로그아웃 버튼으로 변경
   - ex) 세션 없을 시 대본 작성 및 분석 기능 제공
+- 녹음 분석 기능
+- 게시판 기능
+
 ---
 
 ## 추가 해야 할 기능
-- 녹음 분석 기능
-- 게시판 기능
 - 회원 정보 관리
 - 관리자 기능
-- 세션 -> 토큰 (필요하다 생각하면?)<br>
+- 세션 -> 토큰 (필요하다 생각하면?)
+- 댓글 기능<br>
 .<br>
 .<br>
 .
 ---
 
 ## Tree
+<details> 
+
 ```
 📦 
 ├─ .github
@@ -79,6 +83,24 @@
    │  │        └─ up
    │  │           ├─ UpApplication.java
    │  │           ├─ api
+   │  │           │  ├─ converter
+   │  │           │  │  └─ WavToRaw.java
+   │  │           │  ├─ etri
+   │  │           │  │  ├─ controller
+   │  │           │  │  │  └─ ETRIApiController.java
+   │  │           │  │  ├─ dto
+   │  │           │  │  │  ├─ AiRequest.java
+   │  │           │  │  │  ├─ RequestVoiceToTextApiDto.java
+   │  │           │  │  │  └─ ResponseVoiceToTextApiDto.java
+   │  │           │  │  ├─ service
+   │  │           │  │  │  └─ VoiceToTextService.java
+   │  │           │  │  ├─ type
+   │  │           │  │  │  └─ ApiType.java
+   │  │           │  │  └─ url
+   │  │           │  │     ├─ ApiUrl.java
+   │  │           │  │     ├─ PronunciationAI.java
+   │  │           │  │     ├─ RecognizedAI.java
+   │  │           │  │     └─ UrlCollector.java
    │  │           │  └─ speechFlow
    │  │           │     ├─ controller
    │  │           │     │  └─ SpeechFlowAPIController.java
@@ -94,21 +116,38 @@
    │  │           │  │  └─ BoardRepository.java
    │  │           │  └─ service
    │  │           │     ├─ BoardService.java
+   │  │           │     ├─ checkValue
+   │  │           │     │  ├─ CheckListForPagination.java
+   │  │           │     │  └─ CheckParamForPagination.java
    │  │           │     └─ dto
    │  │           │        ├─ BoardAddDto.java
    │  │           │        ├─ BoardGetDto.java
    │  │           │        ├─ BoardIsUseDto.java
    │  │           │        └─ BoardUpdateDto.java
-   │  │           ├─ customException
-   │  │           │  ├─ ResponseContentIsNullException.java
-   │  │           │  └─ TaskIdIsNullException.java
+   │  │           ├─ common
+   │  │           │  ├─ dto
+   │  │           │  │  └─ ApiExceptionResponse.java
+   │  │           │  ├─ enums
+   │  │           │  │  └─ StatusCode.java
+   │  │           │  └─ exception
+   │  │           │     ├─ custom
+   │  │           │     │  ├─ CustomIOException.java
+   │  │           │     │  ├─ CustomIllegalArgumentException.java
+   │  │           │     │  └─ CustomRuntimeException.java
+   │  │           │     ├─ handler
+   │  │           │     │  └─ ExceptionController.java
+   │  │           │     └─ http
+   │  │           │        ├─ BadRequestException.java
+   │  │           │        ├─ ForbiddenException.java
+   │  │           │        ├─ HttpBaseException.java
+   │  │           │        ├─ InternalServerErrorException.java
+   │  │           │        ├─ NotFoundException.java
+   │  │           │        └─ UnAuthorizedException.java
    │  │           ├─ demo
+   │  │           │  ├─ BoardPageController.java
    │  │           │  ├─ HomePageController.java
    │  │           │  ├─ RegisterPageController.java
    │  │           │  └─ ScriptPageController.java
-   │  │           ├─ globalException
-   │  │           │  ├─ ErrorResponse.java
-   │  │           │  └─ GlobalException.java
    │  │           ├─ oAuth
    │  │           │  ├─ common
    │  │           │  │  ├─ ResponseCode.java
@@ -122,10 +161,33 @@
    │  │           │  ├─ handler
    │  │           │  │  └─ OAuth2SuccessHandler.java
    │  │           │  ├─ provider
-   │  │           │  │  └─ JwtProvider.java
+   │  │           │  │  ├─ GithubProvider.java
+   │  │           │  │  ├─ GoogleProvider.java
+   │  │           │  │  ├─ JwtProvider.java
+   │  │           │  │  ├─ KakaoProvider.java
+   │  │           │  │  ├─ Provider.java
+   │  │           │  │  └─ ProviderOAuth.java
    │  │           │  └─ service
-   │  │           │     └─ implement
-   │  │           │        └─ OAuth2UserServiceImplement.java
+   │  │           │     ├─ implement
+   │  │           │     │  ├─ OAuth2UserServiceImplement.java
+   │  │           │     │  └─ UserAuthorizationType.java
+   │  │           │     └─ servicetype
+   │  │           │        ├─ LevelType.java
+   │  │           │        └─ ProviderType.java
+   │  │           ├─ report
+   │  │           │  ├─ controller
+   │  │           │  │  └─ ReportController.java
+   │  │           │  ├─ entity
+   │  │           │  │  ├─ BaseReportEntity.java
+   │  │           │  │  ├─ ReportEntity.java
+   │  │           │  │  └─ type
+   │  │           │  │     └─ ReportContentAndScore.java
+   │  │           │  ├─ repository
+   │  │           │  │  └─ ReportRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ ReportService.java
+   │  │           │     └─ dto
+   │  │           │        └─ ReportAddDto.java
    │  │           ├─ script
    │  │           │  ├─ controller
    │  │           │  │  ├─ RecordController.java
@@ -167,19 +229,24 @@
    │     ├─ application.yaml
    │     ├─ static
    │     │  ├─ css
+   │     │  │  ├─ board-write.css
+   │     │  │  ├─ header-style.css
    │     │  │  ├─ home-style.css
+   │     │  │  ├─ record-style.css
+   │     │  │  ├─ script-style.css
+   │     │  │  ├─ script-write.css
    │     │  │  └─ signIn-style.css
    │     │  ├─ images
    │     │  │  ├─ github-logo.png
    │     │  │  ├─ google-logo.png
    │     │  │  └─ kakao-logo.png
    │     │  └─ scriptPage
-   │     │     ├─ css
-   │     │     │  ├─ script-style.css
-   │     │     │  └─ script-write.css
    │     │     └─ js
    │     │        ├─ addRecordingToList.js
+   │     │        ├─ addTokenSession.js
    │     │        ├─ analyticRecord.js
+   │     │        ├─ boardModify.js
+   │     │        ├─ checkBoardOwner.js
    │     │        ├─ loadLocalRecord.js
    │     │        ├─ localStoragePath.js
    │     │        ├─ record.js
@@ -189,6 +256,9 @@
    │     │        ├─ scriptWrite.js
    │     │        └─ userMe.js
    │     └─ templates
+   │        ├─ board-detail.html
+   │        ├─ board-write.html
+   │        ├─ board.html
    │        ├─ home.html
    │        ├─ script-list.html
    │        ├─ script-write.html
@@ -220,6 +290,9 @@
                      └─ service
                         └─ UserServiceTest.java
 ```
+©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)
+</details>
+
 ---
 
 초기 미로그인시 화면 구성입니다. **게시판**이 들어갈 곳입니다.
