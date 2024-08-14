@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import com.speech.up.board.entity.BoardEntity;
 
 import lombok.Getter;
@@ -13,7 +14,7 @@ public class BoardGetDto {
 
 	@Getter
 	@ToString
-	public static class Response{
+	public static class Response {
 		private final Long boardId;
 		private final String title;
 		private final String content;
@@ -32,7 +33,7 @@ public class BoardGetDto {
 			return new Response(boardEntity);
 		}
 
-		public static List<BoardGetDto.Response> of(List<BoardEntity> boardEntities) {
+		public static List<Response> of(Page<BoardEntity> boardEntities) {
 			return boardEntities
 				.stream()
 				.map(Response::toResponse)
