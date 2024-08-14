@@ -34,6 +34,13 @@
         <h2>분석하기</h2>
         <!-- 분석하기 섹션 내용 -->
     </div>
+    <form id="fileForm" enctype="multipart/form-data">
+        <input type="file" name="myFile" id="input-file">
+        <button type="button" class="saving-button" onclick="saveRecord()">분석하기</button>
+    </form>
+    <div id="record-result">
+
+    </div>
     <div id="script-and-record-section" class="script-and-record-section section">
         <div class="script-section">
             <h2>대본</h2>

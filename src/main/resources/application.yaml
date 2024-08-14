@@ -1,6 +1,9 @@
 spring:
   application:
     name: speech_up
+  servlet:
+    multipart:
+      enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/SPEECH_UP?createDatabaseIfNotExist=true
