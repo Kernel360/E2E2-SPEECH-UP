@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.speech.up.api.speechFlow.service.VoiceToTextSpeechFlowService;
+import com.speech.up.common.exception.http.InternalServerErrorException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,11 +25,11 @@ public class SpeechFlowAPIController {
 		try {
 			String taskId = voiceToTextSpeechFlowService.getResult(filePath);
 			if (taskId == null) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create task");
+				throw new InternalServerErrorException("Task id is null");
 			}
 			return ResponseEntity.ok(taskId);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+			throw new InternalServerErrorException(e.getMessage());
 		}
 	}
 
