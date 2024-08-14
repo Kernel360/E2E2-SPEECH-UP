@@ -1,28 +1,4 @@
-nav {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
 
-.hidden {
-    display: none;
-}
-
-.nav-button {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.2em;
-    padding: 10px;
-    margin: 0 10px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.nav-button:hover {
-    background-color: #495057;
-    border-color: #ffffff;
-}
 
 button:disabled {
     background-color: #d3d3d3; /* 비활성화 시 배경색 */

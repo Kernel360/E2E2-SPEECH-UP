@@ -8,4 +8,8 @@ import com.speech.up.board.entity.BoardEntity;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	Page<BoardEntity> findAllByIsUseTrue(Pageable pageable);
+
+	long countByIsUseTrue();
+
+	BoardEntity findByBoardIdAndIsUseTrue(Long id);
 }

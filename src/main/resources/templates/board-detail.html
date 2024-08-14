@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/header-style.css">
+</head>
+<body>
+
+<header>
+
+    <div id="nav-buttons">
+        <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+    </div>
+</header>
+<div class="container">
+    <h1 class="my-4">Board Detail</h1>
+
+    <!-- 게시글 상세 정보 -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${board.title}">Sample Title</h5>
+            <p class="card-text" th:text="${board.getContent}">Sample Content</p>
+            <p class="card-text"><small class="text-muted" th:text="${board.createdAt}">2024-08-14</small></p>
+            <p class="card-text"><small class="text-muted" th:text="${board.modifiedAt}">2024-08-14</small></p>
+        </div>
+    </div>
+
+    <!-- 링크를 통해 목록으로 돌아가기 -->
+    <div id="board-buttons">
+        <a class="btn btn-primary mt-3" href="/boards">Back to List</a>
+    </div>
+</div>
+</body>
+<script src="/scriptPage/js/checkBoardOwner.js"></script>
+<script src="/scriptPage/js/userMe.js"></script>
+</html>

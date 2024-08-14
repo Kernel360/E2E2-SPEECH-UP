@@ -1,6 +1,7 @@
 package com.speech.up.board.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,9 +17,11 @@ import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 import com.speech.up.common.exception.http.InternalServerErrorException;
+import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 	private final BoardRepository boardRepository;
 	private final UserRepository userRepository;
+	private final JwtProvider jwtProvider;
 
 	public List<BoardGetDto.Response> getAllBoardList(int page, int size) {
 		//Check value of page and size!
@@ -39,12 +43,30 @@ public class BoardService {
 		return BoardGetDto.Response.of(checkedList.getBoardList()); // 변환 후 List 반환
 	}
 
+	public BoardGetDto.Response getBoardById(Long id, HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+
+		if(token != null && token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
+		if(token == null || token.isEmpty()) {
+			return BoardGetDto.Response.toResponse(boardRepository.findByBoardIdAndIsUseTrue(id));
+		}
+		String socialId = jwtProvider.validate(token);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		BoardEntity board = boardRepository.findByBoardIdAndIsUseTrue(id);
+		if(userEntity.getUserId().equals(board.getUser().getUserId())){
+			return BoardGetDto.Response.toResponseIsOwner(board);
+		}
+		return BoardGetDto.Response.toResponse(board);
+	}
+
 	public BoardAddDto.Response addBoard(BoardAddDto.Request boardRequest){
 		return BoardAddDto.toResponse(boardRepository.save(BoardEntity.create(boardRequest)));
 	}
 
 	public BoardUpdateDto.Response updateBoard(BoardUpdateDto.Request boardRequest){
-		UserEntity userEntity = userRepository.findBySocialId(boardRequest.getUser().getSocialId());
+		UserEntity userEntity = userRepository.findByUserId(boardRequest.getUser().getUserId());
 		if(userEntity == null){
 			throw new InternalServerErrorException("Not found user");
 		}
@@ -55,6 +77,10 @@ public class BoardService {
 	public BoardIsUseDto.Response deleteBoard(BoardIsUseDto.Request boardRequest){
 		BoardEntity boardEntity = BoardEntity.delete(boardRequest);
 		return BoardIsUseDto.toResponse(boardRepository.save(boardEntity));
+	}
+
+	public long getTotalBoardCount() {
+		return boardRepository.countByIsUseTrue();
 	}
 
 }
