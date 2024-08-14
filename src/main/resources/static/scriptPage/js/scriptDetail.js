@@ -9,7 +9,7 @@ function loadScriptDetail() {
 
     const detailDiv = document.getElementById('script-detail');
     detailDiv.innerHTML = `
-        <p><strong>작성일 : </strong> ${createdAt.replace("T", " ")} / <strong>수정일 : </strong> ${modifiedAt}</p>
+        <p><strong>작성일 : </strong> ${createdAt.replace("T", " ")} /<strong> 수정일 : </strong> ${modifiedAt.replace("T", " ")}</p>
         <p><strong>제목 : </strong> ${title}</p>
         <p id="script-content">${decodeURIComponent(content)}</p>
     `;

@@ -1,36 +1,36 @@
-// 오디오 분석
-function saveRecord(blob, elementId) {
-    // blob 을 FormData 에 직접 추가
-    const urlParams = new URLSearchParams(window.location.search);
-    const content = document.getElementById(elementId).innerHTML;
-    const directory = "/Users/jaeyunlee/Documents/E2E/E2E2-SPEECH-UP"; // 개인 아이디로 변경
-
+function saveRecord() {
     const formData = new FormData();
-    //유저네임 없으면 1보냄 나중에 삭제필요
-    const body = {
-        script_id: 1,
-        user_id: 1
-    };
-    const jsonBody = JSON.stringify(body);
-    formData.append('script', jsonBody);
-    formData.append('audioPath', directory);
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const fileInput = document.getElementById('input-file');
+    const myFile = fileInput.files[0];
+
+    if (!myFile) {
+        alert('파일을 선택해주세요.');
+        return;
+    }
+
+    formData.append('myFile', myFile);
+    formData.append('requestId', "reserved field"); // 실제 requestId로 대체 필요
+    formData.append('apiType', "PRONUNCIATION");
     formData.append('languageCode', document.getElementById('language-select').value);
-    formData.append('file', blob, blob.name);
-    const button = document.getElementsByClassName("saving-button");
+    formData.append('script', urlParams.get("content"));
 
-
-    fetch('/speech-record', {
+    const button = document.querySelector(".saving-button");
+    const report = document.getElementById('record-result');
+    fetch('/api/upload', {
         method: 'POST',
         body: formData
     })
         .then(response => {
-            if (response.ok) {
-                button.item(0).setAttribute('disabled', 'true');
-                button.item(0).textContent = "저장완료"
-            }
-        })
+            button.disabled = true;
+            button.textContent = "분석 완료";
+            return response.json()
+        }).then((response) => {
+
+            report.innerHTML = response?.return_object?.score;
+    })
         .catch(error => {
-            console.error('API 호출 오류:', error);
-            alert('분석 실패');
+            console.error('API 호출 오류:', error.message);
         });
 }

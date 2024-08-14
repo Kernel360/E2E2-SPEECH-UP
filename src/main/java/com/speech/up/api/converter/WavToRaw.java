@@ -5,6 +5,8 @@ import java.io.*;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -20,7 +22,10 @@ public class WavToRaw {
 	}
 
 	// WAV 파일을 읽어 PCM 데이터를 바이트 배열로 반환
-	public byte[] convertToRawPcm(File file) throws UnsupportedAudioFileException, IOException {
+	public byte[] convertToRawPcm(MultipartFile multipartFile) throws UnsupportedAudioFileException, IOException {
+		File file = File.createTempFile("uploaded-", ".wav");
+		// MultipartFile 데이터를 임시 파일로 저장
+		multipartFile.transferTo(file);
 		try (AudioInputStream sourceStream = AudioSystem.getAudioInputStream(file)) {
 			AudioFormat sourceFormat = sourceStream.getFormat();
 			AudioFormat targetFormat = new AudioFormat(
@@ -54,32 +59,7 @@ public class WavToRaw {
 	}
 
 	// WAV 헤더를 제거하고 PCM 데이터만 반환
-	public byte[] formatWav2Raw(@NotNull final byte[] audioFileContent) {
+	private byte[] formatWav2Raw(@NotNull final byte[] audioFileContent) {
 		return Arrays.copyOfRange(audioFileContent, HEADER_SIZE, audioFileContent.length);
-	}
-
-	// 오디오 데이터를 바이트 배열로 읽어들임
-	public byte[] AudioToByte(File file) {
-		byte[] audioBytes = new byte[0];
-
-		try (FileInputStream fileStream = new FileInputStream(file);
-			 BufferedInputStream in = new BufferedInputStream(fileStream);
-			 ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-
-			byte[] buffer = new byte[1024];
-			int read;
-
-			while ((read = in.read(buffer)) > 0) {
-				out.write(buffer, 0, read);
-			}
-
-			audioBytes = out.toByteArray();
-		} catch (FileNotFoundException ignored) {
-			log.info("File not found: {}", ignored.getMessage());
-		} catch (IOException ioe) {
-			log.info("IO error occurred: {}", ioe.getMessage());
-		}
-
-		return audioBytes;
 	}
 }

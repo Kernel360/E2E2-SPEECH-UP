@@ -1,6 +1,9 @@
 package com.speech.up.api.etri.dto;
 
+import com.speech.up.api.etri.type.ApiType;
+
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter

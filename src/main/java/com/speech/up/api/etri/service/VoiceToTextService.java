@@ -1,29 +1,28 @@
 package com.speech.up.api.etri.service;
 
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.speech.up.api.converter.WavToRaw;
 import com.speech.up.api.etri.dto.AiRequest;
 import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto;
-import com.speech.up.api.etri.dto.RequestVoiceToTextApiDto.ArgumentDTO;
 import com.speech.up.api.etri.dto.ResponseVoiceToTextApiDto;
 import com.speech.up.api.etri.type.ApiType;
 import com.speech.up.api.etri.url.UrlCollector;
@@ -31,6 +30,7 @@ import com.speech.up.api.etri.url.UrlCollector;
 @Service
 public class VoiceToTextService {
 
+	private static final Logger log = LoggerFactory.getLogger(VoiceToTextService.class);
 	@Value(value = "${api.voice.accessKey}")
 	private String accessKey;
 	@Value(value = "${api.voice.url}")
@@ -41,23 +41,21 @@ public class VoiceToTextService {
 	private final Gson gson = new Gson();
 
 	// 음성인식
-	public ResponseEntity<ResponseVoiceToTextApiDto> callRecognitionApi(AiRequest aiRequest) {
+	public ResponseEntity<ResponseVoiceToTextApiDto> callRecognitionApi(String requestId, ApiType apiType, String languageCode, String script,
+		MultipartFile file) {
 		try {
 			WavToRaw wavToRaw = new WavToRaw();
-			// 녹음 파일
-			Path path = Paths.get(aiRequest.getFilePath());
-			File file = new File(path.toFile().getAbsolutePath());
 			byte[] audioBytes = wavToRaw.convertToRawPcm(file);
 			String audioContents = Base64.getEncoder().encodeToString(audioBytes);
-			// 요청 객체 생성
-			RequestVoiceToTextApiDto requestDTO = RequestVoiceToTextApiDto.builder().request_id(
-				aiRequest.getRequestId()).argument(
-				ArgumentDTO.builder()
-					.language_code(aiRequest.getLanguageCode())
-					.audio(audioContents)
-					.script(aiRequest.getScript()).build()).build();
 
-			ResponseEntity<ResponseVoiceToTextApiDto> responseDTO = sendPostRequest(requestDTO, aiRequest.getApiType());
+			RequestVoiceToTextApiDto requestDTO = RequestVoiceToTextApiDto.builder()
+				.request_id(requestId).
+				argument(RequestVoiceToTextApiDto.ArgumentDTO.builder()
+					.language_code(languageCode)
+					.audio(audioContents)
+					.script(script).build()).build();
+
+			ResponseEntity<ResponseVoiceToTextApiDto> responseDTO = sendPostRequest(requestDTO, apiType);
 			if (responseDTO.getStatusCode() != HttpStatus.OK) {
 				return new ResponseEntity<>(responseDTO.getBody(), HttpStatus.BAD_REQUEST);
 			}
@@ -69,7 +67,6 @@ public class VoiceToTextService {
 		} catch (UnsupportedAudioFileException e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	URL getUrl(ApiType apiType) throws MalformedURLException {
