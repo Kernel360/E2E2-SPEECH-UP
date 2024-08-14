@@ -9,7 +9,7 @@ public class CheckParamForPagination {
 	private final int page;
 	private final int size;
 
-	public CheckParamForPagination(final int page,final int size) {
+	CheckParamForPagination(final int page,final int size) {
 		if(page <= 0 || size <= 0){
 			throw new BadRequestException("page or size can not be less than zero");
 		}

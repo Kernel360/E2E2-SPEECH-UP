@@ -11,7 +11,7 @@ import lombok.Getter;
 public class CheckListForPagination {
 	private final Page<BoardEntity> boardList;
 
-	public CheckListForPagination(final Page<BoardEntity> boardList)  {
+	CheckListForPagination(final Page<BoardEntity> boardList)  {
 		if(boardList.isEmpty()){
 			throw new BadRequestException("has no board! change value the size or page");
 		}
