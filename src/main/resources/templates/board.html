@@ -33,11 +33,11 @@
         <tbody>
         <!-- 게시글 목록을 반복하여 표시 -->
         <tr th:each="post : ${boardList}">
-            <td><a th:href="@{/board/{id}(id=${post.boardId})}" th:text="${post.boardId}">1</a></td>
-            <td><a th:href="@{/board/{id}(id=${post.boardId})}" th:text="${post.title}">Sample Title</a></td>
-            <td><a th:href="@{/board/{id}(id=${post.boardId})}" th:text="${post.content}">Sample Content</a></td>
-            <td><a th:href="@{/board/{id}(id=${post.boardId})}" th:text="${post.createdAt}">2024-08-14</a></td>
-            <td><a th:href="@{/board/{id}(id=${post.boardId})}" th:text="${post.modifiedAt}">2024-08-14</a></td>
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.boardId}">1</a></td>
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.title}">Sample Title</a></td>
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.content}">Sample Content</a></td>
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.createdAt}">2024-08-14</a></td>
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.modifiedAt}">2024-08-14</a></td>
         </tr>
         </tbody>
     </table>
@@ -46,16 +46,16 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${pageNumber == 0} ? 'disabled'">
-                <a class="page-link" th:href="@{/board(page=${pageNumber}-1, size=${pageSize})}" aria-label="Previous">
+                <a class="page-link" th:href="@{/boards(page=${pageNumber}-1, size=${pageSize})}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                 th:classappend="${i == pageNumber} ? 'active'">
-                <a class="page-link" th:href="@{/board(page=${i+1}, size=${pageSize})}" th:text="${i + 1}">1</a>
+                <a class="page-link" th:href="@{/boards(page=${i+1}, size=${pageSize})}" th:text="${i + 1}">1</a>
             </li>
             <li class="page-item" th:classappend="${pageNumber + 1 == totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{/board(page=${pageNumber + 1}, size=${pageSize})}" aria-label="Next">
+                <a class="page-link" th:href="@{/boards(page=${pageNumber + 1}, size=${pageSize})}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

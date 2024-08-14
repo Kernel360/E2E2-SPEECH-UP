@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.speech.up.board.service.BoardService;
@@ -19,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardPageController {
 	private final BoardService boardService;
 
-	@GetMapping("/board")
+	@GetMapping("/boards")
 	public String boards(@RequestParam(defaultValue = "1") int page,
 		@RequestParam(defaultValue = "10") int size, Model model){
 		List<BoardGetDto.Response> boardList = boardService.getAllBoardList(page, size);
@@ -32,14 +33,14 @@ public class BoardPageController {
 		model.addAttribute("totalPages", totalPages);
 		return "board";
 	}
-	@GetMapping("/board/{boardId}")
+	@GetMapping("/boards/{boardId}")
 	public String boardsDetail(@PathVariable Long boardId,  Model model, HttpServletRequest request){
 	  BoardGetDto.Response boardDetail = boardService.getBoardById(boardId, request);
 
 		model.addAttribute("board", boardDetail);
 		return "board-detail";
 	}
-	@GetMapping("/board/{boardId}/edit")
+	@GetMapping("/boards/{boardId}/edit")
 	public String boardModify(@PathVariable Long boardId,  Model model, HttpServletRequest request){
 	  BoardGetDto.Response boardDetail = boardService.getBoardById(boardId, request);
 

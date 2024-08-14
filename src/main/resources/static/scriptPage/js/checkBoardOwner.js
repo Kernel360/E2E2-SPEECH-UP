@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',checkBoardOwner);
 function checkBoardOwner(){
     const jwtToken =  getItemWithExpiry("jwtToken");
     const urlParams = window.location.pathname.split("/");
-    fetch(`/boards/${urlParams[2]}`,{headers: {
+    fetch(`/api/boards/${urlParams[2]}`,{headers: {
             'Authorization': `${jwtToken}`}})
         .then(response => response.json())
         .then(board =>  showDeleteAndEdit(board))
@@ -17,7 +17,7 @@ function showDeleteAndEdit(board){
     const boardId = urlParams[2];
     if(board?.owner === true){
         boardButtons.innerHTML += `
-            <a onclick=navigateWithAuth('/board/${boardId}/edit') class="btn btn-primary mt-3">수정하기</a>
+            <a onclick=navigateWithAuth('/boards/${boardId}/edit') class="btn btn-primary mt-3">수정하기</a>
             <a onclick=deleteBoard() class="btn btn-primary mt-3">삭제하기</a>
         `;
     }

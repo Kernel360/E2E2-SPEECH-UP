@@ -59,7 +59,7 @@ function showLoggedInNav(userData) {
         <a href="/" class="nav-button">마이페이지</a>
         <a onclick=logout('/logout') class="nav-button" id="logout-button">로그아웃</a>
         <a onclick=navigateWithAuth('/script-list') class="nav-button">스피치 분석</a>
-        <a onclick=navigateWithAuth('/board') class="nav-button">게시판</a>
+        <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
        
     `;
 }
@@ -68,7 +68,7 @@ function showLoggedOutNav() {
     const navButtons = document.getElementById('nav-buttons');
     navButtons.innerHTML = `
         <a href="/login" class="nav-button">로그인</a>
-        <a onclick=navigateWithAuth('/board') class="nav-button">게시판</a>
+        <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
     `;
 }
 function logout(url){

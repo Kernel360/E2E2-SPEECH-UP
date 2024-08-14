@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
 
                 // 서버에 수정 요청 보내기
-                fetch(`/boards`, {
+                fetch(`/api/boards`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (data) {
                             console.log(data)
                             alert("게시글이 성공적으로 수정되었습니다.");
-                            window.location.href = "/board"; // 목록 페이지로 이동
+                            window.location.href = "/boards"; // 목록 페이지로 이동
                         } else {
                             alert("게시글 수정에 실패했습니다.");
                         }
