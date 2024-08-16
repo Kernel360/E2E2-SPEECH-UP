@@ -1,7 +1,6 @@
 package com.speech.up.board.service;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +15,7 @@ import com.speech.up.board.service.dto.BoardAddDto;
 import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
+import com.speech.up.common.exception.http.BadRequestException;
 import com.speech.up.common.exception.http.InternalServerErrorException;
 import com.speech.up.log.CustomLogger;
 import com.speech.up.oAuth.provider.JwtProvider;
@@ -39,7 +39,7 @@ public class BoardService {
 		Pageable pageable = PageRequest.of(checkedValue.getPage() - 1, checkedValue.getSize());
 
 		//Check list is not empty!
-		Page<BoardEntity> boardList = boardRepository.findAllByIsUseTrue(pageable); // 정확한 타입 명시
+		Page<BoardEntity> boardList = boardRepository.findAllByIsUseTrueOrderByCreatedAtDesc(pageable); // 정확한 타입 명시
 		CheckListForPagination checkedList = CheckListForPagination.checkListIsNotEmpty(boardList);
 
 		return BoardGetDto.Response.of(checkedList.getBoardList()); // 변환 후 List 반환
@@ -63,8 +63,18 @@ public class BoardService {
 		return BoardGetDto.Response.toResponse(board);
 	}
 
-	public BoardAddDto.Response addBoard(BoardAddDto.Request boardRequest){
-		customLogger.requestLog(boardRequest);
+	public BoardAddDto.Response addBoard(BoardAddDto.Request boardRequest, HttpServletRequest request){
+		String token = request.getHeader("Authorization");
+
+		if(token != null && token.startsWith("Bearer ")) {
+			token = token.substring(7);
+		}
+		String socialId = jwtProvider.validate(token);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		if(userEntity == null){
+			throw new BadRequestException("로그인을 해주세요.");
+		}
+
 		return BoardAddDto.toResponse(boardRepository.save(BoardEntity.create(boardRequest)));
 	}
 

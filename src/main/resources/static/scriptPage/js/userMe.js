@@ -92,6 +92,7 @@ function navigateWithAuth(url) {
                 // 페이지를 새 창에서 열기
                 window.location.href = url;
             } else {
+                window.location.href = "/login";
                 console.error('Authorization failed.');
             }
         })

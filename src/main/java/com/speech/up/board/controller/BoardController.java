@@ -43,8 +43,8 @@ public class BoardController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<BoardAddDto.Response> addBoard(@RequestBody BoardAddDto.Request boardAddRequest){
-		return ResponseEntity.ok(boardService.addBoard(boardAddRequest));
+	public ResponseEntity<BoardAddDto.Response> addBoard(@RequestBody BoardAddDto.Request boardAddRequest, HttpServletRequest request){
+		return ResponseEntity.ok(boardService.addBoard(boardAddRequest,request));
 	}
 
 	@PatchMapping("")
