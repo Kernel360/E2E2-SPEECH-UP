@@ -18,10 +18,11 @@
     <h1 class="my-4">Board Detail</h1>
 
     <!-- 게시글 상세 정보 -->
+
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title" th:text="${board.title}">Sample Title</h5>
-            <p class="card-text" th:text="${board.getContent}">Sample Content</p>
+            <h5 id="board-title" class="card-title" th:text="${board.title}">Sample Title</h5>
+            <p id="board-text"  class="card-text" th:text="${board.getContent}">Sample Content</p>
             <p class="card-text"><small class="text-muted" th:text="${board.createdAt}">2024-08-14</small></p>
             <p class="card-text"><small class="text-muted" th:text="${board.modifiedAt}">2024-08-14</small></p>
         </div>

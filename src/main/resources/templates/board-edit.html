@@ -21,19 +21,21 @@
 
     <!-- 게시글 수정 폼 -->
     <div class="card">
-        <h3 class="mb-4">게시물 작성</h3>
-        <form id="board-form" method="post">
+        <h3 class="mb-4">게시물 수정</h3>
+        <form id="board-form">
             <div class="form-group">
                 <label for="card-title">제목:</label>
-                <input type="text" class="form-control" id="card-title" name="title"  required/>
+                <input type="text" class="form-control" id="card-title" name="title" th:value="${board.title}" required/>
             </div>
             <div class="form-group">
                 <label for="card-text">내용:</label>
-                <textarea class="form-control" id="card-text" name="content" rows="10"  required></textarea>
+                <textarea class="form-control" id="card-text" name="content" rows="10" th:text="${board.content}" required></textarea>
             </div>
             <div class="text-right">
                 <button type="submit" class="btn btn-custom">저장</button>
             </div>
+            <label for="board-id"></label><input hidden="hidden" id="board-id" th:name="${board.boardId}"/>
+
         </form>
     </div>
 
@@ -42,7 +44,9 @@
         <a class="btn btn-outline-secondary" href="/boards">Back to List</a>
     </div>
 </div>
+
+<script src="/scriptPage/js/checkBoardOwner.js"></script>
 <script src="/scriptPage/js/userMe.js"></script>
-<script src="/scriptPage/js/boardWrite.js"></script>
+<script src="/scriptPage/js/boardModify.js"></script>
 </body>
 </html>
