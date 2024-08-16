@@ -12,9 +12,6 @@ public class CheckListForPagination {
 	private final Page<BoardEntity> boardList;
 
 	CheckListForPagination(final Page<BoardEntity> boardList)  {
-		if(boardList.isEmpty()){
-			throw new BadRequestException("has no board! change value the size or page");
-		}
 		this.boardList = boardList;
 	}
 	public static CheckListForPagination checkListIsNotEmpty(final Page<BoardEntity> boardList) {

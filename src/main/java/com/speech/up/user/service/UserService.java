@@ -1,5 +1,6 @@
 package com.speech.up.user.service;
 
+import com.speech.up.common.exception.http.BadRequestException;
 import com.speech.up.oAuth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
@@ -17,10 +18,12 @@ public class UserService {
 
     public UserGetInfoDto.UserGetInfoResponseDto getUserInfo(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
-        if(authorization != null && authorization.startsWith("Bearer ")) {
+        if(authorization == null) {
+            throw new BadRequestException("Authorization header is missing");
+        }
+        if(authorization.startsWith("Bearer ")) {
             authorization = authorization.substring(7);
         }
-
         String socialId = jwtProvider.validate(authorization);
         UserEntity userEntity = userRepository.findBySocialId(socialId);
 

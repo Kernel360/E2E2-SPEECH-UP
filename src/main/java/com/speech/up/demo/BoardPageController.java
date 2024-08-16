@@ -6,11 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.speech.up.board.service.BoardService;
 import com.speech.up.board.service.dto.BoardGetDto;
+import com.speech.up.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardPageController {
 	private final BoardService boardService;
+	private final UserService userService;
 
 	@GetMapping("/boards")
 	public String boards(@RequestParam(defaultValue = "1") int page,
@@ -33,10 +34,15 @@ public class BoardPageController {
 		model.addAttribute("totalPages", totalPages);
 		return "board";
 	}
+
+	@GetMapping("/boards/write")
+	public String boardsWrite(){
+		return "board-write";
+	}
+
 	@GetMapping("/boards/{boardId}")
 	public String boardsDetail(@PathVariable Long boardId,  Model model, HttpServletRequest request){
-	  BoardGetDto.Response boardDetail = boardService.getBoardById(boardId, request);
-
+		BoardGetDto.Response boardDetail = boardService.getBoardById(boardId, request);
 		model.addAttribute("board", boardDetail);
 		return "board-detail";
 	}
@@ -45,7 +51,7 @@ public class BoardPageController {
 	  BoardGetDto.Response boardDetail = boardService.getBoardById(boardId, request);
 
 		model.addAttribute("board", boardDetail);
-		return "board-write";
+		return "board-edit";
 	}
 
 
