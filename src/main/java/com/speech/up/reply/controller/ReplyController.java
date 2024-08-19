@@ -21,11 +21,10 @@ import com.speech.up.reply.service.dto.ReplyUpdateDto;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/replys")
+@RequestMapping("/replies")
 @RequiredArgsConstructor
-
 public class ReplyController {
-	private final ReplyService replySerchvice;
+	private final ReplyService replyService;
 
 	//다건
 	@GetMapping("/all")
@@ -41,9 +40,9 @@ public class ReplyController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<ReplyAddDto.Response> addReply(@RequestBody ReplyAddDto.Request replyAddrequestDto) {
+	public ResponseEntity<ReplyAddDto.Response> addReply(@RequestBody ReplyAddDto.Request replyAddrRequestDto) {
 
-		return ResponseEntity.ok(replyService.addReply(replyAddrequestDto));
+		return ResponseEntity.ok(replyService.addReply(replyAddrRequestDto));
 	}
 
 	@PatchMapping("")
