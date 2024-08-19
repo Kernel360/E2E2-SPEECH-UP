@@ -7,10 +7,9 @@ import org.springframework.stereotype.Component;
 import com.speech.up.board.entity.BoardEntity;
 import com.speech.up.board.service.dto.BoardAddDto;
 import com.speech.up.report.entity.ReportEntity;
-import com.speech.up.report.service.dto.ReportAddDto;
-import com.speech.up.script.entity.RecordEntity;
+import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.script.entity.ScriptEntity;
-import com.speech.up.script.service.dto.RecordAddDto;
+import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.script.service.dto.ScriptAddDto;
 import com.speech.up.user.entity.UserEntity;
 
@@ -32,9 +31,9 @@ public class CustomLogger {
 		logger.debug("Script Add Request Log : {}", request);
 	}
 
-	public void requestLog(ReportAddDto.Request request) {
+	/*public void requestLog(ReportAddDto.Request request) {
 		logger.debug("Report Add Request Log : {}", request);
-	}
+	}*/
 
 	public void requestLog(RecordAddDto.Request request) {
 		logger.debug("Record Add Request Log : {}", request);

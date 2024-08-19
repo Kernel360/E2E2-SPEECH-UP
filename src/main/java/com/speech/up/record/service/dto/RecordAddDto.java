@@ -1,9 +1,10 @@
-package com.speech.up.script.service.dto;
+package com.speech.up.record.service.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.speech.up.script.entity.RecordEntity;
+import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.script.entity.ScriptEntity;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -12,20 +13,19 @@ import java.time.LocalDateTime;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RecordAddDto {
+
     @Getter
     @ToString
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     public static class Request {
         private final MultipartFile file;
-        private final String audioPath;
         private final String languageCode;
-        private final ScriptEntity script;
+        private final ScriptEntity scriptEntity; // scriptId를 추가
 
-        public Request(MultipartFile file, String audioPath, String languageCode, ScriptEntity script) {
-			this.file = file;
-			this.audioPath = audioPath;
-			this.languageCode = languageCode;
-            this.script = script;
+        public Request(MultipartFile file, String languageCode, ScriptEntity scriptEntity) {
+            this.file = file;
+            this.languageCode = languageCode;
+            this.scriptEntity = scriptEntity;
         }
     }
 
@@ -33,22 +33,22 @@ public class RecordAddDto {
     @ToString
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     public static class Response {
-        private final Long scriptId;
-        private final String audioPath;
+        private final Long recordId;
+        private final byte[] audioPath;
         private final String languageCode;
         private final LocalDateTime createdAt;
-        private final ScriptEntity script;
+        private final ScriptEntity scriptId; // scriptId로 변경
 
         public Response(RecordEntity recordEntity) {
-            this.scriptId = recordEntity.getRecordId();
-            this.audioPath = recordEntity.getAudioPath();
+            this.recordId = recordEntity.getRecordId();
+            this.audioPath = recordEntity.getAudio();
             this.languageCode = recordEntity.getLanguageCode();
             this.createdAt = recordEntity.getCreatedAt();
-            this.script = recordEntity.getScript();
+            this.scriptId = recordEntity.getScript(); // scriptId로 변경
         }
     }
 
-    public static Response addRecord(RecordEntity recordEntity){
+    public static Response toEntity(RecordEntity recordEntity) {
         return new Response(recordEntity);
     }
 }

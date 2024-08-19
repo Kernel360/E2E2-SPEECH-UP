@@ -16,7 +16,7 @@ public class ScriptAddDto {
 		private final UserEntity user;
 		private final String title;
 
-		public Request(String content, UserEntity user, String title) {
+		private Request(String content, UserEntity user, String title) {
 			this.content = content;
 			this.user = user;
 			this.title = title;
@@ -30,7 +30,7 @@ public class ScriptAddDto {
 		private final LocalDateTime createdAt;
 		private final String title;
 
-		public Response(ScriptEntity scriptEntity) {
+		private Response(ScriptEntity scriptEntity) {
 			this.title = scriptEntity.getTitle();
 			this.content = scriptEntity.getContent();
 			this.createdAt = scriptEntity.getCreatedAt();

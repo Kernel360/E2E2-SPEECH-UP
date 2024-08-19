@@ -27,7 +27,6 @@ async function loadScripts() {
             <td>${script.modifiedAt.replace("T", " ")}</td>
             `;
         }
-        
 
         list.appendChild(row);
     });
@@ -51,7 +50,7 @@ async function getScriptsFromData() {
 }
 
 function goToScriptDetails(script) {
-  window.location.href = `scripts?title=${script.title}&content=${script.content}&modifiedAt=${script.modifiedAt}&createdAt=${script.createdAt}`;
+    window.location.href = `scripts?title=${script.title}&content=${script.content}&modifiedAt=${script.modifiedAt}&createdAt=${script.createdAt}&id=${script.scriptId}`;
 }
 
 document.getElementById('create-script-btn').addEventListener('click', () => {

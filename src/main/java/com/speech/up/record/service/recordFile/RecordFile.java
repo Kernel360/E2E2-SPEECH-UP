@@ -1,4 +1,4 @@
-package com.speech.up.script.service.recordFile;
+package com.speech.up.record.service.recordFile;
 
 import java.io.File;
 import java.io.IOException;
