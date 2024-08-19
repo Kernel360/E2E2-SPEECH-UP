@@ -59,6 +59,7 @@ function showLoggedInNav(userData) {
     navButtons.innerHTML = `
         <a onclick=navigateWithAuth('/page/me') class="nav-button">마이페이지</a>
         <a onclick=logout('/logout') class="nav-button" id="logout-button">로그아웃</a>
+        <a href="/" class="nav-button" >홈</a>
         <a onclick=navigateWithAuth('/script-list') class="nav-button">스피치 분석</a>
         <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
     `;
