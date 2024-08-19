@@ -83,4 +83,14 @@ public class ScriptService {
 		ScriptEntity scriptEntity = ScriptEntity.delete(scriptIsUseRequestDto);
 		return ScriptIsUseDto.toResponse(scriptRepository.save(scriptEntity));
 	}
+
+	public Long getScriptCount(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+		if(authorization != null && authorization.startsWith("Bearer ")) {
+			authorization = authorization.substring(7);
+		}
+		String socialId = jwtProvider.validate(authorization);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		return scriptRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId());
+	}
 }

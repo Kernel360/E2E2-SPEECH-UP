@@ -42,6 +42,17 @@ public class BoardController {
 		return ResponseEntity.ok(boardService.getBoardById(boardId, request));
 	}
 
+	/**
+	 * 게시글 갯수만 조회
+	 *
+	 * @return scriptGetDto 의 ResponseEntity 로 반환
+	 */
+	@GetMapping("/users/count/me")
+	public ResponseEntity<Long> getBoardCount(HttpServletRequest request) {
+		return ResponseEntity.ok(boardService.getBoardCount(request));
+	}
+
+
 	@PostMapping("")
 	public ResponseEntity<BoardAddDto.Response> addBoard(@RequestBody BoardAddDto.Request boardAddRequest, HttpServletRequest request){
 		return ResponseEntity.ok(boardService.addBoard(boardAddRequest,request));
