@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+    <link rel="stylesheet" type="text/css" href="/css/home-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/script-style.css">
+</head>
+<body>
+<div class="report-container">
+    <h1>분석 결과</h1>
+    <div class="report-content">
+        <!-- AI가 인식한 음성 텍스트 -->
+        <div class="recognized-text">
+            <h2>음성 텍스트:</h2>
+            <p th:text="test">여기에 AI 인식 텍스트가 표시됩니다.</p>
+        </div>
+
+        <!-- 점수 -->
+        <div class="score">
+            <h2>점수:</h2>
+            <p th:text="0">여기에 점수가 표시됩니다.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

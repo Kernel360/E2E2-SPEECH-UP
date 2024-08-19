@@ -1,56 +1,67 @@
 package com.speech.up.report.entity;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.speech.up.report.entity.type.ReportContentAndScore;
-import com.speech.up.report.service.dto.ReportAddDto;
-import com.speech.up.script.entity.RecordEntity;
+import com.speech.up.record.entity.RecordEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "report")
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ReportEntity extends BaseReportEntity{
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class ReportEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "report_id")
 	private Long reportId;
 
 	@OneToOne
 	@JoinColumn(name = "record_id")
 	@JsonBackReference
-	private RecordEntity record;
+	private RecordEntity recordId;
 
-	private Double score;
+	@Column(updatable = false)
+	private double score;
 
-	private String content;
+	@Column(updatable = false)
+	private String recognized;
+
+	@Column(updatable = false)
+	private LocalDateTime createdAt;
 
 	private boolean isPublic;
 
 	private boolean isUse;
 
-	private ReportEntity(ReportContentAndScore reportContentAndScore, ReportAddDto.Request request) {
-		this.score = reportContentAndScore.getScore();
-		this.content = reportContentAndScore.getContent();
-		this.isUse = true;
+	private ReportEntity(RecordEntity recordEntity, String recognized, double score){
+		this.recordId = recordEntity;
+		this.recognized = recognized;
+		this.score = score;
+		this.createdAt = LocalDateTime.now();
 		this.isPublic = true;
-		this.record = request.getRecordEntity();
+		this.isUse = true;
 	}
 
-	public static ReportEntity create(ReportContentAndScore reportContentAndScore, ReportAddDto.Request request){
-			return new ReportEntity(reportContentAndScore, request);
+	public static ReportEntity create(RecordEntity recordEntity, String recognized, double score){
+		return new ReportEntity(recordEntity, recognized, score);
 	}
-
 }

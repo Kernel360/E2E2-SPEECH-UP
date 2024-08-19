@@ -14,7 +14,7 @@ public class UserGetInfoDto {
         private final String level;
         private final String authorization;
 
-        public UserGetInfoResponseDto(UserEntity userEntity) {
+        private UserGetInfoResponseDto(UserEntity userEntity) {
 			this.userId = userEntity.getUserId();
 			this.socialId = userEntity.getSocialId();
             this.name = userEntity.getName();

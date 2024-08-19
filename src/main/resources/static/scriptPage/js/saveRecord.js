@@ -1,36 +1,22 @@
-function saveRecord() {
+// 파일을 서버로 전송하고 분석 결과를 처리하는 함수
+function saveRecord(listItemId) {
     const formData = new FormData();
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const fileInput = document.getElementById('input-file');
-    const myFile = fileInput.files[0];
-
-    if (!myFile) {
-        alert('파일을 선택해주세요.');
-        return;
-    }
-
-    formData.append('myFile', myFile);
-    formData.append('requestId', "reserved field"); // 실제 requestId로 대체 필요
-    formData.append('apiType', "PRONUNCIATION");
-    formData.append('languageCode', document.getElementById('language-select').value);
-    formData.append('script', urlParams.get("content"));
-
-    const button = document.querySelector(".saving-button");
-    const report = document.getElementById('record-result');
+    formData.append('script', new URLSearchParams(window.location.search).get("content"));
+    formData.append('recordId', listItemId);
     fetch('/api/upload', {
         method: 'POST',
         body: formData
     })
+        .then(response => response.json())
         .then(response => {
-            button.disabled = true;
-            button.textContent = "분석 완료";
-            return response.json()
-        }).then((response) => {
+            // 분석 결과를 화면에 표시
+            const resultElement = document.createElement('p');
+            resultElement.textContent = `분석 결과: ${response.return_object?.score}`;
+            document.getElementById(listItemId).appendChild(resultElement);
 
-            report.innerHTML = response?.return_object?.score;
-    })
+            alert('분석이 완료되었습니다.');
+        })
         .catch(error => {
-            console.error('API 호출 오류:', error.message);
+            console.error('분석 중 오류가 발생했습니다:', error);
         });
 }
