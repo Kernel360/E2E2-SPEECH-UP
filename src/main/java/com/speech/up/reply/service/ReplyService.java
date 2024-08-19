@@ -26,8 +26,8 @@ public class ReplyService {
 	private final UserRepository userRepository;
 	private final BoardRepository boardRepository;
 
-	public List<ReplyGetDto.Response> getAllReplyList() {
-		List<ReplyEntity> replyList = replyRepository.findAll();
+	public List<ReplyGetDto.Response> getAllReplyList(Long boardId) {
+		List<ReplyEntity> replyList = replyRepository.findAllByBoardBoardIdAndIsUseTrueOrderByCreatedAtDesc(boardId);
 		return ReplyGetDto.Response.of(replyList);
 	}
 

@@ -52,6 +52,9 @@ public class ReplyEntity extends ReplyBaseEntity {
 	@JsonBackReference
 	private UserEntity user;
 
+	private String name;
+
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id", referencedColumnName = "board_id",nullable = false)
 	@JsonBackReference
@@ -63,6 +66,7 @@ public class ReplyEntity extends ReplyBaseEntity {
 
 	private ReplyEntity(UserEntity userEntity, BoardEntity boardEntity, String content, Boolean isUse) {
 		this.user = userEntity;
+		this.name = userEntity.getName();
 		this.board = boardEntity;
 		this.content = content;
 		this.isUse = isUse;

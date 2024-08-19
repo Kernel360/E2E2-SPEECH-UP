@@ -26,35 +26,24 @@ import lombok.RequiredArgsConstructor;
 public class ReplyController {
 	private final ReplyService replyService;
 
-	//다건
-	@GetMapping("/all")
-	public ResponseEntity<List<ReplyGetDto.Response>> getReply() {
-		return ResponseEntity.ok(replyService.getAllReplyList());
-	}
-
-	//단건
-	@GetMapping("/{replyId}")
-	public ResponseEntity<ReplyGetDto.Response> getReply(@PathVariable Long replyId) {
-
-		return ResponseEntity.ok(replyService.getReply(replyId));
+	@GetMapping("/{boardId}")
+	public ResponseEntity<List<ReplyGetDto.Response>> getReplyByBoardId(@PathVariable Long boardId) {
+		return ResponseEntity.ok(replyService.getAllReplyList(boardId));
 	}
 
 	@PostMapping("")
 	public ResponseEntity<ReplyAddDto.Response> addReply(@RequestBody ReplyAddDto.Request replyAddrRequestDto) {
-
 		return ResponseEntity.ok(replyService.addReply(replyAddrRequestDto));
 	}
 
 	@PatchMapping("")
 	public ResponseEntity<ReplyUpdateDto.Response> updateReply(
 		@RequestBody ReplyUpdateDto.Request replyUpdateRequestDto) {
-
 		return ResponseEntity.ok(replyService.updateReply(replyUpdateRequestDto));
 	}
 
 	@DeleteMapping("")
 	public ResponseEntity<ReplyIsUseDto.Response> isUsedReply(@RequestBody ReplyIsUseDto.Request replyIsUseRequestDto) {
-
 		return ResponseEntity.ok(replyService.isUseReply(replyIsUseRequestDto));
 	}
 
