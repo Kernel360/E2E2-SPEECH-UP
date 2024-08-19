@@ -53,6 +53,7 @@ function showLoggedInNav(userData) {
     if(scriptForm != null ){
         scriptForm.innerHTML += `
             <input type="text" id="user-id" name="user-id" value=${userData?.userId} hidden="hidden"/>
+            <input type="text" id="user-name" name="user-name" value=${userData?.name} hidden="hidden"/>
         `
     }
     navButtons.innerHTML = `

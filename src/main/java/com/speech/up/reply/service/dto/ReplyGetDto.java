@@ -20,17 +20,22 @@ public class ReplyGetDto {
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 	public static class Response {
 		private final Long replyId;
-		private final UserEntity user;
-		private final BoardEntity board;
+		private final Long userId;
+		private final Long boardId;
 		private final String content;
+		private final String name;
+		private final LocalDateTime createdAt;
+		private final LocalDateTime modifiedAt;
 
 
 		public Response(ReplyEntity replyEntity) {
 			this.replyId = replyEntity.getReplyId();
-			this.user = replyEntity.getUser();
-			this.board = replyEntity.getBoard();
+			this.userId = replyEntity.getUser().getUserId();
+			this.boardId = replyEntity.getBoard().getBoardId();
 			this.content = replyEntity.getContent();
-
+			this.name = replyEntity.getName();
+			this.createdAt = replyEntity.getCreatedAt();
+			this.modifiedAt = replyEntity.getModifiedAt();
 		}
 
 

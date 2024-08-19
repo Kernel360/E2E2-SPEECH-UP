@@ -10,4 +10,6 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 	ReplyEntity findByReplyIdAndIsUseTrue(Long replyId);
 
 	boolean existsByReplyIdAndIsUseTrue(Long replyId);
+
+	List<ReplyEntity> findAllByBoardBoardIdAndIsUseTrueOrderByCreatedAtDesc(Long boardId);
 }
