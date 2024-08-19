@@ -1,0 +1,28 @@
+.profile-header {
+    background: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.profile-card {
+    margin-top: 20px;
+}
+
+.profile-card .card-body {
+    text-align: center;
+}
+
+.profile-card .list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
