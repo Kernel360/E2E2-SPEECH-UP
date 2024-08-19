@@ -10,6 +10,7 @@ import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 import com.speech.up.user.entity.UserEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +32,7 @@ import lombok.NoArgsConstructor;
 public class BoardEntity extends BaseBoardEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "board_id")
 	private Long boardId;
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -48,7 +48,7 @@ public class ReplyEntity extends ReplyBaseEntity {
 	private Long replyId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "social_id", referencedColumnName = "social_id",nullable = false)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
 	@JsonBackReference
 	private UserEntity user;
 
