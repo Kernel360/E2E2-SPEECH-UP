@@ -11,7 +11,6 @@ import com.speech.up.oAuth.service.implement.UserAuthorizationType;
 import com.speech.up.user.entity.UserEntity;
 
 public class KakaoProvider implements ProviderOAuth {
-	final UserEntity userEntity;
 	final String socialId;
 	final String email;
 	final String name;
@@ -31,12 +30,11 @@ public class KakaoProvider implements ProviderOAuth {
 		this.name = responseMap.get("nickname");
 		this.authorization = UserAuthorizationType.GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
-		this.userEntity = new UserEntity(socialId, email, level, name, authorization, providerType);
 	}
 
 	@Override
 	public UserEntity getUser() {
-		return userEntity;
+		return new UserEntity(socialId, email, level, name, authorization, providerType);
 	}
 
 }

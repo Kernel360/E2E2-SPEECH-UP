@@ -8,7 +8,6 @@ import com.speech.up.oAuth.service.implement.UserAuthorizationType;
 import com.speech.up.user.entity.UserEntity;
 
 public class GithubProvider implements ProviderOAuth {
-	final UserEntity userEntity;
 	final String socialId;
 	final String email;
 	final String name;
@@ -23,10 +22,9 @@ public class GithubProvider implements ProviderOAuth {
 		this.providerType = ProviderType.GITHUB.name();
 		this.authorization = UserAuthorizationType.GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
-		this.userEntity = new UserEntity(socialId, email, level, name, authorization, providerType);
 	}
 	@Override
 	public UserEntity getUser() {
-		return userEntity;
+		return new UserEntity(socialId, email, level, name, authorization, providerType);
 	}
 }
