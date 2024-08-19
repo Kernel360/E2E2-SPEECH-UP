@@ -38,12 +38,12 @@ async function userMe() {
 
         if (response.ok) {
             const userData = await response.json();
-            // 사용자 정보가 성공적으로 받아지면, 네비게이션 바에 로그인이 되어있음을 표시
             showLoggedInNav(userData);
+            myPage(userData);
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
-        showLoggedOutNav(); // 네트워크 오류 등으로 인한 실패 시 로그아웃 상태로 처리
+        showLoggedOutNav();
     }
 }
 
@@ -57,14 +57,30 @@ function showLoggedInNav(userData) {
         `
     }
     navButtons.innerHTML = `
-        <a href="/" class="nav-button">마이페이지</a>
+        <a onclick=navigateWithAuth('/page/me') class="nav-button">마이페이지</a>
         <a onclick=logout('/logout') class="nav-button" id="logout-button">로그아웃</a>
         <a onclick=navigateWithAuth('/script-list') class="nav-button">스피치 분석</a>
         <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
-       
     `;
 }
 
+function myPage(userData){
+    const myPage = document.getElementById("profile");
+    const level = document.getElementById("user-level");
+    const authorization = document.getElementById("user-authorization");
+    if(myPage!== null){
+        myPage.innerHTML = `
+         <h2 id="user-name">${userData.name}</h2>
+         <p id="user-email">${userData.email}</p>
+        `
+    }
+    if(level !== null){
+        level.innerHTML = `${userData.level}`
+    }
+    if(authorization !== null){
+        authorization.innerHTML = `${userData.authorization}`
+    }
+}
 function showLoggedOutNav() {
     const navButtons = document.getElementById('nav-buttons');
     navButtons.innerHTML = `

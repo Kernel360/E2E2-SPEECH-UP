@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="/css/my-page.css">
+    <link rel="stylesheet" type="text/css" href="/css/header-style.css">
+
+</head>
+<body>
+<header>
+    <div id="nav-buttons">
+        <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+    </div>
+</header>
+
+<div class="container">
+    <div class="profile-header" id="profile">
+
+    </div>
+
+    <div class="card profile-card">
+        <div class="card-body">
+            <h4 class="card-title">Profile Information</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>레벨 :</strong> <span id="user-level"></span>
+                </li>
+                <li class="list-group-item">
+                    <strong>나의 권한 :</strong> <span id="user-authorization">User</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>작성한 대본 수 :</strong> <span id="user-scripts-count">-</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>녹음한 파일 수 :</strong> <span id="user-records-count">-</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>작성 게시글 수 :</strong> <span id="user-boards-count">-</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>나의 댓글 수:</strong> <span id="user-replies-count">-</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>보고서 수 :</strong> <span id="user-reports-count">-</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-danger" onclick="confirmDelete()">회원 탈퇴하기</button>
+    </div>
+</div>
+<script src="/scriptPage/js/userMe.js"></script>
+<script src="/scriptPage/js/userDelete.js"></script>
+</body>
+</html>

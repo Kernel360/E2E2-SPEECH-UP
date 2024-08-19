@@ -30,10 +30,16 @@ public class UserService {
         return UserGetInfoDto.UserGetInfoResponseDto.getUserInfo(userEntity);
     }
 
-    // 조회?
-    // 탈퇴
-
-    public void deleteUser(String socialId) {
+    public void deleteUser(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if(authorization == null) {
+            throw new BadRequestException("Authorization header is missing");
+        }
+        if(authorization.startsWith("Bearer ")) {
+            authorization = authorization.substring(7);
+        }
+        String socialId = jwtProvider.validate(authorization);
+        System.out.println(socialId);
         userRepository.deleteBySocialId(socialId);
     }
 }
