@@ -8,5 +8,6 @@ import com.speech.up.reply.entity.ReplyEntity;
 
 public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 	ReplyEntity findByReplyIdAndIsUseTrue(Long replyId);
-	List<ReplyEntity> findAllByIsUseTrue();
+
+	boolean existsByReplyIdAndIsUseTrue(Long replyId);
 }
