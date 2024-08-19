@@ -18,7 +18,7 @@ async function getBoardsFromData() {
     const jwtToken = JSON.parse(localStorage.getItem("jwtToken"));
     const token = jwtToken.value;
 
-    return fetch('/api/boards/users/count/me',{headers: {
+    return fetch('/api/boards/users/counts/me',{headers: {
             'Authorization': `${token}`}})
         .then(response => response.json())
         .then(boards => boards)

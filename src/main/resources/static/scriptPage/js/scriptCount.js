@@ -18,7 +18,7 @@ async function getScriptsFromData() {
     const jwtToken = JSON.parse(localStorage.getItem("jwtToken"));
     const token = jwtToken.value;
 
-    return fetch('/speech-scripts/users/count/me',{headers: {
+    return fetch('/speech-scripts/users/counts/me',{headers: {
             'Authorization': `${token}`}})
         .then(response => response.json())
         .then(scripts => scripts)

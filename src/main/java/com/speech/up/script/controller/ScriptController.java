@@ -44,7 +44,7 @@ public class ScriptController {
 	 *
 	 * @return 갯수만 반환
 	 */
-	@GetMapping("/users/count/me")
+	@GetMapping("/users/counts/me")
 	public ResponseEntity<Long> getScriptCount(HttpServletRequest request) {
 		return ResponseEntity.ok(scriptService.getScriptCount(request));
 	}

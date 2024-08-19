@@ -18,7 +18,7 @@ async function getRepliesFromData() {
     const jwtToken = JSON.parse(localStorage.getItem("jwtToken"));
     const token = jwtToken.value;
 
-    return fetch('/replies/users/count/me',{headers: {
+    return fetch('/replies/users/counts/me',{headers: {
             'Authorization': `${token}`}})
         .then(response => response.json())
         .then(replies => replies)

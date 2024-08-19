@@ -37,7 +37,7 @@ public class ReplyController {
 	 *
 	 * @return scriptGetDto 의 ResponseEntity 로 반환
 	 */
-	@GetMapping("/users/count/me")
+	@GetMapping("/users/counts/me")
 	public ResponseEntity<Long> getBoardCount(HttpServletRequest request) {
 		return ResponseEntity.ok(replyService.getBoardCount(request));
 	}
