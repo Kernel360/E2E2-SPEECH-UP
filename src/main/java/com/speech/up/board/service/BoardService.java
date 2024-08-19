@@ -96,4 +96,13 @@ public class BoardService {
 		return boardRepository.countByIsUseTrue();
 	}
 
+	public Long getBoardCount(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+		if(authorization != null && authorization.startsWith("Bearer ")) {
+			authorization = authorization.substring(7);
+		}
+		String socialId = jwtProvider.validate(authorization);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		return boardRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId());
+	}
 }

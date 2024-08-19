@@ -1,11 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 타겟 요소의 부모를 지정
     const targetNode = document.getElementById('script-form'); // 대상 요소의 부모 ID
 
-    // 변화를 감지할 옵션 설정
     const config = { childList: true, subtree: true };
 
-    // 콜백 함수: 특정 요소가 추가될 때 호출
     const callback = function(mutationsList, observer) {
         for(const mutation of mutationsList) {
             if (mutation.type === 'childList') {

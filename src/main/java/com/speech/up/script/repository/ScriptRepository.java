@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ScriptRepository extends JpaRepository<ScriptEntity, Long> {
 	List<ScriptEntity> findByUserUserIdAndIsUseTrue(Long userUserId);
+	long countByUserUserIdAndIsUseTrue(Long userUserId);
 }
