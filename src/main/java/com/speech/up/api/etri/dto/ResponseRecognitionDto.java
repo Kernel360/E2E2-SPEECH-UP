@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class ResponseRecognizedDto {
+public class ResponseRecognitionDto {
 	private String request_id;
 	private int result;
 	private ReturnObjectDTO return_object;

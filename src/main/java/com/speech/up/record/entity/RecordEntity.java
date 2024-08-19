@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @DynamicUpdate
@@ -56,12 +55,10 @@ public class RecordEntity extends BaseRecordEntity {
 		this(audio, request.getLanguageCode(), scriptEntity, true);
 	}
 
-	// 새로운 생성자 추가
 	public static RecordEntity create(byte[] audio, RecordAddDto.Request request, ScriptEntity scriptEntity) {
 		return new RecordEntity(audio, request, scriptEntity);
 	}
 
-	// 녹음 삭제
 	private RecordEntity(RecordIsUseDto.Request recordIsUseRequestDto) {
 		this(recordIsUseRequestDto.getRecordEntity().getAudio(),
 			recordIsUseRequestDto.getRecordEntity()

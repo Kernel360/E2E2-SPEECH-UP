@@ -15,7 +15,7 @@ public class UrlCollector {
 		PronunciationAI pronunciationAI = new PronunciationAI(pronunciation);
 		RecognizedAI recognizedAI = new RecognizedAI(recognized);
 		this.aiApiUrl.put(ApiType.PRONUNCIATION, pronunciationAI.getUrl());
-		this.aiApiUrl.put(ApiType.RECOGNIZED, recognizedAI.getUrl());
+		this.aiApiUrl.put(ApiType.RECOGNITION, recognizedAI.getUrl());
 	}
 
 	public URL getApiUrl(ApiType apiType){

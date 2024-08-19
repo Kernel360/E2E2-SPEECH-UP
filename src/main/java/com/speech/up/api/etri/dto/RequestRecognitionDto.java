@@ -5,12 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class RequestRecognizedDto {
+public class RequestRecognitionDto {
 	private final String requestId;
 	private final ArgumentDTO argument;
 
@@ -27,17 +26,17 @@ public class RequestRecognizedDto {
 		}
 	}
 
-	private RequestRecognizedDto(String requestId, ArgumentDTO argument) {
+	private RequestRecognitionDto(String requestId, ArgumentDTO argument) {
 		this.requestId = requestId;
 		this.argument = argument;
 	}
 
-	public static RequestRecognizedDto createRec(String requestId, String audio, String languageCode){
+	public static RequestRecognitionDto createRecognition(String requestId, String audio, String languageCode){
 		ArgumentDTO argumentDTO = ArgumentDTO.builder()
 			.language_code(languageCode)
 			.audio(audio)
 			.build();
 
-		return new RequestRecognizedDto(requestId, argumentDTO);
+		return new RequestRecognitionDto(requestId, argumentDTO);
 	}
 }

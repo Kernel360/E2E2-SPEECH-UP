@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.speech.up.api.etri.dto.RequestPronunciationDto;
-import com.speech.up.api.etri.dto.RequestRecognizedDto;
+import com.speech.up.api.etri.dto.RequestRecognitionDto;
 import com.speech.up.api.etri.dto.ResponsePronunciationApiDto;
-import com.speech.up.api.etri.dto.ResponseRecognizedDto;
+import com.speech.up.api.etri.dto.ResponseRecognitionDto;
 import com.speech.up.api.etri.type.ApiType;
 import com.speech.up.api.etri.url.UrlCollector;
 import com.speech.up.common.exception.http.BadRequestException;
@@ -57,14 +57,14 @@ public class VoiceToTextService {
 			String audioContents = encodeAudioToBase64(recordEntity.getAudio());
 
 			RequestPronunciationDto pronunciationRequest = createPronunciationRequest(audioContents, script);
-			RequestRecognizedDto recognizedRequest = createRecognizedRequest(audioContents, recordEntity.getLanguageCode());
+			RequestRecognitionDto recognizedRequest = createRecognizedRequest(audioContents, recordEntity.getLanguageCode());
 
-			ResponseEntity<ResponseRecognizedDto> recognizedResponse = sendPostRequest(ApiType.RECOGNIZED, recognizedRequest, ResponseRecognizedDto.class);
+			ResponseEntity<ResponseRecognitionDto> recognizedResponse = sendPostRequest(ApiType.RECOGNITION, recognizedRequest, ResponseRecognitionDto.class);
 			ResponseEntity<ResponsePronunciationApiDto> pronunciationResponse = sendPostRequest(ApiType.PRONUNCIATION, pronunciationRequest, ResponsePronunciationApiDto.class);
 
 			handleApiResponses(recognizedResponse, pronunciationResponse);
 
-			ResponseRecognizedDto recognizedBody = recognizedResponse.getBody();
+			ResponseRecognitionDto recognizedBody = recognizedResponse.getBody();
 			ResponsePronunciationApiDto pronunciationBody = pronunciationResponse.getBody();
 
 			saveReportIfValid(recognizedBody, pronunciationBody, recordEntity);
@@ -83,11 +83,11 @@ public class VoiceToTextService {
 	}
 
 	private RequestPronunciationDto createPronunciationRequest(String audioContents, String script) {
-		return RequestPronunciationDto.createPro("reserved field", audioContents, script);
+		return RequestPronunciationDto.createPronunciation("reserved field", audioContents, script);
 	}
 
-	private RequestRecognizedDto createRecognizedRequest(String audioContents, String languageCode) {
-		return RequestRecognizedDto.createRec("reserved field", audioContents, languageCode);
+	private RequestRecognitionDto createRecognizedRequest(String audioContents, String languageCode) {
+		return RequestRecognitionDto.createRecognition("reserved field", audioContents, languageCode);
 	}
 
 	private <T> ResponseEntity<T> sendPostRequest(ApiType apiType, Object requestDTO, Class<T> responseType) throws IOException {
@@ -141,7 +141,7 @@ public class VoiceToTextService {
 		}
 	}
 
-	private void handleApiResponses(ResponseEntity<ResponseRecognizedDto> recognizedResponse,
+	private void handleApiResponses(ResponseEntity<ResponseRecognitionDto> recognizedResponse,
 		ResponseEntity<ResponsePronunciationApiDto> pronunciationResponse) {
 		if (recognizedResponse.getStatusCode() != HttpStatus.OK) {
 			throw new BadRequestException("Recognized API response: " + recognizedResponse.getStatusCode());
@@ -152,7 +152,7 @@ public class VoiceToTextService {
 		}
 	}
 
-	private void saveReportIfValid(ResponseRecognizedDto recognizedBody,
+	private void saveReportIfValid(ResponseRecognitionDto recognizedBody,
 		ResponsePronunciationApiDto pronunciationBody,
 		RecordEntity recordEntity) {
 		if (recognizedBody != null && pronunciationBody != null) {

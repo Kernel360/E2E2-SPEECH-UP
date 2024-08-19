@@ -20,7 +20,7 @@ public class RecordAddDto {
     public static class Request {
         private final MultipartFile file;
         private final String languageCode;
-        private final ScriptEntity scriptEntity; // scriptId를 추가
+        private final ScriptEntity scriptEntity;
 
         public Request(MultipartFile file, String languageCode, ScriptEntity scriptEntity) {
             this.file = file;

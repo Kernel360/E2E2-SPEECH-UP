@@ -31,7 +31,7 @@ public class RecordController {
 	public ResponseEntity<RecordAddDto.Response> addRecord(
 		@RequestPart("file") MultipartFile file,
 		@RequestParam("languageCode") String languageCode,
-		@RequestParam("scriptId") Long scriptId // scriptId 추가
+		@RequestParam("scriptId") Long scriptId
 	) throws IOException, UnsupportedAudioFileException {
 		RecordAddDto.Response response = recordService.addRecord(file, languageCode, scriptId);
 		return ResponseEntity.ok(response);
