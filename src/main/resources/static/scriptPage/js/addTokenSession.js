@@ -13,7 +13,6 @@ if(token != null ){
 function setItemWithExpiry(key, value, ttl) {
     const now = new Date();
 
-    // ttl은 밀리초로 표현된 유효 시간입니다.
     const expiry = now.getTime() + ttl;
 
     const item = {

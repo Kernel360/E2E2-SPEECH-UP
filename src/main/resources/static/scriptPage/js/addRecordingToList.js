@@ -2,13 +2,12 @@
 function addRecordingToList(url, recordId) {
     const list = document.getElementById('recordings-list');
     const li = document.createElement('li');
-    // 오디오 플레이어 추가
     const audio = document.createElement('audio');
+
     audio.controls = true;
     audio.src = url;
     li.appendChild(audio);
 
-    // "분석하기" 버튼 추가
     const analyzeButton = document.createElement('button');
     
     analyzeButton.setAttribute('id', 'analyze-button');

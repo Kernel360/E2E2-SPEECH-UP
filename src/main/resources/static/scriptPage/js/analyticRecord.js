@@ -34,16 +34,14 @@ function createWavHeader(sampleRate, numChannels, bitsPerSample, dataLength) {
 }
 
 function displayRecords(records) {
-    list.innerHTML = ''; // 기존 내용을 초기화
+    list.innerHTML = '';
     records.forEach(record => {
         const pcmData = base64ToUint8Array(record.audio_path);
         if (pcmData) {
             try {
-                // WAV 헤더 생성
                 const wavHeader = createWavHeader(16000, 1, 16, pcmData.length);
                 const wavData = new Uint8Array(wavHeader.byteLength + pcmData.byteLength);
 
-                // 헤더와 PCM 데이터를 결합
                 wavData.set(new Uint8Array(wavHeader), 0);
                 wavData.set(pcmData, wavHeader.byteLength);
 
@@ -58,7 +56,7 @@ function displayRecords(records) {
                             ${record.analyzed ? '분석결과 보러가기' : '분석하기'}
                         </button>
                     </div>
-                `; // <-- 템플릿 리터럴이 올바르게 닫힘
+                `;
 
                 list.appendChild(li);
 
@@ -84,7 +82,7 @@ async function loadRecords(scriptId) {
         return await response.json();
     } catch (error) {
         console.error("Error fetching records: ", error);
-        return []; // 에러 발생 시 빈 배열 반환
+        return [];
     }
 }
 
@@ -118,7 +116,6 @@ function navigate(record) {
     const recordJson = JSON.parse(atob(record));
 
     if (recordJson.analyzed) {
-        // 분석결과 페이지로 이동
         window.location.href = `/report`;
     } else {
         saveRecord(recordJson.record_id);

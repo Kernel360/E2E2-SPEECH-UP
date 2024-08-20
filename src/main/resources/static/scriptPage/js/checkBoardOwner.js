@@ -40,22 +40,18 @@ function deleteBoard(){
     })
         .then(response => response.json())
         .then(userData => {
-            // 사용자 정보가 성공적으로 로드되면 수정 폼의 submit 이벤트를 처리합니다.
-
-
                 const title = document.getElementById('board-title').innerHTML;
                 const content = document.getElementById('board-text').innerHTML;
 
-                // JSON 데이터 생성
                 const requestBody = {
                     board_id: boardId,
                     title: title,
                     content: content,
                     user: {
-                        user_id: userData.userId, // /user/me 요청에서 받은 user_id 사용
+                        user_id: userData.userId,
                     }
                 };
-                // 서버에 수정 요청 보내기
+
                 fetch(`/api/boards`, {
                     method: 'DELETE',
                     headers: {
@@ -67,7 +63,7 @@ function deleteBoard(){
                     .then(data => {
                         if (data) {
                             console.log(data)
-                            window.location.href = "/boards"; // 목록 페이지로 이동
+                            window.location.href = "/boards";
                         } else {
                             alert("게시글 삭제에 실패했습니다.");
                         }

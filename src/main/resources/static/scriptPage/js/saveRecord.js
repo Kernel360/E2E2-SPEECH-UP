@@ -1,4 +1,3 @@
-// 파일을 서버로 전송하고 분석 결과를 처리하는 함수
 function saveRecord(listItemId) {
     const formData = new FormData();
     formData.append('script', new URLSearchParams(window.location.search).get("content"));
@@ -12,7 +11,6 @@ function saveRecord(listItemId) {
         body: formData
     })
         .then(() => {
-            // 분석 결과를 화면에 표시
             isAnalyze(listItemId);
         })
         .catch(error => {
@@ -26,14 +24,12 @@ function isAnalyze(recordId) {
     fetch(`/speech-record/${recordId}/analyze`, {
         method: 'PATCH'
     }).then(data => {
-            // 서버에서 응답한 데이터로 작업을 수행
             console.log('Analysis status updated:', data);
         })
         .catch(error => {
             console.error('Error:', error);
         })
         .finally(() => {
-            // 요청이 끝나면 로딩바를 숨김
             loadingBar.style.display = 'none';
             window.location.reload();
         });

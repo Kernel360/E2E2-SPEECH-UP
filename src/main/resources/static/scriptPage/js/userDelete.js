@@ -4,7 +4,7 @@ function confirmDelete() {
                 fetch("/users/me",{
                     method:"DELETE",
                     headers: {
-                        'Authorization': `${jwtToken}` // Authorization 헤더 추가
+                        'Authorization': `${jwtToken}`
                     }
                 }).then(() => {
                     localStorage.removeItem("jwtToken")
