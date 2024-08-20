@@ -4,7 +4,7 @@ async function loadScripts() {
     const scripts = await getScriptsFromData();
 
     const list = document.getElementById('scripts-list');
-    list.innerHTML = ''; // 기존 리스트 초기화
+    list.innerHTML = '';
 
     scripts.forEach(script => {
         const row = document.createElement('tr');

@@ -17,12 +17,14 @@ public class RecordGetDto {
         private final byte[] audioPath;
         private final String languageCode;
         private final LocalDateTime createdAt;
+        private final boolean isAnalyzed;
 
         public Response(RecordEntity recordEntity) {
             this.recordId = recordEntity.getRecordId();
             this.audioPath = recordEntity.getAudio();
             this.languageCode = recordEntity.getLanguageCode();
             this.createdAt = recordEntity.getCreatedAt();
+            this.isAnalyzed = recordEntity.isAnalyzed();
         }
 
         public static Response getRecords(RecordEntity recordEntity) {

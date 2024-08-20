@@ -34,10 +34,6 @@
         <h2>분석하기</h2>
         <!-- 분석하기 섹션 내용 -->
     </div>
-    <div id="loading-bar" style="display: none;">업로드 중...</div>
-    <div id="record-result">
-
-    </div>
     <div id="script-and-record-section" class="script-and-record-section section">
         <div class="script-section">
             <h2>대본</h2>
@@ -51,9 +47,9 @@
                 <input type="file" id="file-input" />
                 <button id="upload-btn" >업로드</button>
             </div>
-            <div class="recording-controls">
+            <!--<div class="recording-controls">
                 <button id="record-btn" onclick="startRecording()">녹음 추가</button>
-            </div>
+            </div>-->
             <label for="language-select">언어 선택:</label>
             <select id="language-select">
                 <option value="korean">한국어</option>
@@ -68,7 +64,13 @@
         </div>
     </div>
 </div>
+<div id="loading-bar" style="display: none;">
+    <div id="loading-content">
+        <p id="loading-text">분석 중입니다. 잠시만 기다려주세요...</p>
+        <div id="loading-circle"></div>
+    </div>
 
+</div>
 <script src="/scriptPage/js/scriptDetail.js"></script>
 <script src="/scriptPage/js/record.js"></script>
 <script src="/scriptPage/js/saveRecord.js"></script>

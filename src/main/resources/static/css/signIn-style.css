@@ -13,20 +13,19 @@ h2 {
     font-size: 2em;
 }
 
-/* 소셜 로그인 섹션 스타일 */
 .social-login-buttons {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* 버튼 사이의 간격 */
+    gap: 15px;
 }
 
 .social-logo {
     width: 24px;
     height: 24px;
-    margin-right: 10px; /* 이미지와 텍스트 사이의 간격 */
-    background-color: transparent; /* 배경을 투명하게 설정 */
-    border: none; /* 이미지에 불필요한 테두리가 있을 경우 제거 */
-    display: inline-block; /* 기본 display 설정 */
+    margin-right: 10px;
+    background-color: transparent;
+    border: none;
+    display: inline-block;
 }
 
 .social-button {
@@ -39,8 +38,8 @@ h2 {
     color: white;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-    background-color: transparent; /* 버튼의 배경을 투명하게 설정 */
-    border: none; /* 버튼의 테두리를 제거 */
+    background-color: transparent;
+    border: none;
 }
 
 .google-button {
@@ -69,7 +68,6 @@ h2 {
     background-color: #373738;
 }
 
-/* 이미지에만 투명 배경을 설정하는 코드 */
 .social-button img {
     background-color: transparent;
     border: none;

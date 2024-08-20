@@ -11,7 +11,6 @@ function starter(){
 function getItemWithExpiry(key) {
     const itemStr = localStorage.getItem(key);
 
-    // 항목이 존재하지 않으면 null을 반환합니다.
     if (!itemStr) {
         return null;
     }
@@ -19,7 +18,6 @@ function getItemWithExpiry(key) {
     const item = JSON.parse(itemStr);
     const now = new Date();
 
-    // 항목이 만료된 경우, localStorage에서 항목을 제거하고 null을 반환합니다.
     if (now.getTime() > item.expiry) {
         localStorage.removeItem(key);
         return null;
@@ -32,7 +30,7 @@ async function userMe() {
     try {
         const response = await fetch("/users/me", {
             headers: {
-                'Authorization': `${jwtToken}` // Authorization 헤더 추가
+                'Authorization': `${jwtToken}`
             }
         });
 
@@ -100,14 +98,12 @@ function navigateWithAuth(url) {
         'Authorization': `${jwtToken}`
     });
 
-    // 요청 생성 및 전송
     fetch(url, {
         method: 'GET',
         headers: headers
     })
         .then(response => {
             if (response.ok) {
-                // 페이지를 새 창에서 열기
                 window.location.href = url;
             } else {
                 window.location.href = "/login";

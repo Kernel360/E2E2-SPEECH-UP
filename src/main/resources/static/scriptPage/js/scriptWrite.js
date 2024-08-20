@@ -12,7 +12,7 @@ document.getElementById('script-form').addEventListener('submit', async function
         content: content,
         user :{
             user_id : userId
-        }// 현재 시간
+        }
     };
 
     try {
@@ -28,7 +28,6 @@ document.getElementById('script-form').addEventListener('submit', async function
 
         if (response.ok) {
             alert('대본이 성공적으로 저장되었습니다.');
-            // 대본 리스트 페이지로 리다이렉트
             window.location.href = '/script-list';
         } else {
             alert('대본 저장 중 오류가 발생했습니다.');
