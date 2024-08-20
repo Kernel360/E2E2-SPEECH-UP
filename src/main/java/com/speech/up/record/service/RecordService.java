@@ -12,6 +12,7 @@ import com.speech.up.script.repository.ScriptRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -57,6 +58,13 @@ public class RecordService {
 	public RecordIsUseDto.Response deleteRecord(RecordIsUseDto.Request recordIsUseRequestDto) {
 		RecordEntity recordEntity = RecordEntity.delete(recordIsUseRequestDto);
 		return RecordIsUseDto.deleteRecord(recordRepository.save(recordEntity));
+	}
+
+	@Transactional
+	public void analyzed(Long recordId){
+		RecordEntity recordEntity = recordRepository.findById(recordId)
+			.orElseThrow(() -> new IllegalStateException("not found record by recordId : " + recordId));
+		recordEntity.analyze(true);
 	}
 
 }

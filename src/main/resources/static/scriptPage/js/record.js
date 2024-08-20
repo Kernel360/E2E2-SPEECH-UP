@@ -35,7 +35,6 @@ function handleStopRecording() {
     const file = new File(recordedChunks,timestamp+".wav",{ type: 'audio/wav' });
     recordedChunks = [];
     recordingUrl = URL.createObjectURL(file);
-    addRecordingToList(recordingUrl, file);
     setRecordingState(false);
 }
 
@@ -56,11 +55,11 @@ function setRecordingState(state) {
     document.getElementById('record-btn').textContent = state ? '녹음 중지' : '녹음 추가';
 }
 
-// 페이지 로드 시 버튼 클릭 이벤트 설정
+/*// 페이지 로드 시 버튼 클릭 이벤트 설정
 document.getElementById('record-btn').addEventListener('click', () => {
     if (isRecording) {
         stopRecording();
     } else {
         startRecording();
     }
-});
+});*/

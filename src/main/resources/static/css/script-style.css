@@ -101,6 +101,38 @@ input[type="file"] {
     display: block;
 }
 
+/* 로딩 바 스타일 */
+#loading-bar {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    background: #00000059;
+    backdrop-filter: blur(5px);
+}
+#loading-circle{
+    border-top: 4px solid #00ff48;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+#loading-text{
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+#loading-content{
+    position: sticky;
+    top: 50vh;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 @media (max-width: 992px) {
 
     .script-section, .recordings-section {
@@ -147,34 +179,8 @@ input[type="file"] {
     }
 }
 
-/* 로딩 컨테이너 스타일 */
-#loading-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
 
-/* 로딩 바 스타일 */
-#loading-bar {
-    border-top: 4px solid #00ff48;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 
 /* 분석 내용 보러가기 버튼 스타일 */
 #view-analysis-btn {
@@ -253,4 +259,24 @@ p {
 strong {
     font-weight: bold;
     color: #343a40; /* 어두운 색으로 강조 */
+}
+
+.progress {
+    position: relative;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 20px;
+}
+
+.progress .indeterminate {
+    position: absolute;
+    background-color: #2196f3;
+    width: 30%;
+    height: 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -30%; }
+    100% { left: 100%; }
 }

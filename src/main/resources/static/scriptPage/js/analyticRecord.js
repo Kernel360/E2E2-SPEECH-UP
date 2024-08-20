@@ -35,7 +35,6 @@ function createWavHeader(sampleRate, numChannels, bitsPerSample, dataLength) {
 
 function displayRecords(records) {
     list.innerHTML = ''; // 기존 내용을 초기화
-    console.log(records)
     records.forEach(record => {
         const pcmData = base64ToUint8Array(record.audio_path);
         if (pcmData) {
@@ -50,15 +49,16 @@ function displayRecords(records) {
 
                 const blob = new Blob([wavData], { type: 'audio/wav' });
                 const url = URL.createObjectURL(blob);
-                console.log(url);
 
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <div class="recording-item">
                         <audio controls src="${url}"></audio>
-                        <button onclick="saveRecord('${record.record_id}')">분석하기</button>
+                        <button onclick="navigate('${btoa(JSON.stringify(record))}')">
+                            ${record.analyzed ? '분석결과 보러가기' : '분석하기'}
+                        </button>
                     </div>
-                `;
+                `; // <-- 템플릿 리터럴이 올바르게 닫힘
 
                 list.appendChild(li);
 
@@ -111,5 +111,16 @@ function base64ToUint8Array(base64) {
     } catch (error) {
         console.error("Error converting base64 to Uint8Array: ", error);
         return null;
+    }
+}
+
+function navigate(record) {
+    const recordJson = JSON.parse(atob(record));
+
+    if (recordJson.analyzed) {
+        // 분석결과 페이지로 이동
+        window.location.href = `/report`;
+    } else {
+        saveRecord(recordJson.record_id);
     }
 }

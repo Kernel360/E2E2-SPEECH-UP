@@ -24,7 +24,7 @@ document.getElementById('upload-btn').addEventListener('click', function() {
         .then(data => {
             console.log('업로드 성공:', data);
             const url = URL.createObjectURL(file);
-            addRecordingToList(url, file);
+            addRecordingToList(url, scriptId);
         })
         .catch(error => {
             console.error('업로드 실패:', error);
