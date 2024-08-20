@@ -1,7 +1,7 @@
 package com.speech.up.user.service;
 
 import com.speech.up.common.exception.http.BadRequestException;
-import com.speech.up.oAuth.provider.JwtProvider;
+import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 import com.speech.up.user.service.dto.UserGetInfoDto;

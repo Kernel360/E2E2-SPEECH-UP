@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.handler;
+package com.speech.up.auth.handler;
 
 import java.io.IOException;
 
@@ -6,8 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.speech.up.oAuth.entity.CustomOAuth2User;
-import com.speech.up.oAuth.provider.JwtProvider;
+import com.speech.up.auth.entity.CustomOAuth2User;
+import com.speech.up.auth.provider.JwtProvider;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

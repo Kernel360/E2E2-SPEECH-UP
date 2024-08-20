@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.config;
+package com.speech.up.auth.config;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -20,8 +20,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.speech.up.oAuth.filter.JwtAuthenticationFilter;
-import com.speech.up.oAuth.handler.OAuth2SuccessHandler;
+import com.speech.up.auth.filter.JwtAuthenticationFilter;
+import com.speech.up.auth.handler.OAuth2SuccessHandler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

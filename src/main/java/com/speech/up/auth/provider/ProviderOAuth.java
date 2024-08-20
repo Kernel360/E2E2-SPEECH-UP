@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.provider;
+package com.speech.up.auth.provider;
 
 import com.speech.up.user.entity.UserEntity;
 

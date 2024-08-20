@@ -1,11 +1,11 @@
-package com.speech.up.oAuth.provider;
+package com.speech.up.auth.provider;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.speech.up.oAuth.service.servicetype.ProviderType;
+import com.speech.up.auth.service.servicetype.ProviderType;
 import com.speech.up.user.entity.UserEntity;
 
 public class Provider {

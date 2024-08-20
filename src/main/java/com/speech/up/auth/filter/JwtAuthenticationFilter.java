@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.filter;
+package com.speech.up.auth.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.speech.up.oAuth.provider.JwtProvider;
+import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 

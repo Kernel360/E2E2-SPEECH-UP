@@ -1,7 +1,6 @@
 package com.speech.up.record.service;
 
 import com.speech.up.api.converter.WavToRaw;
-import com.speech.up.log.CustomLogger;
 import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
 import com.speech.up.record.service.dto.RecordAddDto;
@@ -26,7 +25,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class RecordService {
 	private final RecordRepository recordRepository;
 	private final ScriptRepository scriptRepository;
-	private final CustomLogger customLogger;
 
 	private List<RecordEntity> getActiveRecordsByScriptId(Long scriptId) {
 		return recordRepository.findByScriptScriptIdAndIsUseTrue(scriptId);
