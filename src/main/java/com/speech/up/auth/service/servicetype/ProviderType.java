@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.service.servicetype;
+package com.speech.up.auth.service.servicetype;
 
 public enum ProviderType {
 	KAKAO,

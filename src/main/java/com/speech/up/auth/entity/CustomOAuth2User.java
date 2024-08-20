@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.entity;
+package com.speech.up.auth.entity;
 
 import java.util.Collection;
 import java.util.Map;

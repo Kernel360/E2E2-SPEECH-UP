@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.service.implement;
+package com.speech.up.auth.service.implement;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -6,10 +6,9 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.speech.up.oAuth.entity.CustomOAuth2User;
-import com.speech.up.oAuth.provider.Provider;
-import com.speech.up.oAuth.service.servicetype.ProviderType;
+import com.speech.up.auth.entity.CustomOAuth2User;
+import com.speech.up.auth.provider.Provider;
+import com.speech.up.auth.service.servicetype.ProviderType;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 

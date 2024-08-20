@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.service.implement;
+package com.speech.up.auth.service.implement;
 
 public enum UserAuthorizationType {
 	GENERAL_USER

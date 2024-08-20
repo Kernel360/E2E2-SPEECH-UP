@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.speech.up.board.repository.BoardRepository;
 import com.speech.up.common.exception.http.InternalServerErrorException;
-import com.speech.up.oAuth.provider.JwtProvider;
+import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.reply.entity.ReplyEntity;
 import com.speech.up.reply.repository.ReplyRepository;
 import com.speech.up.reply.service.dto.ReplyAddDto;

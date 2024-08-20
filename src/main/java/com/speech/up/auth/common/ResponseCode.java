@@ -1,4 +1,4 @@
-package com.speech.up.oAuth.common;
+package com.speech.up.auth.common;
 
 public interface ResponseCode {
 	String SUCCESS = "SU";
