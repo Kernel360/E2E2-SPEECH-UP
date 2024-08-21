@@ -19,6 +19,7 @@ public class KakaoProvider implements ProviderOAuth {
 	final String level;
 
 
+	@SuppressWarnings("unchecked")
 	public KakaoProvider(OAuth2User user) {
 		Map<String, String> responseMap = (Map<String, String>) user.getAttributes().get("properties");
 		if(responseMap == null) {

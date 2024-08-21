@@ -20,7 +20,7 @@ public class ScriptIsUseDto {
 		private final String title;
 		private final UserEntity user;
 
-		public Request(Long scriptId, boolean isUse, String content, String title, UserEntity user) {
+		Request(Long scriptId, boolean isUse, String content, String title, UserEntity user) {
 			this.scriptId = scriptId;
 			this.isUse = isUse;
 			this.content = content;
@@ -35,7 +35,7 @@ public class ScriptIsUseDto {
 		private final Long scriptId;
 		private final boolean isUse;
 		private final String title;
-		public Response(ScriptEntity scriptEntity) {
+		Response(ScriptEntity scriptEntity) {
 			this.scriptId = scriptEntity.getScriptId();
 			this.isUse = scriptEntity.isUse();
 			this.title = scriptEntity.getTitle();
