@@ -2,12 +2,8 @@ FROM amazoncorretto:17
 
 LABEL authors="Kangmin Lee"
 
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=build/libs/up-0.0.1.jar
 
-WORKDIR /app
+ADD ${JAR_FILE} docker-springboot.jar
 
-COPY ${JAR_FILE} /app/app.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/docker-springboot.jar", ">", "app.log"]
