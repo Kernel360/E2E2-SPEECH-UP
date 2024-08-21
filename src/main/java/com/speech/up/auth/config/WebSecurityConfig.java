@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,6 +39,9 @@ public class WebSecurityConfig {
 	private final DefaultOAuth2UserService oAuth2UserService;
 	private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
+	@Value("${google.cloud.url}")
+	private String allowUrl;
+
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -66,7 +70,7 @@ public class WebSecurityConfig {
 	@Bean
 	protected CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList(allowUrl));
 		corsConfiguration.addAllowedOrigin("*");
 		corsConfiguration.addAllowedMethod("*");
 		corsConfiguration.addAllowedHeader("*");
