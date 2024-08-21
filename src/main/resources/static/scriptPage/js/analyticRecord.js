@@ -116,7 +116,7 @@ function navigate(record) {
     const recordJson = JSON.parse(atob(record));
 
     if (recordJson.analyzed) {
-        window.location.href = `/report`;
+        window.location.href = `/reports/${recordJson.record_id}`;
     } else {
         saveRecord(recordJson.record_id);
     }

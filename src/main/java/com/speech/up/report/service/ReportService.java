@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class ReportService {
 	private static final Logger log = LoggerFactory.getLogger(ReportService.class);
 	private final ReportRepository reportRepository;
+	private final RecordRepository recordRepository;
 
 	public void saveReport(RecordEntity recordEntity, String recognized, double score) {
 		ReportEntity reportEntity = ReportEntity.create(recordEntity, recognized, score);
@@ -23,7 +24,12 @@ public class ReportService {
 		reportRepository.save(reportEntity);
 	}
 
-	public ReportEntity getReport(Long recordId) {
+	public ReportEntity getReportFromRecordId(Long recordId) {
 		return reportRepository.findByRecordId(recordId);
+	}
+
+	public String getScriptFromRecordId (Long recordId) {
+		RecordEntity recordEntity = recordRepository.findById(recordId).get();
+		return recordEntity.getScript().getContent();
 	}
 }
