@@ -53,7 +53,7 @@ function displayRecords(records) {
                     <div class="recording-item">
                         <audio controls src="${url}"></audio>
                         <button onclick="navigate('${btoa(JSON.stringify(record))}')">
-                            ${record.analyzed ? '분석결과 보러가기' : '분석하기'}
+                            ${record.analyzed ? '분석결과' : '분석하기'}
                         </button>
                     </div>
                 `;
@@ -116,7 +116,9 @@ function navigate(record) {
     const recordJson = JSON.parse(atob(record));
 
     if (recordJson.analyzed) {
-        window.location.href = `/reports/${recordJson.record_id}`;
+        const url = `/reports/${recordJson.record_id}`;
+        const options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+        window.open(url, options);
     } else {
         saveRecord(recordJson.record_id);
     }

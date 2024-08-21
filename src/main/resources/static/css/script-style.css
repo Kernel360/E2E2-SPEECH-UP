@@ -126,6 +126,12 @@ input[type="file"] {
     top: 50vh;
 }
 
+.recording-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -190,6 +196,10 @@ input[type="file"] {
 
 #view-analysis-btn:hover {
     background-color: #218838;
+}
+
+.file-upload {
+    padding: inherit;
 }
 
 label, select, button {

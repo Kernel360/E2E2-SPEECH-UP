@@ -18,19 +18,27 @@ public class KakaoProvider implements ProviderOAuth {
 	final String authorization ;
 	final String level;
 
-
-	@SuppressWarnings("unchecked")
 	public KakaoProvider(OAuth2User user) {
-		Map<String, String> responseMap = (Map<String, String>) user.getAttributes().get("properties");
-		if(responseMap == null) {
-			responseMap = new HashMap<String, String>();
+		Object properties = user.getAttributes().get("properties");
+		Map<String, String> responseMap = new HashMap<>();
+		if(properties instanceof Map<?, ?> tempMap) {
+			response(responseMap, tempMap);
 		}
+
 		this.socialId = user.getAttributes().get("id")+"";
 		this.providerType = ProviderType.KAKAO.name();
 		this.email = "none";
 		this.name = responseMap.get("nickname");
 		this.authorization = UserAuthorizationType.GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
+	}
+
+	private void response(Map<String, String> response, Map<?, ?> tempMap){
+		for (Map.Entry<?, ?> entry : tempMap.entrySet()) {
+			if (entry.getKey() instanceof String && entry.getValue() instanceof String) {
+				response.put((String) entry.getKey(), (String)entry.getValue());
+			}
+		}
 	}
 
 	@Override
