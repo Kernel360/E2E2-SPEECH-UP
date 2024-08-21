@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Report</title>
-    <link rel="stylesheet" type="text/css" href="/css/home-style.css">
-    <link rel="stylesheet" type="text/css" href="/css/script-style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/header-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/report-style.css">
 </head>
 <body>
+<header>
+    <div id="nav-buttons">
+        <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+    </div>
+</header>
 <div class="report-container">
     <h1>분석 결과</h1>
     <div class="report-content">
-        <!-- AI가 인식한 음성 텍스트 -->
         <div class="recognized-text">
-            <h2>음성 텍스트:</h2>
-            <p th:text="test">여기에 AI 인식 텍스트가 표시됩니다.</p>
+            <h2>작성한 대본 : </h2>
+            <p th:text="${script}"></p>
         </div>
-
-        <!-- 점수 -->
+        <div class="recognized-text">
+            <h2>인식된 음성 : </h2>
+            <p th:text="${recognized}"></p>
+        </div>
         <div class="score">
-            <h2>점수:</h2>
-            <p th:text="0">여기에 점수가 표시됩니다.</p>
+            <h2>발음 점수 : </h2>
+            <p th:text="${score}"></p>
         </div>
     </div>
 </div>
+<script src="/scriptPage/js/userMe.js"></script>
 </body>
 </html>
