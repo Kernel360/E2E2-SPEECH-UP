@@ -19,6 +19,7 @@ import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
+import jakarta.annotation.Nullable;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,11 +33,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private final UserRepository userRepository;
 	private final JwtProvider jwtProvider;
 
-	@SuppressWarnings("null")
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-		FilterChain filterChain) throws ServletException, IOException {
+	protected void doFilterInternal(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response,
+		@Nullable FilterChain filterChain) throws ServletException, IOException {
 		try {
+			assert filterChain != null;
+			assert request != null;
 			String token = parseBearerToken(request);
 			if(token == null){
 				filterChain.doFilter(request, response);
