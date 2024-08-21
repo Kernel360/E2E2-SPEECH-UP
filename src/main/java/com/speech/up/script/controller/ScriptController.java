@@ -40,6 +40,18 @@ public class ScriptController {
 	}
 
 	/**
+	 * 대본 갯수만 조회
+	 *
+	 * @return 갯수만 반환
+	 */
+	@GetMapping("/users/counts/me")
+	public ResponseEntity<Long> getScriptCount(HttpServletRequest request) {
+		return ResponseEntity.ok(scriptService.getScriptCount(request));
+	}
+
+
+
+	/**
 	 * 대본 생성
 	 * @param scriptAddRequestDto RequestBody 로 대본작성시 필요한 내용을 받아옴
 	 * @return 대본을 user 의 대본 목록에 추가
@@ -75,5 +87,5 @@ public class ScriptController {
 		@RequestBody ScriptIsUseDto.Request scriptIsUseDtoRequest
 	) {
 		return ResponseEntity.ok(scriptService.deleteScriptById(scriptIsUseDtoRequest));
-	} // 테스트 후 적용 안되면 메서드 수정 필요
+	}
 }

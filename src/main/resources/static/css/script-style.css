@@ -1,30 +1,26 @@
-
-
 button:disabled {
-    background-color: #d3d3d3; /* 비활성화 시 배경색 */
-    color: #a9a9a9;            /* 비활성화 시 텍스트 색상 */
-    cursor: not-allowed;       /* 비활성화 시 커서 스타일 */
+    background-color: #d3d3d3;
+    color: #a9a9a9;
+    cursor: not-allowed;
 }
 
-/* 컨테이너 스타일 */
 .script-container {
-    background-color: #ffffff; /* 흰색 배경 */
-    padding: 20px; /* 내부 패딩 */
-    border-radius: 8px; /* 모서리를 부드럽게 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
-    max-width: 800px; /* 최대 너비 */
-    margin: 20px auto; /* 가운데 정렬 및 여백 */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
 }
 
-/* 텍스트 컨텐츠 스타일 */
 #script-content {
-    background-color: #f8f9fa; /* 연한 배경 */
-    padding: 15px; /* 내부 패딩 */
-    border-radius: 4px; /* 모서리를 부드럽게 */
-    color: #555; /* 텍스트 색상 */
-    white-space: pre-wrap; /* 줄바꿈을 유지 */
-    font-family: "Courier New", Courier, monospace; /* 고정폭 글꼴 */
-    line-height: 1.5; /* 줄 간격 */
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    color: #555;
+    white-space: pre-wrap;
+    font-family: "Courier New", Courier, monospace;
+    line-height: 1.5;
 }
 
 .script-section, .recordings-section {
@@ -48,7 +44,7 @@ button:disabled {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box; /* Ensures padding is included in width */
+    box-sizing: border-box;
 }
 
 .recordings-section ul {
@@ -101,6 +97,46 @@ input[type="file"] {
     display: block;
 }
 
+#loading-bar {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    background: #00000059;
+    backdrop-filter: blur(5px);
+}
+
+#loading-circle{
+    border-top: 4px solid #00ff48;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+
+#loading-text{
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#loading-content{
+    position: sticky;
+    top: 50vh;
+}
+
+.recording-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 992px) {
 
     .script-section, .recordings-section {
@@ -147,36 +183,6 @@ input[type="file"] {
     }
 }
 
-/* 로딩 컨테이너 스타일 */
-#loading-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-/* 로딩 바 스타일 */
-#loading-bar {
-    border-top: 4px solid #00ff48;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* 분석 내용 보러가기 버튼 스타일 */
 #view-analysis-btn {
     margin-top: 20px;
     padding: 10px 20px;
@@ -192,55 +198,55 @@ input[type="file"] {
     background-color: #218838;
 }
 
-/* 글자 크기 조정 */
-label, select, button {
-    font-size: 1.5em;  /* 글자 크기 키움 */
+.file-upload {
+    padding: inherit;
 }
 
-/* 테이블 스타일 */
+label, select, button {
+    font-size: 1.5em;
+}
+
 .script-table {
     width: 100%;
-    border-collapse: collapse; /* 경계선이 겹치지 않도록 */
+    border-collapse: collapse;
     margin: 20px 0;
     background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 테이블 헤더 스타일 */
 .script-table th {
     background-color: #f8f9fa;
     font-weight: bold;
-    padding: 12px; /* 여백 */
-    border: 1px solid #ddd; /* 경계선 */
-    text-align: left; /* 텍스트 정렬 */
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
 }
 
 /* 테이블 셀 스타일 */
 .script-table td {
     padding: 12px;
-    border: 1px solid #ddd; /* 셀 사이 경계선 */
+    border: 1px solid #ddd;
     text-align: left;
 }
 
 /* 내용 칸 너비 조정 */
 .script-table td:nth-child(2) {
-    width: 50%; /* 내용 칸의 너비를 전체 테이블의 50%로 설정 */
+    width: 50%;
 }
 
 /* 날짜 칸 너비 조정 */
 .script-table td:nth-child(3),
 .script-table td:nth-child(4) {
-    width: 20%; /* 날짜 칸의 너비를 각각 20%로 설정 */
+    width: 20%;
 }
 
 /* 번호 칸 너비 조정 */
 .script-table td:nth-child(1) {
-    width: 10%; /* 번호 칸의 너비를 10%로 설정 */
+    width: 10%;
 }
 
-/* 기본 스타일 설정 */
 p {
-    display: flex; /* 내용 정렬 */
+    display: flex;
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 10px;
@@ -249,8 +255,27 @@ p {
     line-height: 1.6;
 }
 
-/* 강조된 텍스트 스타일 */
 strong {
     font-weight: bold;
-    color: #343a40; /* 어두운 색으로 강조 */
+    color: #343a40;
+}
+
+.progress {
+    position: relative;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 20px;
+}
+
+.progress .indeterminate {
+    position: absolute;
+    background-color: #2196f3;
+    width: 30%;
+    height: 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -30%; }
+    100% { left: 100%; }
 }

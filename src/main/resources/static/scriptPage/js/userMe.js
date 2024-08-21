@@ -11,7 +11,6 @@ function starter(){
 function getItemWithExpiry(key) {
     const itemStr = localStorage.getItem(key);
 
-    // 항목이 존재하지 않으면 null을 반환합니다.
     if (!itemStr) {
         return null;
     }
@@ -19,7 +18,6 @@ function getItemWithExpiry(key) {
     const item = JSON.parse(itemStr);
     const now = new Date();
 
-    // 항목이 만료된 경우, localStorage에서 항목을 제거하고 null을 반환합니다.
     if (now.getTime() > item.expiry) {
         localStorage.removeItem(key);
         return null;
@@ -32,18 +30,18 @@ async function userMe() {
     try {
         const response = await fetch("/users/me", {
             headers: {
-                'Authorization': `${jwtToken}` // Authorization 헤더 추가
+                'Authorization': `${jwtToken}`
             }
         });
 
         if (response.ok) {
             const userData = await response.json();
-            // 사용자 정보가 성공적으로 받아지면, 네비게이션 바에 로그인이 되어있음을 표시
             showLoggedInNav(userData);
+            myPage(userData);
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
-        showLoggedOutNav(); // 네트워크 오류 등으로 인한 실패 시 로그아웃 상태로 처리
+        showLoggedOutNav();
     }
 }
 
@@ -57,14 +55,31 @@ function showLoggedInNav(userData) {
         `
     }
     navButtons.innerHTML = `
-        <a href="/" class="nav-button">마이페이지</a>
+        <a onclick=navigateWithAuth('/page/me') class="nav-button">마이페이지</a>
         <a onclick=logout('/logout') class="nav-button" id="logout-button">로그아웃</a>
+        <a href="/" class="nav-button" >홈</a>
         <a onclick=navigateWithAuth('/script-list') class="nav-button">스피치 분석</a>
         <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
-       
     `;
 }
 
+function myPage(userData){
+    const myPage = document.getElementById("profile");
+    const level = document.getElementById("user-level");
+    const authorization = document.getElementById("user-authorization");
+    if(myPage!== null){
+        myPage.innerHTML = `
+         <h2 id="user-name">${userData.name}</h2>
+         <p id="user-email">${userData.email}</p>
+        `
+    }
+    if(level !== null){
+        level.innerHTML = `${userData.level}`
+    }
+    if(authorization !== null){
+        authorization.innerHTML = `${userData.authorization}`
+    }
+}
 function showLoggedOutNav() {
     const navButtons = document.getElementById('nav-buttons');
     navButtons.innerHTML = `
@@ -83,14 +98,12 @@ function navigateWithAuth(url) {
         'Authorization': `${jwtToken}`
     });
 
-    // 요청 생성 및 전송
     fetch(url, {
         method: 'GET',
         headers: headers
     })
         .then(response => {
             if (response.ok) {
-                // 페이지를 새 창에서 열기
                 window.location.href = url;
             } else {
                 window.location.href = "/login";

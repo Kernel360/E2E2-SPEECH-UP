@@ -13,6 +13,7 @@ public class UserGetInfoDto {
         private final String name;
         private final String level;
         private final String authorization;
+        private final String email;
 
         private UserGetInfoResponseDto(UserEntity userEntity) {
 			this.userId = userEntity.getUserId();
@@ -20,6 +21,7 @@ public class UserGetInfoDto {
             this.name = userEntity.getName();
             this.level = userEntity.getLevel();
             this.authorization = userEntity.getAuthorization();
+            this.email = userEntity.getEmail();
         }
 
         public static UserGetInfoResponseDto getUserInfo(UserEntity userEntity) {

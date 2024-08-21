@@ -12,4 +12,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	long countByIsUseTrue();
 
 	BoardEntity findByBoardIdAndIsUseTrue(Long id);
+
+	Long countByUserUserIdAndIsUseTrue(Long userId);
 }

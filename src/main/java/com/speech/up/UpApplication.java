@@ -36,6 +36,9 @@ public class UpApplication {
 		System.setProperty("spring.security.oauth2.client.registration.github.client-id", dotenv.get("GITHUB_CLIENT_ID"));
 		System.setProperty("spring.security.oauth2.client.registration.github.client-secret", dotenv.get("GITHUB_CLIENT_SECRET"));
 
+		System.setProperty("spring.datasource.url",dotenv.get("GOOGLE_CLOUD_DATABASE"));
+		System.setProperty("google.cloud.url",dotenv.get("GOOGLE_CLOUD_URL"));
+
 		SpringApplication.run(UpApplication.class, args);
 	}
 

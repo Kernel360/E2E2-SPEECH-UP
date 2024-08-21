@@ -6,7 +6,7 @@ spring:
       enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/SPEECH_UP?createDatabaseIfNotExist=true
+    url: ${GOOGLE_CLOUD_DATABASE}
     username: root
     password: 1234
   jpa:
@@ -17,6 +17,7 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
+
   security:
     oauth2:
       client:
@@ -63,15 +64,9 @@ speech-flow:
   result :
     type : ${SPEECH_FLOW_RESULT_TYPE}
 
+
 logging:
   level:
-    root: DEBUG                         # 기본 로그 레벨을 INFO로 설정
-    com.speech.up: DEBUG                  # com.example 패키지의 로그 레벨을 DEBUG로 설정
-    org.hibernate.SQL: DEBUG            # Hibernate SQL 로그 레벨을 DEBUG로 설정
-#  pattern:
-#    console: "%d{yyyy-MM-dd HH:mm:ss} - [%thread] %-5level %logger{36} - %msg%n"  # 콘솔 로그 포맷 설정
-#  file:
-#    name: app,log
-
+    com.speech.up: DEBUG                  #com.speech.up 패키지의 로그 레벨을 DEBUG로 설정
 
 

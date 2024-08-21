@@ -1,7 +1,6 @@
 package com.speech.up.record.service;
 
 import com.speech.up.api.converter.WavToRaw;
-import com.speech.up.log.CustomLogger;
 import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
 import com.speech.up.record.service.dto.RecordAddDto;
@@ -13,6 +12,7 @@ import com.speech.up.script.repository.ScriptRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -26,7 +26,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class RecordService {
 	private final RecordRepository recordRepository;
 	private final ScriptRepository scriptRepository;
-	private final CustomLogger customLogger;
 
 	private List<RecordEntity> getActiveRecordsByScriptId(Long scriptId) {
 		return recordRepository.findByScriptScriptIdAndIsUseTrue(scriptId);
@@ -59,6 +58,13 @@ public class RecordService {
 	public RecordIsUseDto.Response deleteRecord(RecordIsUseDto.Request recordIsUseRequestDto) {
 		RecordEntity recordEntity = RecordEntity.delete(recordIsUseRequestDto);
 		return RecordIsUseDto.deleteRecord(recordRepository.save(recordEntity));
+	}
+
+	@Transactional
+	public void analyzed(Long recordId){
+		RecordEntity recordEntity = recordRepository.findById(recordId)
+			.orElseThrow(() -> new IllegalStateException("not found record by recordId : " + recordId));
+		recordEntity.analyze(true);
 	}
 
 }

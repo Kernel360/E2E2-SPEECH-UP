@@ -1,5 +1,6 @@
 package com.speech.up.record.controller;
 
+import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.service.RecordService;
 import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.record.service.dto.RecordGetDto;
@@ -42,5 +43,13 @@ public class RecordController {
 		@RequestBody RecordIsUseDto.Request recordIsUseRequestDto
 	) {
 		return ResponseEntity.ok(recordService.deleteRecord(recordIsUseRequestDto));
+	}
+
+	@PatchMapping("/{recordId}/analyze")
+	public ResponseEntity<Void> isRecordAnalyzed(
+		@PathVariable Long recordId
+	) {
+		recordService.analyzed(recordId);
+		return ResponseEntity.ok().build();
 	}
 }

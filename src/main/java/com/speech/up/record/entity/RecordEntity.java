@@ -1,7 +1,6 @@
 package com.speech.up.record.entity;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,7 +15,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -33,6 +31,8 @@ public class RecordEntity extends BaseRecordEntity {
 
 	private String languageCode;
 
+	private boolean isAnalyzed;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "script_id", nullable = false)
 	@JsonBackReference
@@ -44,15 +44,16 @@ public class RecordEntity extends BaseRecordEntity {
 	@JsonManagedReference
 	private ReportEntity report;
 
-	private RecordEntity(byte[] audio, String languageCode, ScriptEntity script, boolean isUse) {
+	private RecordEntity(byte[] audio, String languageCode, ScriptEntity script, boolean isUse, boolean isAnalyzed) {
 		this.audio = audio;
 		this.languageCode = languageCode;
 		this.isUse = isUse;
 		this.script = script;
+		this.isAnalyzed = isAnalyzed;
 	}
 
 	private RecordEntity(byte[] audio, RecordAddDto.Request request, ScriptEntity scriptEntity) {
-		this(audio, request.getLanguageCode(), scriptEntity, true);
+		this(audio, request.getLanguageCode(), scriptEntity, true, false);
 	}
 
 	public static RecordEntity create(byte[] audio, RecordAddDto.Request request, ScriptEntity scriptEntity) {
@@ -63,11 +64,15 @@ public class RecordEntity extends BaseRecordEntity {
 		this(recordIsUseRequestDto.getRecordEntity().getAudio(),
 			recordIsUseRequestDto.getRecordEntity()
 				.getLanguageCode(),
-			recordIsUseRequestDto.getRecordEntity().getScript(), false);
+			recordIsUseRequestDto.getRecordEntity().getScript(), true, false);
 		this.recordId = recordIsUseRequestDto.getRecordEntity().getRecordId();
 	}
 
 	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {
 		return new RecordEntity(recordIsUseRequestDto);
+	}
+
+	public void analyze(boolean isAnalyzed) {
+		this.isAnalyzed = isAnalyzed;
 	}
 }

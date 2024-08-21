@@ -1,5 +1,3 @@
-
-/* 헤더 스타일 */
 header {
     background-color: #343a40;
     color: #ffffff;
@@ -18,6 +16,7 @@ header a {
     margin-right: 10px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
 header a:hover {
@@ -44,4 +43,3 @@ header a:hover {
     border-color: #ffffff;
     color:#ffffff;
 }
-

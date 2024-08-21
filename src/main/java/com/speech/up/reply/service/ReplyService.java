@@ -4,18 +4,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.speech.up.board.entity.BoardEntity;
 import com.speech.up.board.repository.BoardRepository;
-import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.common.exception.http.InternalServerErrorException;
+import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.reply.entity.ReplyEntity;
 import com.speech.up.reply.repository.ReplyRepository;
 import com.speech.up.reply.service.dto.ReplyAddDto;
 import com.speech.up.reply.service.dto.ReplyGetDto;
 import com.speech.up.reply.service.dto.ReplyIsUseDto;
 import com.speech.up.reply.service.dto.ReplyUpdateDto;
+import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,6 +26,7 @@ public class ReplyService {
 	private final ReplyRepository replyRepository;
 	private final UserRepository userRepository;
 	private final BoardRepository boardRepository;
+	private final JwtProvider jwtProvider;
 
 	public List<ReplyGetDto.Response> getAllReplyList(Long boardId) {
 		List<ReplyEntity> replyList = replyRepository.findAllByBoardBoardIdAndIsUseTrueOrderByCreatedAtDesc(boardId);
@@ -84,5 +86,15 @@ public class ReplyService {
 			throw new InternalServerErrorException("해당 댓글이 FALSE 처리 되어있습니다.");
 		}
 
+	}
+
+	public Long getBoardCount(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+		if(authorization != null && authorization.startsWith("Bearer ")) {
+			authorization = authorization.substring(7);
+		}
+		String socialId = jwtProvider.validate(authorization);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		return replyRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId());
 	}
 }

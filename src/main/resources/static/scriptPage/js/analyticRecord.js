@@ -34,29 +34,27 @@ function createWavHeader(sampleRate, numChannels, bitsPerSample, dataLength) {
 }
 
 function displayRecords(records) {
-    list.innerHTML = ''; // 기존 내용을 초기화
-    console.log(records)
+    list.innerHTML = '';
     records.forEach(record => {
         const pcmData = base64ToUint8Array(record.audio_path);
         if (pcmData) {
             try {
-                // WAV 헤더 생성
                 const wavHeader = createWavHeader(16000, 1, 16, pcmData.length);
                 const wavData = new Uint8Array(wavHeader.byteLength + pcmData.byteLength);
 
-                // 헤더와 PCM 데이터를 결합
                 wavData.set(new Uint8Array(wavHeader), 0);
                 wavData.set(pcmData, wavHeader.byteLength);
 
                 const blob = new Blob([wavData], { type: 'audio/wav' });
                 const url = URL.createObjectURL(blob);
-                console.log(url);
 
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <div class="recording-item">
                         <audio controls src="${url}"></audio>
-                        <button onclick="saveRecord('${record.record_id}')">분석하기</button>
+                        <button onclick="navigate('${btoa(JSON.stringify(record))}')">
+                            ${record.analyzed ? '분석결과' : '분석하기'}
+                        </button>
                     </div>
                 `;
 
@@ -84,7 +82,7 @@ async function loadRecords(scriptId) {
         return await response.json();
     } catch (error) {
         console.error("Error fetching records: ", error);
-        return []; // 에러 발생 시 빈 배열 반환
+        return [];
     }
 }
 
@@ -111,5 +109,17 @@ function base64ToUint8Array(base64) {
     } catch (error) {
         console.error("Error converting base64 to Uint8Array: ", error);
         return null;
+    }
+}
+
+function navigate(record) {
+    const recordJson = JSON.parse(atob(record));
+
+    if (recordJson.analyzed) {
+        const url = `/reports/${recordJson.record_id}`;
+        const options = 'top=10, left=10, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no';
+        window.open(url, options);
+    } else {
+        saveRecord(recordJson.record_id);
     }
 }

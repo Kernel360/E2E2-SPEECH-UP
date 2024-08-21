@@ -18,6 +18,7 @@ import com.speech.up.reply.service.dto.ReplyGetDto;
 import com.speech.up.reply.service.dto.ReplyIsUseDto;
 import com.speech.up.reply.service.dto.ReplyUpdateDto;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -30,6 +31,17 @@ public class ReplyController {
 	public ResponseEntity<List<ReplyGetDto.Response>> getReplyByBoardId(@PathVariable Long boardId) {
 		return ResponseEntity.ok(replyService.getAllReplyList(boardId));
 	}
+
+	/**
+	 * 게시글 갯수만 조회
+	 *
+	 * @return scriptGetDto 의 ResponseEntity 로 반환
+	 */
+	@GetMapping("/users/counts/me")
+	public ResponseEntity<Long> getBoardCount(HttpServletRequest request) {
+		return ResponseEntity.ok(replyService.getBoardCount(request));
+	}
+
 
 	@PostMapping("")
 	public ResponseEntity<ReplyAddDto.Response> addReply(@RequestBody ReplyAddDto.Request replyAddrRequestDto) {

@@ -1,8 +1,7 @@
 package com.speech.up.script.service;
 
 import com.speech.up.common.exception.http.NotFoundException;
-import com.speech.up.log.CustomLogger;
-import com.speech.up.oAuth.provider.JwtProvider;
+import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 import com.speech.up.script.service.dto.ScriptAddDto;
@@ -31,7 +30,6 @@ public class ScriptService {
 	private final ScriptRepository scriptRepository;
 	private final UserRepository userRepository;
 	private final JwtProvider jwtProvider;
-	private final CustomLogger customLogger;
 
 	private List<ScriptEntity> getActiveScriptsByUserId(Long userId) {
 		return scriptRepository.findByUserUserIdAndIsUseTrue(userId);
@@ -64,7 +62,8 @@ public class ScriptService {
 		}
 	}
 	public ScriptAddDto.Response addScript(ScriptAddDto.Request scriptAddRequestDto) {
-		customLogger.requestLog(scriptAddRequestDto);
+
+		log.debug("Add Script : {}", scriptAddRequestDto);
 		ScriptEntity scriptEntity = ScriptEntity.create(scriptAddRequestDto);
 		return ScriptAddDto.toResponse(scriptRepository.save(scriptEntity));
 	}
@@ -82,5 +81,15 @@ public class ScriptService {
 	public ScriptIsUseDto.Response deleteScriptById(ScriptIsUseDto.Request scriptIsUseRequestDto) {
 		ScriptEntity scriptEntity = ScriptEntity.delete(scriptIsUseRequestDto);
 		return ScriptIsUseDto.toResponse(scriptRepository.save(scriptEntity));
+	}
+
+	public Long getScriptCount(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+		if(authorization != null && authorization.startsWith("Bearer ")) {
+			authorization = authorization.substring(7);
+		}
+		String socialId = jwtProvider.validate(authorization);
+		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		return scriptRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId());
 	}
 }

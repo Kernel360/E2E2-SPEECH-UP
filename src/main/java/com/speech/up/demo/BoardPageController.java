@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardPageController {
 	private final BoardService boardService;
-	private final UserService userService;
 
 	@GetMapping("/boards")
 	public String boards(@RequestParam(defaultValue = "1") int page,

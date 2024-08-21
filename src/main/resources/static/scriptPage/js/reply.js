@@ -1,24 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 타겟 요소의 부모를 지정
-    const targetNode = document.getElementById('script-form'); // 대상 요소의 부모 ID
+    const targetNode = document.getElementById('script-form');
 
-    // 변화를 감지할 옵션 설정
     const config = { childList: true, subtree: true };
 
-    // 콜백 함수: 특정 요소가 추가될 때 호출
     const callback = function(mutationsList, observer) {
         for(const mutation of mutationsList) {
             if (mutation.type === 'childList') {
-                const commentElement = document.getElementById('user-id'); // 특정 요소 ID
+                const commentElement = document.getElementById('user-id');
                 if (commentElement) {
-                    getComment(); // 요소가 발견되면 함수 실행
-                    observer.disconnect(); // 필요 없으면 감시 중지
+                    getComment();
+                    observer.disconnect();
                 }
             }
         }
     };
 
-    // MutationObserver 생성 및 감시 시작
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, config);
 });
