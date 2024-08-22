@@ -35,8 +35,8 @@ jobs:
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
-        host: km253552535@35.216.60.77
-        username: ${{ secrets.SSH_USERNAME }}
+        host: 35.216.60.77 
+        username: km25352535 
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
