@@ -23,11 +23,14 @@ jobs:
 
     - name: Build and push Docker image
       run: |
+        # Log in to Docker Hub
         echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        SHORT_SHA=${{ github.sha }}     # Create a short SHA variable
-        SHORT_SHA=${SHORT_SHA:0:7}      # Use only the first 7 characters
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:$SHORT_SHA .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:$SHORT_SHA
+        
+        # Build the Docker image with the 'latest' tag
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest .
+        
+        # Push the Docker image to Docker Hub
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -40,9 +43,7 @@ jobs:
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           
           # Pull the latest Docker image
-          SHORT_SHA=${{ github.sha }}
-          SHORT_SHA=${SHORT_SHA:0:7}
-          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:$SHORT_SHA
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
           
           # Stop and remove the existing container if it exists
           sudo docker ps -q -f name=speech2 | xargs -r sudo docker stop
@@ -68,7 +69,7 @@ jobs:
             -e SPEECH_FLOW_LANG=${{ secrets.SPEECH_FLOW_LANG }} \
             -e SPEECH_FLOW_RESULT_TYPE=${{ secrets.SPEECH_FLOW_RESULT_TYPE }} \
             -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:$SHORT_SHA
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
           # Clean up old Docker images
           sudo docker image prune -f
