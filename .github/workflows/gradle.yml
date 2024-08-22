@@ -17,12 +17,14 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Set environment values
       run: |
         cd ./src/main/resources
         touch ./.env
         echo "${{ secrets.ENV }}" > ./.env
       shell: bash
+
     - name: Build with Gradle
       run: ./gradlew assemble
 
@@ -36,6 +38,11 @@ jobs:
         
         # Push the Docker image to Docker Hub
         docker push ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
+
+    - name: Clean up dangling Docker images locally
+      run: |
+        # Clean up any dangling images after the build
+        sudo docker image prune -f
 
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -61,5 +68,5 @@ jobs:
             --name speech2 \
             ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
-          # Clean up old Docker images
+          # Clean up old Docker images on the server
           sudo docker image prune -f
