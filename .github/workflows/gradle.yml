@@ -33,11 +33,16 @@ jobs:
         # Log in to Docker Hub
         echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         
-        # Build the Docker image with the 'latest' tag, without cache
-        docker build --no-cache -t ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest .
+        # Build the Docker image with the 'latest' tag
+        docker build -t ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} .
         
         # Push the Docker image to Docker Hub
         docker push ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
+
+    - name: Clean up dangling Docker images locally
+      run: |
+        # Clean up any dangling images after the build
+        sudo docker image prune -f
 
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -63,5 +68,5 @@ jobs:
             --name speech2 \
             ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
-          # Clean up old Docker images, including dangling images
+          # Clean up old Docker images on the server
           sudo docker image prune -f
