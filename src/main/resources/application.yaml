@@ -1,3 +1,9 @@
+server:
+  ssl:
+    key-store: /app/keystore.p12 #내 .p12 경로
+    key-store-password: my-certificate-password
+    key-alias: my-certificate-name
+    key-store-type: pkcs12
 spring:
   application:
     name: speech_up
