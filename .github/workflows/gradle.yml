@@ -17,12 +17,14 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Set environment values
       run: |
         cd ./src/main/resources
         touch ./.env
         echo "${{ secrets.ENV }}" > ./.env
       shell: bash
+
     - name: Build with Gradle
       run: ./gradlew assemble
 
@@ -31,8 +33,8 @@ jobs:
         # Log in to Docker Hub
         echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         
-        # Build the Docker image with the 'latest' tag
-        docker build -t ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} .
+        # Build the Docker image with the 'latest' tag, without cache
+        docker build --no-cache -t ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest .
         
         # Push the Docker image to Docker Hub
         docker push ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
@@ -61,5 +63,5 @@ jobs:
             --name speech2 \
             ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
-          # Clean up old Docker images
+          # Clean up old Docker images, including dangling images
           sudo docker image prune -f
