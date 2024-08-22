@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>내 주변 스피치 학원</title>
+    <link rel="stylesheet" type="text/css" href="/css/home-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/kakaomap-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/script-style.css">
+</head>
+<script src="/scriptPage/js/userMe.js"></script>
+<script src="/scriptPage/js/addTokenSession.js"></script>
+<body>
+<div class="container">
+    <!-- 지도 섹션 -->
+    <div class="map_wrap">
+        <div id="map"></div>
+    </div>
+
+    <!-- 리스트 섹션 -->
+    <div id="menu_wrap" class="bg_white">
+        <div class="option">
+
+        </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
+    </div>
+</div>
+<div id="academy-list" style="margin-top:10px"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0001f8b843450ca1a7d355ebf3f5b5b&libraries=services,clusterer,drawing"></script>
+<div id="loading-bar" style="display: none;z-index: 2;height: 100%">
+    <div id="loading-content">
+        <p id="loading-text">회원님 주변의 스피치 학원을 찾고 있어요.</p>
+        <div id="loading-circle"></div>
+    </div>
+</div>
+</body>
+<script src="/scriptPage/js/map.js"></script>
+</html>

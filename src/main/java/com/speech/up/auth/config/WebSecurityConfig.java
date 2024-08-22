@@ -50,8 +50,9 @@ public class WebSecurityConfig {
 			.sessionManagement(
 				sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(request -> request.requestMatchers(
-				"/", "api/v1/auth/**", "/oauth2/**", "/sign-up", "/css/**", "/js/**","/**","/logout",
-				"/static/images/**","/boards/**", "/api/upload", "/report", "/speech-record", "reports/**").permitAll()
+				"/", "api/v1/auth/**", "/oauth2/**", "/sign-up", "/js/**","/**","/logout",
+				"/static/images/**","/boards/**", "/api/upload", "/report", "/speech-record", "reports/**",
+					"/map").permitAll()
 				.requestMatchers("/script-list").hasRole("GENERAL_USER")
 				.requestMatchers("/script-write").hasRole("GENERAL_USER")
 				.requestMatchers("/boards-write").hasRole("GENERAL_USER")

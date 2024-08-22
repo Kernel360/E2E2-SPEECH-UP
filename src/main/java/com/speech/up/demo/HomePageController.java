@@ -27,4 +27,9 @@ public class HomePageController {
 	public String myPage(){
 		return "myPage";
 	}
+
+	@GetMapping("/map")
+	public String mapPage() {
+		return "map";
+	}
 }
