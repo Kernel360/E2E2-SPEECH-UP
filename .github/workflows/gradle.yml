@@ -60,6 +60,7 @@ jobs:
           
           # Stop and remove the existing container if it exists
           sudo docker ps -q -f name=speech2 | xargs -r sudo docker stop
+          sudo docker images --filter "dangling=true" -q | xargs sudo docker rmi
           sudo docker ps -a -q -f name=speech2 | xargs -r sudo docker rm
           
           # Run the new container with environment variables
