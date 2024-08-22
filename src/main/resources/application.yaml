@@ -1,7 +1,7 @@
 server:
   ssl:
     key-store: /app/keystore.p12 #내 .p12 경로
-    key-store-password: my-certificate-password
+    key-store-password: Lkm25351416!
     key-alias: my-certificate-name
     key-store-type: pkcs12
 spring:
