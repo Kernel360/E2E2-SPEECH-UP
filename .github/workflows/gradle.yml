@@ -1,0 +1,64 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Build Docker image
+      run: docker build -t speech2/speechup2 .
+
+    - name: Run Docker container
+      env:
+        GOOGLE_CLOUD_DATABASE: ${{ secrets.GOOGLE_CLOUD_DATABASE }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+        KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+        GITHUB_CLIENT_ID: ${{ secrets.GITHUB_CLIENT_ID }}
+        GITHUB_CLIENT_SECRET: ${{ secrets.GITHUB_CLIENT_SECRET }}
+        API_VOICE_TO_TEXT_URL: ${{ secrets.API_VOICE_TO_TEXT_URL }}
+        API_VOICE_TO_TEXT_ACCESS_KEY: ${{ secrets.API_VOICE_TO_TEXT_ACCESS_KEY }}
+        API_VOICE_TO_LANGUAGE_CODE: ${{ secrets.API_VOICE_TO_LANGUAGE_CODE }}
+        API_VOICE_TO_SCORE: ${{ secrets.API_VOICE_TO_SCORE }}
+        SPEECH_FLOW_API_KEY_ID: ${{ secrets.SPEECH_FLOW_API_KEY_ID }}
+        SPEECH_FLOW_API_KEY_SECRET: ${{ secrets.SPEECH_FLOW_API_KEY_SECRET }}
+        SPEECH_FLOW_LANG: ${{ secrets.SPEECH_FLOW_LANG }}
+        SPEECH_FLOW_RESULT_TYPE: ${{ secrets.SPEECH_FLOW_RESULT_TYPE }}
+        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+      run: |
+        docker run -d \
+          -p 8080:8080 \
+          --name speech2 \
+          -e GOOGLE_CLOUD_DATABASE \
+          -e GOOGLE_CLIENT_ID \
+          -e GOOGLE_CLIENT_SECRET \
+          -e KAKAO_CLIENT_ID \
+          -e KAKAO_CLIENT_SECRET \
+          -e GITHUB_CLIENT_ID \
+          -e GITHUB_CLIENT_SECRET \
+          -e API_VOICE_TO_TEXT_URL \
+          -e API_VOICE_TO_TEXT_ACCESS_KEY \
+          -e API_VOICE_TO_LANGUAGE_CODE \
+          -e API_VOICE_TO_SCORE \
+          -e SPEECH_FLOW_API_KEY_ID \
+          -e SPEECH_FLOW_API_KEY_SECRET \
+          -e SPEECH_FLOW_LANG \
+          -e SPEECH_FLOW_RESULT_TYPE \
+          -e JWT_SECRET_KEY \
+          speech2/speechup2
