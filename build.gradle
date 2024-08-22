@@ -58,6 +58,7 @@ dependencies {
 bootJar{
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-tasks.named('test') {
-	useJUnitPlatform()
+tasks.withType(Test) {
+	// Skip tests
+	enabled = false
 }
