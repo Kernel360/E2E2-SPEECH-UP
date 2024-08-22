@@ -27,10 +27,10 @@ jobs:
         echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         
         # Build the Docker image with the 'latest' tag
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} .
+        docker build -t ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }} .
         
         # Push the Docker image to Docker Hub
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
+        docker push ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -43,7 +43,7 @@ jobs:
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           
           # Pull the latest Docker image
-          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
+          sudo docker pull ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
           
           # Stop and remove the existing container if it exists
           sudo docker ps -q -f name=speech2 | xargs -r sudo docker stop
