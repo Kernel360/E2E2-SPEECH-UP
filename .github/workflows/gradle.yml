@@ -23,7 +23,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }} .
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
 
@@ -34,37 +34,37 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-            # Log in to Docker Hub
-            sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-            
-            # Pull the latest Docker image
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
-            
-            # Stop and remove the existing container if it exists
-            sudo docker ps -q -f name=speech2 | xargs -r sudo docker stop
-            sudo docker ps -a -q -f name=speech2 | xargs -r sudo docker rm
-            
-            # Run the new container with environment variables
-            sudo docker run -d \
-              -p 8080:8080 \
-              --name speech2 \
-              -e GOOGLE_CLOUD_DATABASE=${{ secrets.GOOGLE_CLOUD_DATABASE }} \
-              -e GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
-              -e GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
-              -e KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }} \
-              -e KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }} \
-              -e GITHUB_CLIENT_ID=${{ secrets.GITHUB_CLIENT_ID }} \
-              -e GITHUB_CLIENT_SECRET=${{ secrets.GITHUB_CLIENT_SECRET }} \
-              -e API_VOICE_TO_TEXT_URL=${{ secrets.API_VOICE_TO_TEXT_URL }} \
-              -e API_VOICE_TO_TEXT_ACCESS_KEY=${{ secrets.API_VOICE_TO_TEXT_ACCESS_KEY }} \
-              -e API_VOICE_TO_LANGUAGE_CODE=${{ secrets.API_VOICE_TO_LANGUAGE_CODE }} \
-              -e API_VOICE_TO_SCORE=${{ secrets.API_VOICE_TO_SCORE }} \
-              -e SPEECH_FLOW_API_KEY_ID=${{ secrets.SPEECH_FLOW_API_KEY_ID }} \
-              -e SPEECH_FLOW_API_KEY_SECRET=${{ secrets.SPEECH_FLOW_API_KEY_SECRET }} \
-              -e SPEECH_FLOW_LANG=${{ secrets.SPEECH_FLOW_LANG }} \
-              -e SPEECH_FLOW_RESULT_TYPE=${{ secrets.SPEECH_FLOW_RESULT_TYPE }} \
-              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
-              ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
+          # Log in to Docker Hub
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          
+          # Pull the latest Docker image
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
+          
+          # Stop and remove the existing container if it exists
+          sudo docker ps -q -f name=speech2 | xargs -r sudo docker stop
+          sudo docker ps -a -q -f name=speech2 | xargs -r sudo docker rm
+          
+          # Run the new container with environment variables
+          sudo docker run -d \
+            -p 8080:8080 \
+            --name speech2 \
+            -e GOOGLE_CLOUD_DATABASE=${{ secrets.GOOGLE_CLOUD_DATABASE }} \
+            -e GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
+            -e GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
+            -e KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }} \
+            -e KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }} \
+            -e GITHUB_CLIENT_ID=${{ secrets.GITHUB_CLIENT_ID }} \
+            -e GITHUB_CLIENT_SECRET=${{ secrets.GITHUB_CLIENT_SECRET }} \
+            -e API_VOICE_TO_TEXT_URL=${{ secrets.API_VOICE_TO_TEXT_URL }} \
+            -e API_VOICE_TO_TEXT_ACCESS_KEY=${{ secrets.API_VOICE_TO_TEXT_ACCESS_KEY }} \
+            -e API_VOICE_TO_LANGUAGE_CODE=${{ secrets.API_VOICE_TO_LANGUAGE_CODE }} \
+            -e API_VOICE_TO_SCORE=${{ secrets.API_VOICE_TO_SCORE }} \
+            -e SPEECH_FLOW_API_KEY_ID=${{ secrets.SPEECH_FLOW_API_KEY_ID }} \
+            -e SPEECH_FLOW_API_KEY_SECRET=${{ secrets.SPEECH_FLOW_API_KEY_SECRET }} \
+            -e SPEECH_FLOW_LANG=${{ secrets.SPEECH_FLOW_LANG }} \
+            -e SPEECH_FLOW_RESULT_TYPE=${{ secrets.SPEECH_FLOW_RESULT_TYPE }} \
+            -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
 
-            # Clean up old Docker images
-            sudo docker image prune -f
+          # Clean up old Docker images
+          sudo docker image prune -f
