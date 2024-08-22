@@ -2,6 +2,7 @@ package com.speech.up.demo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,12 @@ public class HomePageController {
 		return "myPage";
 	}
 
+	@Value("${kakao.map.app.key}")
+	private String kakaoMapAppKey;
+
 	@GetMapping("/map")
-	public String mapPage() {
+	public String mapPage(Model model) {
+		model.addAttribute("kakaoMapAppKey", kakaoMapAppKey);
 		return "map";
 	}
 }

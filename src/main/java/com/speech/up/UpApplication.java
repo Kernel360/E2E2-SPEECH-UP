@@ -39,6 +39,8 @@ public class UpApplication {
 		System.setProperty("spring.datasource.url",dotenv.get("GOOGLE_CLOUD_DATABASE"));
 		System.setProperty("google.cloud.url",dotenv.get("GOOGLE_CLOUD_URL"));
 
+		System.setProperty("kakao.map.app.key", dotenv.get("KAKAO_MAP_APP_KEY"));
+
 		SpringApplication.run(UpApplication.class, args);
 	}
 
