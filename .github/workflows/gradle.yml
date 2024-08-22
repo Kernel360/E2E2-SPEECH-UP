@@ -19,7 +19,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build with Gradle
-      run: ./gradlew assemble --no-test
+      run: ./gradlew assemble
 
     - name: Build and push Docker image
       run: |
