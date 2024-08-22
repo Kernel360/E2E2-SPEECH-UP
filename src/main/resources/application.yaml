@@ -69,4 +69,7 @@ logging:
   level:
     com.speech.up: DEBUG                  #com.speech.up 패키지의 로그 레벨을 DEBUG로 설정
 
-
+kakao:
+  map:
+    app:
+      key: ${KAKAO_MAP_APP_KEY}

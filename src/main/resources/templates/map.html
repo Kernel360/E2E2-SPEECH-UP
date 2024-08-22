@@ -27,7 +27,7 @@
     </div>
 </div>
 <div id="academy-list" style="margin-top:10px"></div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0001f8b843450ca1a7d355ebf3f5b5b&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaoMapAppKey} + '&libraries=services,clusterer,drawing'"></script>
 <div id="loading-bar" style="display: none;z-index: 2;height: 100%">
     <div id="loading-content">
         <p id="loading-text">회원님 주변의 스피치 학원을 찾고 있어요.</p>
