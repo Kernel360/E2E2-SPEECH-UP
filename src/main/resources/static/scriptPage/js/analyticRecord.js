@@ -74,8 +74,15 @@ function displayRecords(records) {
 }
 
 async function loadRecords(scriptId) {
+    const jwtToken =  getItemWithExpiry("jwtToken");
+
     try {
-        const response = await fetch(`/speech-record/${scriptId}`);
+        const response = await fetch(`/speech-record/${scriptId}`,{
+            method: 'GET',
+            headers: {
+                'Authorization' : `${jwtToken}`
+            }
+        });
         if (!response.ok) {
             throw new Error(`Failed to load records: ${response.statusText}`);
         }
