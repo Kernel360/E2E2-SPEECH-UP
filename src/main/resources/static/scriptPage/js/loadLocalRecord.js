@@ -1,6 +1,7 @@
 document.getElementById('upload-btn').addEventListener('click', function() {
     const fileInput = document.getElementById('file-input');
     const files = fileInput.files;
+    const jwtToken =  getItemWithExpiry("jwtToken");
 
     if (files.length === 0) {
         alert('파일을 선택하세요.');
@@ -18,7 +19,10 @@ document.getElementById('upload-btn').addEventListener('click', function() {
     formData.append('scriptId', scriptId);
     fetch('/speech-record', {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: {
+            'Authorization' : `${jwtToken}`
+        }
     })
         .then(response => response.json())
         .then(data => {

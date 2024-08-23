@@ -50,12 +50,18 @@ public class WebSecurityConfig {
 			.sessionManagement(
 				sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(request -> request.requestMatchers(
-				"/", "api/v1/auth/**", "/oauth2/**", "/sign-up", "/js/**","/**","/logout",
-				"/static/images/**","/boards/**", "/api/upload", "/report", "/speech-record", "reports/**",
-					"/map").permitAll()
-				.requestMatchers("/script-list").hasRole("GENERAL_USER")
-				.requestMatchers("/script-write").hasRole("GENERAL_USER")
-				.requestMatchers("/boards-write").hasRole("GENERAL_USER")
+				 "api/v1/auth/**", "/oauth2/**", "/sign-up", "/css/**",
+					"/js/**","/logout","/scriptPage/js/*","/login","/images/*",
+				"/static/images/**","/boards","/boards/**", "/api/upload",
+					"/.well-known/**",
+					"/report","/scripts","/script-write", "/script-list","/replies/**",
+					"/admin/view","/page/me","/speech-record", "reports/**","/").permitAll()
+				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER","GENERAL_USER")
+				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER","GENERAL_USER")
+				.requestMatchers("/speech-record").hasAnyRole("ADMIN_USER","GENERAL_USER")
+				.requestMatchers("/speech-record/**").hasAnyRole("ADMIN_USER","GENERAL_USER")
+				.requestMatchers("/api/admin/user/all").hasRole("ADMIN_USER")
+				.requestMatchers("/api/admin/me").hasRole("ADMIN_USER")
 				.anyRequest().authenticated())
 			.oauth2Login(oauth2 -> oauth2
 				.authorizationEndpoint(endpoint -> endpoint.baseUri("/oauth2/authorization/**"))

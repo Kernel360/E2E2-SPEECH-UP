@@ -17,7 +17,7 @@ function showDeleteAndEdit(board){
     const boardId = urlParams[2];
     if(board?.owner === true){
         boardButtons.innerHTML += `
-            <a onclick=navigateWithAuth('/boards/${boardId}/edit') class="btn btn-primary mt-3">수정하기</a>
+            <a href='/boards/${boardId}/edit' class="btn btn-primary mt-3">수정하기</a>
             <a onclick=deleteBoard() class="btn btn-primary mt-3">삭제하기</a>
         `;
     }
@@ -55,7 +55,8 @@ function deleteBoard(){
                 fetch(`/api/boards`, {
                     method: 'DELETE',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization' : `${jwtToken}`
                     },
                     body: JSON.stringify(requestBody)
                 })

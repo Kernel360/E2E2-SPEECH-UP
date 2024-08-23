@@ -25,9 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
 
                 fetch(`/api/boards`, {
-                    method: 'PATCH',
+                    method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization' : `${jwtToken}`
                     },
                     body: JSON.stringify(requestBody)
                 })

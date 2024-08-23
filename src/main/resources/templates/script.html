@@ -9,23 +9,9 @@
 </head>
 <body>
 <header>
-    <nav>
-        <a href="/" class="nav-button">홈</a>
-        <a href="/logout" class="nav-button" id="logout-button">로그아웃</a>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const logoutButton = document.getElementById('logout-button');
-
-                if (logoutButton) {
-                    logoutButton.addEventListener('click', function(event) {
-                        if (!confirm('로그아웃 하시겠습니까?')) {
-                            event.preventDefault(); // 확인을 누르지 않으면 로그아웃 중단
-                        }
-                    });
-                }
-            });
-        </script>
-    </nav>
+        <div id="nav-buttons">
+            <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+        </div>
 </header>
 <h1>SpeechUp!</h1>
 <div class="container">
@@ -70,6 +56,7 @@
     </div>
 
 </div>
+<script src="/scriptPage/js/userMe.js"></script>
 <script src="/scriptPage/js/scriptDetail.js"></script>
 <script src="/scriptPage/js/record.js"></script>
 <script src="/scriptPage/js/saveRecord.js"></script>
