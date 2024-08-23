@@ -91,22 +91,3 @@ function logout(){
     localStorage.removeItem("jwtToken");
     window.location.href = "/logout";
 }
-const body =  document.getElementsByTagName("body");
-function navigateWithAuth(url) {
-    const jwtToken =  getItemWithExpiry("jwtToken");
-    const headers = new Headers({
-        'Authorization': `${jwtToken}`
-    });
-    fetch(url, {
-        method: 'GET',
-        headers: headers
-    })
-        .then(async response => {
-            body.item(0).innerHTML =await response.text();
-            if (!response.ok) {
-                window.location.href = "/login";
-                console.error('Authorization failed.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
