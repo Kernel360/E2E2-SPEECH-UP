@@ -32,4 +32,11 @@ public class UserController {
     ) {
       userService.deleteUser(request);
     }
+
+
+    @DeleteMapping("/id")
+    @PreAuthorize("hasAnyRole('ADMIN_USER')")
+    public void unUsedUser(HttpServletRequest request){
+        userService.unUsedUser(request);
+    }
 }
