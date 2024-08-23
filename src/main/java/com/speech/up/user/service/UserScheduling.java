@@ -3,6 +3,7 @@ package com.speech.up.user.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
 
 @Service
+@EnableScheduling
 @RequiredArgsConstructor
 public class UserScheduling {
 
@@ -26,11 +28,11 @@ public class UserScheduling {
 		LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
 
 		// 일주일 이상 접속하지 않은 활성 사용자 조회
-		List<UserEntity> inactiveUsers = userRepository.findAllByLastAccessedAtBeforeAndIsUse(oneWeekAgo, true);
+		List<UserEntity> inactiveUsers = userRepository.findAllByLastAccessedAtBeforeAndIsUseTrue(oneWeekAgo);
 
 		// 해당 사용자의 is_use 값을 0으로 설정
 		for (UserEntity users : inactiveUsers) {
-			userRepository.deleteBySocialId(users.getSocialId());
+			userRepository.customDeleteUser(users.getUserId(),false);
 		}
 	}
 }

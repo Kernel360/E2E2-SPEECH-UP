@@ -49,5 +49,27 @@ public class UserService {
         userRepository.deleteBySocialId(socialId);
     }
 
+    public void unUsedUser(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if(authorization == null) {
+            throw new BadRequestException("Authorization header is missing");
+        }
+        if(authorization.startsWith("Bearer ")) {
+            authorization = authorization.substring(7);
+        }
+        String socialId = jwtProvider.validate(authorization);
+
+        if (!userRepository.existsBySocialId(socialId)){
+            throw new BadRequestException("해당 유저가 존재하지 않습니다.");
+        }
+
+        UserEntity userEntity = userRepository.findBySocialId(socialId);
+
+
+
+        userRepository.customDeleteUser(userEntity.getUserId(),false);
+
+    }
+
 
 }
