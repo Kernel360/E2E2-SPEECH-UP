@@ -23,8 +23,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	List<UserEntity> findAllByLastAccessedAtBeforeAndIsUseTrue(LocalDateTime oneWeekAgo);
 
+	//TODO :  이 부분을 제거하고 save 로 변경하는 방안을 생각하는 것이 좋을 것 같습니다.
 	@Transactional
 	@Modifying
-	@Query("update UserEntity u set u.isUse = :use where u.userId = :userId and u.isUse = true ")
+	@Query("update UserEntity u set u.isUse = :use where u.userId = :userId ")
 	void customDeleteUser(@Param("userId") Long userId, @Param("use") boolean use);
 }
