@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -54,9 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority(role));
 			SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-			AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null, authorities);
+			AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, token, authorities);
 
-			authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+			 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 			securityContext.setAuthentication(authenticationToken);
 			SecurityContextHolder.setContext(securityContext);
 

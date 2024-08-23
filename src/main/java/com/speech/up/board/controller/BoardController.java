@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -52,18 +53,20 @@ public class BoardController {
 		return ResponseEntity.ok(boardService.getBoardCount(request));
 	}
 
-
 	@PostMapping("")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<BoardAddDto.Response> addBoard(@RequestBody BoardAddDto.Request boardAddRequest, HttpServletRequest request){
 		return ResponseEntity.ok(boardService.addBoard(boardAddRequest,request));
 	}
 
 	@PatchMapping("")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<BoardUpdateDto.Response>  updateBoard(@RequestBody BoardUpdateDto.Request boardUpdateRequest){
 		return ResponseEntity.ok(boardService.updateBoard(boardUpdateRequest));
 	}
 
 	@DeleteMapping("")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<BoardIsUseDto.Response> deleteBoard(@RequestBody BoardIsUseDto.Request boardIsUseResponse	){
 		return ResponseEntity.ok(boardService.deleteBoard(boardIsUseResponse));
 	}
