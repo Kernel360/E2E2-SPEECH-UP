@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Null;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ToString
@@ -36,6 +37,10 @@ public class UserEntity {
 
     private String providerType;
 
+    private LocalDateTime lastAccessedAt;
+
+    private boolean isUse;
+
     @Null
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -49,6 +54,7 @@ public class UserEntity {
         this.email = email;
         this.level = level;
         this.authorization = authorization;
+        this.lastAccessedAt = LocalDateTime.now();
     }
 
 
@@ -58,6 +64,7 @@ public class UserEntity {
         this.level = level;
         this.name = name;
         this.authorization = authorization;
+        this.lastAccessedAt = LocalDateTime.now();
     }
 
     public UserEntity(String socialId, String email, String level,
@@ -68,5 +75,17 @@ public class UserEntity {
         this.name = name;
         this.authorization = authorization;
         this.providerType = providerType;
+        this.lastAccessedAt = LocalDateTime.now();
+    }
+
+    public UserEntity(UserEntity user) {
+        this.userId = user.getUserId();
+        this.name = user.getName();
+        this.socialId = user.getSocialId();
+        this.email = user.getEmail();
+        this.level = user.getLevel();
+        this.providerType = user.getProviderType();
+        this.authorization = user.getAuthorization();
+        this.lastAccessedAt = LocalDateTime.now();
     }
 }
