@@ -25,7 +25,7 @@ public class ReportService {
 	}
 
 	public ReportEntity getReportFromRecordId(Long recordId) {
-		return reportRepository.findByRecordId(recordId);
+		return reportRepository.findReportEntityByReportId(recordId);
 	}
 
 	public String getScriptFromRecordId (Long recordId) {
