@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',starter);
 function starter(){
     const jwtToken =  getItemWithExpiry("jwtToken");
     if(jwtToken != null){
-        return userMe().then((res)=> res.json()).catch((e) => console.error(e))
+        return userMe().then((res)=> res);
     }
     return  showLoggedOutNav();
 }
@@ -55,11 +55,11 @@ function showLoggedInNav(userData) {
         `
     }
     navButtons.innerHTML = `
-        <a onclick=navigateWithAuth('/page/me') class="nav-button">마이페이지</a>
-        <a onclick=logout('/logout') class="nav-button" id="logout-button">로그아웃</a>
+        <a href="/page/me" class="nav-button">마이페이지</a>
+        <a onclick=logout() class="nav-button" id="logout-button">로그아웃</a>
         <a href="/" class="nav-button" >홈</a>
-        <a onclick=navigateWithAuth('/script-list') class="nav-button">스피치 분석</a>
-        <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
+        <a href="/script-list" class="nav-button">스피치 분석</a>
+        <a href="/boards" class="nav-button">게시판</a>
     `;
 }
 
@@ -84,28 +84,26 @@ function showLoggedOutNav() {
     const navButtons = document.getElementById('nav-buttons');
     navButtons.innerHTML = `
         <a href="/login" class="nav-button">로그인</a>
-        <a onclick=navigateWithAuth('/boards') class="nav-button">게시판</a>
+        <a href="/boards" class="nav-button">게시판</a>
     `;
 }
-function logout(url){
+function logout(){
     localStorage.removeItem("jwtToken");
     window.location.href = "/logout";
 }
-
+const body =  document.getElementsByTagName("body");
 function navigateWithAuth(url) {
     const jwtToken =  getItemWithExpiry("jwtToken");
     const headers = new Headers({
         'Authorization': `${jwtToken}`
     });
-
     fetch(url, {
         method: 'GET',
         headers: headers
     })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = url;
-            } else {
+        .then(async response => {
+            body.item(0).innerHTML =await response.text();
+            if (!response.ok) {
                 window.location.href = "/login";
                 console.error('Authorization failed.');
             }

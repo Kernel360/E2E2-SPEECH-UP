@@ -9,6 +9,7 @@ import com.speech.up.record.service.dto.RecordIsUseDto;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,11 +25,13 @@ public class RecordController {
 	private final RecordService recordService;
 
 	@GetMapping("/{scriptId}")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<List<RecordGetDto.Response>> getRecordALl(@PathVariable Long scriptId) {
 		return ResponseEntity.ok(recordService.getRecordList(scriptId));
 	}
 
 	@PostMapping("")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<RecordAddDto.Response> addRecord(
 		@RequestPart("file") MultipartFile file,
 		@RequestParam("languageCode") String languageCode,
@@ -39,6 +42,7 @@ public class RecordController {
 	}
 
 	@PatchMapping("")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<RecordIsUseDto.Response> deleteRecord(
 		@RequestBody RecordIsUseDto.Request recordIsUseRequestDto
 	) {
@@ -46,6 +50,7 @@ public class RecordController {
 	}
 
 	@PatchMapping("/{recordId}/analyze")
+	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
 	public ResponseEntity<Void> isRecordAnalyzed(
 		@PathVariable Long recordId
 	) {

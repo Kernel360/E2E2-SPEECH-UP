@@ -1,5 +1,7 @@
 package com.speech.up.user.service;
 
+import java.util.List;
+
 import com.speech.up.common.exception.http.BadRequestException;
 import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.user.entity.UserEntity;
@@ -15,6 +17,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
+
+    public List<UserGetInfoDto.UserGetInfoResponseDto> getAllUsers() {
+        return UserGetInfoDto.UserGetInfoResponseDto.getUsers(userRepository.findAll());
+    }
 
     public UserGetInfoDto.UserGetInfoResponseDto getUserInfo(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
@@ -42,4 +48,6 @@ public class UserService {
         System.out.println(socialId);
         userRepository.deleteBySocialId(socialId);
     }
+
+
 }
