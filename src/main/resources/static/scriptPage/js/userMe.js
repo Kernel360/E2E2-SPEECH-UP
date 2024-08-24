@@ -67,6 +67,7 @@ function myPage(userData){
     const myPage = document.getElementById("profile");
     const level = document.getElementById("user-level");
     const authorization = document.getElementById("user-authorization");
+    const lastAccessedAt= document.getElementById("user-last-accessed-at");
     if(myPage!== null){
         myPage.innerHTML = `
          <h2 id="user-name">${userData.name}</h2>
@@ -78,6 +79,9 @@ function myPage(userData){
     }
     if(authorization !== null){
         authorization.innerHTML = `${userData.authorization}`
+    }
+    if(lastAccessedAt !== null){
+        lastAccessedAt.innerHTML = `${userData.lastAccessedAt.replace("T", " ")}`
     }
 }
 function showLoggedOutNav() {
