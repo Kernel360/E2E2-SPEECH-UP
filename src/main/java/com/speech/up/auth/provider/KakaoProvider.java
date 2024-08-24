@@ -17,6 +17,7 @@ public class KakaoProvider implements ProviderOAuth {
 	final String providerType;
 	final String authorization ;
 	final String level;
+	final boolean isUse;
 
 	public KakaoProvider(OAuth2User user) {
 		Object properties = user.getAttributes().get("properties");
@@ -29,8 +30,9 @@ public class KakaoProvider implements ProviderOAuth {
 		this.providerType = ProviderType.KAKAO.name();
 		this.email = "none";
 		this.name = responseMap.get("nickname");
-		this.authorization = UserAuthorizationType.GENERAL_USER.name();
+		this.authorization = UserAuthorizationType.ROLE_GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
+		this.isUse = true;
 	}
 
 	private void response(Map<String, String> response, Map<?, ?> tempMap){

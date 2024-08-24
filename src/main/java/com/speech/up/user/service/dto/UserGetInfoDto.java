@@ -9,9 +9,37 @@ import lombok.Getter;
 import lombok.ToString;
 
 public class UserGetInfoDto {
+
     @Getter
     @ToString
-    public static class UserGetInfoResponseDto {
+    public static class Request{
+        private final Long userId;
+        private final String socialId;
+        private final String name;
+        private final String level;
+        private final String authorization;
+        private final String providerType;
+        private final String email;
+        private final LocalDateTime lastAccessedAt;
+        private final boolean isUse;
+
+        private Request(UserEntity userEntity){
+            this.userId = userEntity.getUserId();
+            this.socialId = userEntity.getSocialId();
+            this.name = userEntity.getName();
+            this.providerType = userEntity.getProviderType();
+            this.level = userEntity.getLevel();
+            this.authorization = userEntity.getAuthorization();
+            this.email = userEntity.getEmail();
+            this.lastAccessedAt = userEntity.getLastAccessedAt();
+            this.isUse = userEntity.isUse();
+        }
+
+    }
+
+    @Getter
+    @ToString
+    public static class Response {
         private final Long userId;
         private final String socialId;
         private final String name;
@@ -19,8 +47,9 @@ public class UserGetInfoDto {
         private final String authorization;
         private final String email;
         private final LocalDateTime lastAccessedAt;
+        private final boolean isUse;
 
-        private UserGetInfoResponseDto(UserEntity userEntity) {
+        private Response(UserEntity userEntity) {
 			this.userId = userEntity.getUserId();
 			this.socialId = userEntity.getSocialId();
             this.name = userEntity.getName();
@@ -28,15 +57,16 @@ public class UserGetInfoDto {
             this.authorization = userEntity.getAuthorization();
             this.email = userEntity.getEmail();
 			this.lastAccessedAt = userEntity.getLastAccessedAt();
+			this.isUse = userEntity.isUse();
 		}
 
-        public static UserGetInfoResponseDto getUserInfo(UserEntity userEntity) {
-            return new UserGetInfoResponseDto(userEntity);
+        public static Response getUserInfo(UserEntity userEntity) {
+            return new Response(userEntity);
         }
 
-        public static List<UserGetInfoResponseDto> getUsers(List<UserEntity> users) {
+        public static List<Response> getUsers(List<UserEntity> users) {
             return users.stream()
-                .map(UserGetInfoResponseDto::getUserInfo)
+                .map(Response::getUserInfo)
                 .collect(Collectors.toList());
         }
 
