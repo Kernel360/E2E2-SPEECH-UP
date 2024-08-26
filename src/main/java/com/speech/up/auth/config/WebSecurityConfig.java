@@ -50,7 +50,8 @@ public class WebSecurityConfig {
 			.requestMatchers(
 				new AntPathRequestMatcher("/images/**"),
 				new AntPathRequestMatcher("/css/**"),
-				new AntPathRequestMatcher("/scriptPage/js/**")
+				new AntPathRequestMatcher("/scriptPage/js/**"),
+				new AntPathRequestMatcher("/map")
 			);
 	}
 
@@ -64,7 +65,7 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests(request -> request.requestMatchers(
 					"api/v1/auth/**", "/oauth2/**", "/sign-up", "/logout", "/login",
 					"/boards", "/boards/**", "/api/upload",
-					"/.well-known/**", "/map", "/api/open/data/*",
+					"/.well-known/**", "/api/open/data/*",
 					"/report", "/scripts", "/script-write", "/script-list", "/replies/**",
 					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
 				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")

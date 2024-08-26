@@ -1,10 +1,17 @@
 package com.speech.up;
 
+import java.util.Arrays;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.servlet.DispatcherType;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -44,4 +51,13 @@ public class UpApplication {
 		SpringApplication.run(UpApplication.class, args);
 	}
 
+	@Bean
+	public FilterRegistrationBean<ForwardedHeaderFilter> forwardedHeaderFilter() {
+		ForwardedHeaderFilter filter = new ForwardedHeaderFilter();
+		FilterRegistrationBean<ForwardedHeaderFilter> registration = new FilterRegistrationBean<>(filter);
+		registration.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.ASYNC, DispatcherType.ERROR);
+		registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+		registration.setUrlPatterns(Arrays.asList("/app/*", "/ping", "/oauth2/authorization/callback", "/oauth/callback"));
+		return registration;
+	}
 }
