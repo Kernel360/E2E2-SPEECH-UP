@@ -97,28 +97,45 @@ function searchPlaces() {
 // 장소검색이 완료됐을 때 호출되는 콜백 함수입니다
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
+        let searchRanges = [5000, 10000, 15000]; // 검색 거리 범위 (5km, 10km, 15km)
+        let foundPlaces = false; // 검색 결과를 찾았는지 여부
 
-        var filteredPlaces = data.filter(function(place) {
-            var placePosition = new kakao.maps.LatLng(place.y, place.x);
-            var distance = getDistance(userLocate[0], userLocate[1], placePosition.getLat(), placePosition.getLng());
-            return distance <= 5000; // 5km 이내 필터링
-        });
+        for (let range of searchRanges) {
+            let filteredPlaces = data.filter(function(place) {
+                let placePosition = new kakao.maps.LatLng(place.y, place.x);
+                let distance = getDistance(userLocate[0], userLocate[1], placePosition.getLat(), placePosition.getLng());
+                return distance <= range;
+            });
 
-        if (filteredPlaces.length === 0) {
-            alert('회원님 주변 5km 이내에 스피치학원이 없습니다.');
-            return;
+            if (filteredPlaces.length > 0) {
+                displayPlaces(filteredPlaces);
+                displayPagination(pagination);
+                foundPlaces = true; // 검색 결과를 찾음
+                break; // 검색 결과를 찾았으므로 반복문 종료
+            }
         }
 
-        displayPlaces(filteredPlaces);
-        displayPagination(pagination);
+        if (!foundPlaces) {
+            alert('회원님 주변 15km 이내에 스피치학원이 없습니다.');
+            closeSearchWindow(); // 검색 창 닫기
+        }
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert('검색 결과가 존재하지 않습니다.');
+        closeSearchWindow(); // 검색 창 닫기
     } else if (status === kakao.maps.services.Status.ERROR) {
         alert('검색 결과 중 오류가 발생했습니다.');
+        closeSearchWindow(); // 검색 창 닫기
     }
-    loadingBar.style.display = 'none';
+
+    loadingBar.style.display = 'none'; // 로딩바 숨기기
 }
+
+// 검색 창 닫기 함수
+function closeSearchWindow() {
+    window.close();
+}
+
 
 // Haversine 공식을 적용한 거리계산 코드
 function getDistance(lat1, lon1, lat2, lon2) {
