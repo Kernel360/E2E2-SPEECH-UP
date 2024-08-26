@@ -73,3 +73,6 @@ kakao:
   map:
     app:
       key: ${KAKAO_MAP_APP_KEY}
+
+server:
+  forward-headers-strategy: framework  # X-Forwarded-Proto와 같은 헤더를 인식하도록 설정
