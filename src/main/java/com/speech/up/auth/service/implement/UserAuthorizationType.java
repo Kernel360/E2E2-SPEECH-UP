@@ -1,5 +1,5 @@
 package com.speech.up.auth.service.implement;
 
 public enum UserAuthorizationType {
-	GENERAL_USER
+	ROLE_GENERAL_USER
 }

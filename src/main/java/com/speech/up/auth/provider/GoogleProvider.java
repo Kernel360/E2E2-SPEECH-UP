@@ -14,14 +14,17 @@ public class GoogleProvider implements ProviderOAuth {
 	final String providerType;
 	final String authorization ;
 	final String level;
+	final boolean isUse;
+
 
 	public GoogleProvider(OAuth2User user) {
 		this.socialId = user.getAttributes().get("sub")+"";
 		this.providerType = ProviderType.GOOGLE.name();
 		this.email = user.getAttributes().get("email")+"";
 		this.name = user.getAttributes().get("name")+"";
-		this.authorization = UserAuthorizationType.GENERAL_USER.name();
+		this.authorization = UserAuthorizationType.ROLE_GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
+		this.isUse = true;
 	}
 	@Override
 	public UserEntity getUser() {

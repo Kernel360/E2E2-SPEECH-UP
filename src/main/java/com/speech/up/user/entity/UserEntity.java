@@ -55,6 +55,7 @@ public class UserEntity {
         this.level = level;
         this.authorization = authorization;
         this.lastAccessedAt = LocalDateTime.now();
+        this.isUse = true;
     }
 
 
@@ -65,6 +66,7 @@ public class UserEntity {
         this.name = name;
         this.authorization = authorization;
         this.lastAccessedAt = LocalDateTime.now();
+        this.isUse = true;
     }
 
     public UserEntity(String socialId, String email, String level,
@@ -76,6 +78,7 @@ public class UserEntity {
         this.authorization = authorization;
         this.providerType = providerType;
         this.lastAccessedAt = LocalDateTime.now();
+        this.isUse = true;
     }
 
     public UserEntity(UserEntity user) {
@@ -87,5 +90,6 @@ public class UserEntity {
         this.providerType = user.getProviderType();
         this.authorization = user.getAuthorization();
         this.lastAccessedAt = LocalDateTime.now();
+        this.isUse = true;
     }
 }

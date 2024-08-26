@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/header-style.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin-view.css">
+
+</head>
+<body>
+<header>
+    <div id="nav-buttons">
+        <!-- 이 부분은 자바스크립트로 동적으로 업데이트됩니다. -->
+    </div>
+</header>
+<!--여기 아래에 추가-->
+<div class="container mt-5">
+    <h2>User List</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Authorization</th>
+            <th>Email</th>
+            <th>Active</th>
+            <th>Last Accessed At</th>
+            <th>handler</th>
+        </tr>
+        </thead>
+        <tbody id="userTableBody">
+        <!-- 사용자 데이터가 여기에 동적으로 추가됩니다 -->
+        </tbody>
+    </table>
+</div>
+
+</body>
+<script src="/scriptPage/js/myPage.js"></script>
+<script src="/scriptPage/js/userMe.js"></script>
+<script src="/scriptPage/js/checkAdministration.js"></script>
+<script src="/scriptPage/js/adminUserHandler.js"></script>
+</html>

@@ -18,11 +18,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
-    public List<UserGetInfoDto.UserGetInfoResponseDto> getAllUsers() {
-        return UserGetInfoDto.UserGetInfoResponseDto.getUsers(userRepository.findAll());
+    public List<UserGetInfoDto.Response> getAllUsers() {
+        return UserGetInfoDto.Response.getUsers(userRepository.findAll());
     }
 
-    public UserGetInfoDto.UserGetInfoResponseDto getUserInfo(HttpServletRequest request) {
+    public UserGetInfoDto.Response getUserInfo(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         if(authorization == null) {
             throw new BadRequestException("Authorization header is missing");
@@ -33,7 +33,7 @@ public class UserService {
         String socialId = jwtProvider.validate(authorization);
         UserEntity userEntity = userRepository.findBySocialId(socialId);
 
-        return UserGetInfoDto.UserGetInfoResponseDto.getUserInfo(userEntity);
+        return UserGetInfoDto.Response.getUserInfo(userEntity);
     }
 
     public void deleteUser(HttpServletRequest request) {
@@ -49,5 +49,12 @@ public class UserService {
         userRepository.deleteBySocialId(socialId);
     }
 
+    public void unUsedUser(Long userId) {
+        userRepository.customDeleteUser(userId,false);
+    }
+
+    public void restoreUser(Long userId) {
+        userRepository.customDeleteUser(userId,true);
+    }
 
 }

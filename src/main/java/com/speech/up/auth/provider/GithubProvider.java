@@ -14,14 +14,16 @@ public class GithubProvider implements ProviderOAuth {
 	final String providerType;
 	final String authorization ;
 	final String level;
+	final boolean isUse;
 
 	public GithubProvider(OAuth2User user) {
 		this.socialId = user.getAttributes().get("id")+"";
 		this.name = user.getAttributes().get("name")+"";
 		this.email = "none";
 		this.providerType = ProviderType.GITHUB.name();
-		this.authorization = UserAuthorizationType.GENERAL_USER.name();
+		this.authorization = UserAuthorizationType.ROLE_GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
+		this.isUse = true;
 	}
 	@Override
 	public UserEntity getUser() {
