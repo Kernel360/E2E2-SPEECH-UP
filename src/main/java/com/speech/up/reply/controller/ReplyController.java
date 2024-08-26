@@ -51,7 +51,7 @@ public class ReplyController {
 	 */
 	@GetMapping("/users/counts/me")
 	public ResponseEntity<Long> getBoardCount(HttpServletRequest request) {
-		return ResponseEntity.ok(replyService.getBoardCount(request));
+		return ResponseEntity.ok(replyService.getReplyCount(request));
 	}
 
 	/**

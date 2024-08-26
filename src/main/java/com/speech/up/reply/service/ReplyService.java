@@ -88,7 +88,7 @@ public class ReplyService {
 
 	}
 
-	public Long getBoardCount(HttpServletRequest request) {
+	public Long getReplyCount(HttpServletRequest request) {
 		String authorization = request.getHeader("Authorization");
 		if(authorization != null && authorization.startsWith("Bearer ")) {
 			authorization = authorization.substring(7);
