@@ -54,7 +54,17 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 }
-
+javadoc {
+	source = fileTree('src/main/java').matching {
+		include 'com/speech/up/board/controller/**'
+		include 'com/speech/up/record/controller/**'
+		include 'com/speech/up/reply/controller/**'
+		include 'com/speech/up/script/controller/**'
+		include 'com/speech/up/user/controller/**'
+		include 'com/speech/up/demo/**'
+	}
+	destinationDir = layout.buildDirectory.dir("docs/javadoc").get().asFile
+}
 bootJar{
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
