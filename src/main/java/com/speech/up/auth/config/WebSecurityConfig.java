@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,6 +18,7 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -43,6 +45,16 @@ public class WebSecurityConfig {
 	private String allowUrl;
 
 	@Bean
+	public WebSecurityCustomizer configured() { // 스프링 시큐리티 기능 비활성화
+		return (web) -> web.ignoring()
+			.requestMatchers(
+				new AntPathRequestMatcher("/images/**"),
+				new AntPathRequestMatcher("/css/**"),
+				new AntPathRequestMatcher("/scriptPage/js/**")
+			);
+	}
+
+	@Bean
 	protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 			.csrf(CsrfConfigurer::disable)
@@ -50,16 +62,15 @@ public class WebSecurityConfig {
 			.sessionManagement(
 				sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(request -> request.requestMatchers(
-				 "api/v1/auth/**", "/oauth2/**", "/sign-up", "/css/**",
-					"/js/**","/logout","/scriptPage/js/*","/login","/images/*",
-				"/static/images/**","/boards","/boards/**", "/api/upload",
-					"/.well-known/**","/map","/api/open/data/*",
-					"/report","/scripts","/script-write", "/script-list","/replies/**",
-					"/admin/view","/page/me","/speech-record", "reports/**","/").permitAll()
-				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER","GENERAL_USER")
-				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER","GENERAL_USER")
-				.requestMatchers("/speech-record").hasAnyRole("ADMIN_USER","GENERAL_USER")
-				.requestMatchers("/speech-record/**").hasAnyRole("ADMIN_USER","GENERAL_USER")
+					"api/v1/auth/**", "/oauth2/**", "/sign-up", "/logout", "/login",
+					"/boards", "/boards/**", "/api/upload",
+					"/.well-known/**", "/map", "/api/open/data/*",
+					"/report", "/scripts", "/script-write", "/script-list", "/replies/**",
+					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
+				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")
+				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER")
+				.requestMatchers("/speech-record").hasAnyRole("ADMIN_USER", "GENERAL_USER")
+				.requestMatchers("/speech-record/**").hasAnyRole("ADMIN_USER", "GENERAL_USER")
 				.requestMatchers("/api/admin/user/all").hasRole("ADMIN_USER")
 				.requestMatchers("/api/admin/me").hasRole("ADMIN_USER")
 				.anyRequest().authenticated())
