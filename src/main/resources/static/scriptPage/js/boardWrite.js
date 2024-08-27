@@ -1,16 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const jwtToken =  getItemWithExpiry("jwtToken");
+document.addEventListener('DOMContentLoaded', function () {
+    const jwtToken = getItemWithExpiry("jwtToken");
 
     fetch('/users/me', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization' : `${jwtToken}`
+            'Authorization': `${jwtToken}`
         }
     })
         .then(response => response.json())
         .then(userData => {
-            document.getElementById('board-form').addEventListener('submit', function(event) {
+            document.getElementById('board-form').addEventListener('submit', function (event) {
                 event.preventDefault();
 
                 const title = document.getElementById('card-title').value;
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization' : `${jwtToken}`
+                        'Authorization': `${jwtToken}`
                     },
                     body: JSON.stringify(requestBody)
                 })
