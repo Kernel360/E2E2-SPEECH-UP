@@ -46,30 +46,11 @@ public class UserEntity {
     @JsonManagedReference
     private List<ScriptEntity> scriptEntity;
 
-    public UserEntity(Long userId, String name, String socialId, String email,
-                      String level, String authorization) {
-        this.userId = userId;
-        this.name = name;
-        this.socialId = socialId;
-        this.email = email;
-        this.level = level;
-        this.authorization = authorization;
-        this.lastAccessedAt = LocalDateTime.now();
-        this.isUse = true;
-    }
 
 
-    public UserEntity(String socialId, String email, String level, String name, String authorization) {
-        this.socialId = socialId;
-        this.email = email;
-        this.level = level;
-        this.name = name;
-        this.authorization = authorization;
-        this.lastAccessedAt = LocalDateTime.now();
-        this.isUse = true;
-    }
 
-    public UserEntity(String socialId, String email, String level,
+
+    private UserEntity(String socialId, String email, String level,
         String name, String authorization, String providerType) {
         this.socialId = socialId;
         this.email = email;
@@ -81,7 +62,7 @@ public class UserEntity {
         this.isUse = true;
     }
 
-    public UserEntity(UserEntity user) {
+    private UserEntity(UserEntity user) {
         this.userId = user.getUserId();
         this.name = user.getName();
         this.socialId = user.getSocialId();
@@ -91,5 +72,14 @@ public class UserEntity {
         this.authorization = user.getAuthorization();
         this.lastAccessedAt = LocalDateTime.now();
         this.isUse = true;
+    }
+
+    public static UserEntity providerOf(String socialId, String email, String level,
+        String name, String authorization, String providerType){
+        return new UserEntity(socialId, email, level, name, authorization, providerType);
+    }
+
+    public static UserEntity updateUserAccess(UserEntity user){
+        return new UserEntity(user);
     }
 }

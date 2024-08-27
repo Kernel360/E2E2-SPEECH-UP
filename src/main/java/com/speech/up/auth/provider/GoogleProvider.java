@@ -28,6 +28,6 @@ public class GoogleProvider implements ProviderOAuth {
 	}
 	@Override
 	public UserEntity getUser() {
-		return new UserEntity(socialId, email, level, name, authorization, providerType);
+		return UserEntity.providerOf(socialId, email, level, name, authorization, providerType);
 	}
 }
