@@ -45,16 +45,16 @@
 <!--     페이지네이션 -->
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${pageNumber == 0} ? 'disabled'">
+            <li class="page-item" th:classappend="${pageNumber == 1} ? 'disabled'">
                 <a class="page-link" th:href="@{/boards(page=${pageNumber}-1, size=${pageSize})}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                th:classappend="${i == pageNumber} ? 'active'">
+                th:classappend="${i+1 == pageNumber} ? 'active'">
                 <a class="page-link" th:href="@{/boards(page=${i+1}, size=${pageSize})}" th:text="${i + 1}">1</a>
             </li>
-            <li class="page-item" th:classappend="${pageNumber + 1 == totalPages} ? 'disabled'">
+            <li class="page-item" th:classappend="${pageNumber == totalPages} ? 'disabled'">
                 <a class="page-link" th:href="@{/boards(page=${pageNumber + 1}, size=${pageSize})}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>

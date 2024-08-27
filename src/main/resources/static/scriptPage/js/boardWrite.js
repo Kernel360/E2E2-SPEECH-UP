@@ -36,10 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => {
                         if (data) {
                             console.log(data)
-                            alert("게시글이 성공적으로 수정되었습니다.");
+                            alert("게시글이 성공적으로 작성되었습니다.");
                             window.location.href = "/boards";
                         } else {
-                            alert("게시글 수정에 실패했습니다.");
+                            alert("게시글 작성에 실패했습니다.");
                         }
                     })
                     .catch(error => console.error('Error:', error));
