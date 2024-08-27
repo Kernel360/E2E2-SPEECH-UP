@@ -74,15 +74,15 @@ public class RecordEntity extends BaseRecordEntity {
 		this.isAnalyzed = true;
 	}
 
-	public static void analyze(RecordEntity recordEntity) {
-		new RecordEntity(recordEntity);
-	}
-
 	public static RecordEntity create(byte[] audio, RecordAddDto.Request request, ScriptEntity scriptEntity) {
 		return new RecordEntity(audio, request, scriptEntity);
 	}
 
 	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {
 		return new RecordEntity(recordIsUseRequestDto);
+	}
+
+	public static RecordEntity analyze(RecordEntity recordEntity) {
+		return new RecordEntity(recordEntity);
 	}
 }

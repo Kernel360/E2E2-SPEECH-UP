@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtProvider {
@@ -19,8 +20,8 @@ public class JwtProvider {
 	private String secretKey;
 
 	public String createToken(String userId) {
-		Date expirationDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)); // 현재부터 1시간 뒤까지
-		Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)); // 발급받은 토큰 UTF-8 로 인코딩
+		Date expirationDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+		Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
 		return Jwts.builder()
 			.signWith(key, SignatureAlgorithm.HS256)
@@ -28,23 +29,31 @@ public class JwtProvider {
 	}
 
 	public String validate(String jwt) {
-		String subject = null;
+		String subject;
 		Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
 		try {
-
 			subject = Jwts.parserBuilder()
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(jwt)
 				.getBody()
 				.getSubject();
-
 		} catch (NullPointerException nullPointerException) {
 			throw new IllegalArgumentException("JwtProvider 클래스에 문제 있으니 확인해라.");
 		} catch (Exception exception) {
 			throw new IllegalArgumentException(exception);
 		}
 		return subject;
+	}
+
+	public String getHeader(HttpServletRequest request) {
+		String authorization = request.getHeader("Authorization");
+
+		if (authorization != null && authorization.startsWith("Bearer ")) {
+			authorization = authorization.substring(7);
+		}
+
+		return validate(authorization);
 	}
 }

@@ -21,13 +21,12 @@ public class ReplyUpdateDto {
 		private final BoardEntity board;
 		private final String content;
 
-		public Request(Long replyId, UserEntity userEntity, BoardEntity boardEntity, String content) {
+		private Request(Long replyId, UserEntity userEntity, BoardEntity boardEntity, String content) {
 			this.replyId = replyId;
 			this.user = userEntity;
 			this.board = boardEntity;
 			this.content = content;
 		}
-
 	}
 
 	@Getter
@@ -40,14 +39,13 @@ public class ReplyUpdateDto {
 		private final String content;
 		private final LocalDateTime modifiedAt;
 
-		public Response(ReplyEntity replyEntity) {
+		private Response(ReplyEntity replyEntity) {
 			this.replyId = replyEntity.getReplyId();
 			this.user = replyEntity.getUser();
 			this.board = replyEntity.getBoard();
 			this.content = replyEntity.getContent();
 			this.modifiedAt = LocalDateTime.now();
 		}
-
 	}
 
 	public static Response toResponse(ReplyEntity replyEntity) {

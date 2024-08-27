@@ -48,15 +48,14 @@ public class ReplyEntity extends ReplyBaseEntity {
 	private Long replyId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
 	@JsonBackReference
 	private UserEntity user;
 
 	private String name;
 
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "board_id", referencedColumnName = "board_id",nullable = false)
+	@JoinColumn(name = "board_id", referencedColumnName = "board_id", nullable = false)
 	@JsonBackReference
 	private BoardEntity board;
 
@@ -70,24 +69,19 @@ public class ReplyEntity extends ReplyBaseEntity {
 		this.board = boardEntity;
 		this.content = content;
 		this.isUse = isUse;
-
 	}
 
-	// 리플 생성
 	private ReplyEntity(ReplyAddDto.Request replyAddRequestDto) {
 		this(replyAddRequestDto.getUser(), replyAddRequestDto.getBoard(), replyAddRequestDto.getContent(), true);
 	}
 
-	// 리플 업데이트
 	private ReplyEntity(ReplyUpdateDto.Request replyUpdateRequestDto) {
 		this(replyUpdateRequestDto.getUser(), replyUpdateRequestDto.getBoard(),
 			replyUpdateRequestDto.getContent(), true);
 		this.replyId = replyUpdateRequestDto.getReplyId();
 	}
 
-	// 리플 삭제
-	private ReplyEntity(ReplyIsUseDto.Request replyIsUseRequestDto
-	) {
+	private ReplyEntity(ReplyIsUseDto.Request replyIsUseRequestDto) {
 		this(replyIsUseRequestDto.getUser(), replyIsUseRequestDto.getBoard(),
 			replyIsUseRequestDto.getContent(), false);
 		this.replyId = replyIsUseRequestDto.getReplyId();

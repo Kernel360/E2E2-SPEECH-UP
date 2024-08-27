@@ -9,6 +9,7 @@ import com.speech.up.report.entity.ReportEntity;
 import com.speech.up.report.entity.dto.ReportGetDto;
 
 public interface ReportRepository extends JpaRepository<ReportEntity, Long> {
-	Optional<ReportEntity> findReportEntityByReportId(Long recordId);
+	Optional<ReportEntity> findReportEntityByRecordIdRecordId(Long recordId);
+
 	List<ReportGetDto.Response> findAllBy();
 }

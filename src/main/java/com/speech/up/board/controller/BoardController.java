@@ -23,6 +23,7 @@ import com.speech.up.board.service.dto.BoardUpdateDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+
 /**
  * BoardController는 게시판 관련된 API 요청을 처리하는 컨트롤러입니다.
  * <p>
@@ -59,7 +60,10 @@ public class BoardController {
 	 * @return 조회된 게시글과 함께 HTTP 상태 200(OK)를 반환
 	 */
 	@GetMapping("/{boardId}")
-	public ResponseEntity<BoardGetDto.Response> getBoard(@PathVariable("boardId") Long boardId, HttpServletRequest request){
+	public ResponseEntity<BoardGetDto.Response> getBoard(
+		@PathVariable("boardId") Long boardId,
+		HttpServletRequest request
+	) {
 		return ResponseEntity.ok(boardService.getBoardById(boardId, request));
 	}
 
@@ -86,8 +90,11 @@ public class BoardController {
 	 */
 	@PostMapping("")
 	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
-	public ResponseEntity<BoardAddDto.Response> addBoard(@RequestBody BoardAddDto.Request boardAddRequest, HttpServletRequest request){
-		return ResponseEntity.ok(boardService.addBoard(boardAddRequest,request));
+	public ResponseEntity<BoardAddDto.Response> addBoard(
+		@RequestBody BoardAddDto.Request boardAddRequest,
+		HttpServletRequest request
+	) {
+		return ResponseEntity.ok(boardService.addBoard(boardAddRequest, request));
 	}
 
 	/**
@@ -101,7 +108,7 @@ public class BoardController {
 	 */
 	@PatchMapping("")
 	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
-	public ResponseEntity<BoardUpdateDto.Response>  updateBoard(@RequestBody BoardUpdateDto.Request boardUpdateRequest){
+	public ResponseEntity<BoardUpdateDto.Response> updateBoard(@RequestBody BoardUpdateDto.Request boardUpdateRequest) {
 		return ResponseEntity.ok(boardService.updateBoard(boardUpdateRequest));
 	}
 
@@ -116,7 +123,7 @@ public class BoardController {
 	 */
 	@DeleteMapping("")
 	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
-	public ResponseEntity<BoardIsUseDto.Response> deleteBoard(@RequestBody BoardIsUseDto.Request boardIsUseResponse	){
+	public ResponseEntity<BoardIsUseDto.Response> deleteBoard(@RequestBody BoardIsUseDto.Request boardIsUseResponse) {
 		return ResponseEntity.ok(boardService.deleteBoard(boardIsUseResponse));
 	}
 }

@@ -6,7 +6,7 @@ import lombok.ToString;
 public class ReportGetDto {
 	@Getter
 	@ToString
-	public static class Response{
+	public static class Response {
 		private final Long reportId;
 		private final double score;
 		private final boolean isUse;

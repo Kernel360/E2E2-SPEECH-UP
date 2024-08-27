@@ -3,6 +3,7 @@ package com.speech.up.auth.filter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,17 +47,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				filterChain.doFilter(request, response);
 				return;
 			}
-			String userId = jwtProvider.validate(token);
-			if(userId == null){
+			String socialId = jwtProvider.validate(token);
+			if(socialId == null){
 				filterChain.doFilter(request, response);
 				return;
 			}
-			UserEntity userEntity = userRepository.findBySocialId(userId);
+			UserEntity userEntity = userRepository.findBySocialId(socialId)
+				.orElseThrow(() -> new NoSuchElementException("not found UserEntity by socialId : " + socialId));;
 			String role = userEntity.getAuthorization();
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			authorities.add(new SimpleGrantedAuthority(role));
 			SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-			AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, token, authorities);
+			AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(socialId, token, authorities);
 
 			 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 			securityContext.setAuthentication(authenticationToken);

@@ -25,7 +25,7 @@ public class ReportService {
 	}
 
 	public ReportEntity getReportFromRecordId(Long recordId) {
-		return reportRepository.findReportEntityByReportId(recordId)
+		return reportRepository.findReportEntityByRecordIdRecordId(recordId)
 			.orElseThrow(() -> new EntityNotFoundException("not found Report by RecordId : " + recordId));
 	}
 

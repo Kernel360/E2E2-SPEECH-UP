@@ -10,7 +10,7 @@ public class BoardAddDto {
 
 	@Getter
 	@ToString
-	public static class Request{
+	public static class Request {
 		private final String title;
 		private final String content;
 		private final UserEntity user;
@@ -24,7 +24,7 @@ public class BoardAddDto {
 
 	@Getter
 	@ToString
-	public static class Response{
+	public static class Response {
 		private final String title;
 		private final String content;
 

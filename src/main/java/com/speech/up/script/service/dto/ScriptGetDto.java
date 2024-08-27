@@ -18,7 +18,7 @@ public class ScriptGetDto {
 		private final LocalDateTime createdAt;
 		private final LocalDateTime modifiedAt;
 
-		Response(ScriptEntity scriptEntity) {
+		private Response(ScriptEntity scriptEntity) {
 			this.scriptId = scriptEntity.getScriptId();
 			this.content = scriptEntity.getContent();
 			this.title = scriptEntity.getTitle();
