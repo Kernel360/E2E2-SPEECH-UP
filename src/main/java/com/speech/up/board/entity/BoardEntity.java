@@ -57,14 +57,14 @@ public class BoardEntity extends BaseBoardEntity{
 		this.content = boardAddRequest.getContent();
 	}
 
-	public BoardEntity(BoardUpdateDto.Request boardUpdateRequest) {
+	private BoardEntity(BoardUpdateDto.Request boardUpdateRequest) {
 		this(boardUpdateRequest.getUser(),true);
 		this.boardId = boardUpdateRequest.getBoardId();
 		this.title = boardUpdateRequest.getTitle();
 		this.content = boardUpdateRequest.getContent();
 	}
 
-	public BoardEntity(BoardIsUseDto.Request boardIsUseRequest) {
+	private BoardEntity(BoardIsUseDto.Request boardIsUseRequest) {
 		this(boardIsUseRequest.getUser(),false);
 		this.boardId = boardIsUseRequest.getBoardId();
 		this.title = boardIsUseRequest.getTitle();

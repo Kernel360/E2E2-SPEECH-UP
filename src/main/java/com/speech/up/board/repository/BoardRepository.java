@@ -9,7 +9,7 @@ import com.speech.up.board.entity.BoardEntity;
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	Page<BoardEntity> findAllByIsUseTrueOrderByCreatedAtDesc(Pageable pageable);
 
-	long countByIsUseTrue();
+	Long countByIsUseTrue();
 
 	BoardEntity findByBoardIdAndIsUseTrue(Long id);
 

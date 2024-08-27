@@ -11,9 +11,10 @@ import lombok.Getter;
 public class CheckListForPagination {
 	private final Page<BoardEntity> boardList;
 
-	CheckListForPagination(final Page<BoardEntity> boardList)  {
+	CheckListForPagination(final Page<BoardEntity> boardList) {
 		this.boardList = boardList;
 	}
+
 	public static CheckListForPagination checkListIsNotEmpty(final Page<BoardEntity> boardList) {
 		return new CheckListForPagination(boardList);
 	}

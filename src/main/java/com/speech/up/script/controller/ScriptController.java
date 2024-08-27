@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScriptController {
 	private final ScriptService scriptService;
+
 	/**
 	 * 유저의 대본 목록 조회
 	 *
@@ -48,8 +49,6 @@ public class ScriptController {
 	public ResponseEntity<Long> getScriptCount(HttpServletRequest request) {
 		return ResponseEntity.ok(scriptService.getScriptCount(request));
 	}
-
-
 
 	/**
 	 * 대본 생성

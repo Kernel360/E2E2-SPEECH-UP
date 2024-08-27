@@ -73,7 +73,8 @@ public class ReplyController {
 	 */
 	@PatchMapping("")
 	public ResponseEntity<ReplyUpdateDto.Response> updateReply(
-		@RequestBody ReplyUpdateDto.Request replyUpdateRequestDto) {
+		@RequestBody ReplyUpdateDto.Request replyUpdateRequestDto
+	) {
 		return ResponseEntity.ok(replyService.updateReply(replyUpdateRequestDto));
 	}
 

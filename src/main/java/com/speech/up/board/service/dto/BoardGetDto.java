@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
+
 import com.speech.up.board.entity.BoardEntity;
 
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class BoardGetDto {
 		public static Response toResponse(BoardEntity boardEntity) {
 			return new Response(boardEntity, false);
 		}
+
 		public static Response toResponseIsOwner(BoardEntity boardEntity) {
 			return new Response(boardEntity, true);
 		}
@@ -46,3 +48,4 @@ public class BoardGetDto {
 		}
 	}
 }
+

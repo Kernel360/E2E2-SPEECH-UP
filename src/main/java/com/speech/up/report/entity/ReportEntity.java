@@ -52,7 +52,7 @@ public class ReportEntity {
 
 	private boolean isUse;
 
-	private ReportEntity(RecordEntity recordEntity, String recognized, double score){
+	private ReportEntity(RecordEntity recordEntity, String recognized, double score) {
 		this.recordId = recordEntity;
 		this.recognized = recognized;
 		this.score = score;
@@ -61,7 +61,7 @@ public class ReportEntity {
 		this.isUse = true;
 	}
 
-	public static ReportEntity create(RecordEntity recordEntity, String recognized, double score){
+	public static ReportEntity create(RecordEntity recordEntity, String recognized, double score) {
 		return new ReportEntity(recordEntity, recognized, score);
 	}
 }

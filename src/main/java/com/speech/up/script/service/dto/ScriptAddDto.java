@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 
 public class ScriptAddDto {
+
 	@Getter
 	@ToString
 	public static class Request {

@@ -1,6 +1,7 @@
 package com.speech.up.user.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.speech.up.common.exception.http.BadRequestException;
 import com.speech.up.auth.provider.JwtProvider;
@@ -23,29 +24,16 @@ public class UserService {
     }
 
     public UserGetInfoDto.Response getUserInfo(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
-        if(authorization == null) {
-            throw new BadRequestException("Authorization header is missing");
-        }
-        if(authorization.startsWith("Bearer ")) {
-            authorization = authorization.substring(7);
-        }
-        String socialId = jwtProvider.validate(authorization);
-        UserEntity userEntity = userRepository.findBySocialId(socialId);
+        String socialId = jwtProvider.getHeader(request);
+        UserEntity userEntity = userRepository.findBySocialId(socialId)
+            .orElseThrow(() -> new NoSuchElementException("not found UserEntity by socialId: " + socialId));
 
         return UserGetInfoDto.Response.getUserInfo(userEntity);
     }
 
     public void deleteUser(HttpServletRequest request) {
-        String authorization = request.getHeader("Authorization");
-        if(authorization == null) {
-            throw new BadRequestException("Authorization header is missing");
-        }
-        if(authorization.startsWith("Bearer ")) {
-            authorization = authorization.substring(7);
-        }
-        String socialId = jwtProvider.validate(authorization);
-        System.out.println(socialId);
+        String socialId = jwtProvider.getHeader(request);
+
         userRepository.deleteBySocialId(socialId);
     }
 
@@ -56,5 +44,4 @@ public class UserService {
     public void restoreUser(Long userId) {
         userRepository.customDeleteUser(userId,true);
     }
-
 }

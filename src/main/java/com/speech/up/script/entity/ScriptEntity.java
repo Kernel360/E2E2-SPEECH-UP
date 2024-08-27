@@ -56,12 +56,14 @@ public class ScriptEntity extends BaseScriptEntity {
 	}
 
 	private ScriptEntity(ScriptUpdateDto.Request scriptUpdateRequestDto) {
-		this(scriptUpdateRequestDto.getContent(), scriptUpdateRequestDto.getUser(), scriptUpdateRequestDto.getTitle(),true);
+		this(scriptUpdateRequestDto.getContent(), scriptUpdateRequestDto.getUser(), scriptUpdateRequestDto.getTitle(),
+			true);
 		this.scriptId = scriptUpdateRequestDto.getScriptId();
 	}
 
 	private ScriptEntity(ScriptIsUseDto.Request scriptIsUseRequestDto) {
-		this(scriptIsUseRequestDto.getContent(), scriptIsUseRequestDto.getUser(), scriptIsUseRequestDto.getTitle(), false);
+		this(scriptIsUseRequestDto.getContent(), scriptIsUseRequestDto.getUser(), scriptIsUseRequestDto.getTitle(),
+			false);
 		this.scriptId = scriptIsUseRequestDto.getScriptId();
 	}
 

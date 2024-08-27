@@ -63,10 +63,10 @@ public class RecordService {
 	}
 
 	@Transactional
-	public void analyzed(Long recordId){
+	public void analyzed(Long recordId) {
 		RecordEntity recordEntity = recordRepository.findById(recordId)
 			.orElseThrow(() -> new IllegalStateException("not found record by recordId : " + recordId));
-		RecordEntity.analyze(recordEntity);
+		recordRepository.save(RecordEntity.analyze(recordEntity));
 	}
 
 }

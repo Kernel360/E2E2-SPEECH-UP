@@ -1,5 +1,7 @@
 package com.speech.up.auth.service.implement;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -21,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 	private final UserRepository userRepository;
 
-	@SuppressWarnings("null")
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(request);
@@ -32,10 +33,12 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
 		assert userEntity != null;
 
-		if(!userRepository.existsBySocialId(userEntity.getSocialId())) {
+		if (!userRepository.existsBySocialId(userEntity.getSocialId())) {
 			userRepository.save(userEntity);
-		}else{
-			UserEntity user = userRepository.findBySocialId(userEntity.getSocialId());
+		} else {
+			UserEntity user = userRepository.findBySocialId(userEntity.getSocialId())
+				.orElseThrow(
+					() -> new NoSuchElementException("not found UserEntity by socialId: " + userEntity.getSocialId()));
 			UserEntity updateUserAccess = new UserEntity(user);
 			userRepository.save(updateUserAccess);
 		}
