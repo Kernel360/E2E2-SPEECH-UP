@@ -35,7 +35,8 @@ public class RecordIsUseDto {
 		}
 	}
 
-	public static Response deleteRecord(RecordEntity recordEntity) {
+	public static Response toResponse(RecordEntity recordEntity) {
 		return new Response(recordEntity);
 	}
 }
+

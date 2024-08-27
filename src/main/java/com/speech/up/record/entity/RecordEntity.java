@@ -56,10 +56,6 @@ public class RecordEntity extends BaseRecordEntity {
 		this(audio, request.getLanguageCode(), scriptEntity, true, false);
 	}
 
-	public static RecordEntity create(byte[] audio, RecordAddDto.Request request, ScriptEntity scriptEntity) {
-		return new RecordEntity(audio, request, scriptEntity);
-	}
-
 	private RecordEntity(RecordIsUseDto.Request recordIsUseRequestDto) {
 		this(recordIsUseRequestDto.getRecordEntity().getAudio(),
 			recordIsUseRequestDto.getRecordEntity()
@@ -68,11 +64,25 @@ public class RecordEntity extends BaseRecordEntity {
 		this.recordId = recordIsUseRequestDto.getRecordEntity().getRecordId();
 	}
 
-	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {
-		return new RecordEntity(recordIsUseRequestDto);
+	private RecordEntity(RecordEntity recordEntity) {
+		this.recordId = recordEntity.getRecordId();
+		this.audio = recordEntity.getAudio();
+		this.languageCode = recordEntity.getLanguageCode();
+		this.script = recordEntity.getScript();
+		this.isUse = recordEntity.isUse();
+		this.report = recordEntity.getReport();
+		this.isAnalyzed = true;
 	}
 
-	public void analyze(boolean isAnalyzed) {
-		this.isAnalyzed = isAnalyzed;
+	public static void analyze(RecordEntity recordEntity) {
+		new RecordEntity(recordEntity);
+	}
+
+	public static RecordEntity create(byte[] audio, RecordAddDto.Request request, ScriptEntity scriptEntity) {
+		return new RecordEntity(audio, request, scriptEntity);
+	}
+
+	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {
+		return new RecordEntity(recordIsUseRequestDto);
 	}
 }
