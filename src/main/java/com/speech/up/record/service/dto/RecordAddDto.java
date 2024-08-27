@@ -48,7 +48,7 @@ public class RecordAddDto {
         }
     }
 
-    public static Response toEntity(RecordEntity recordEntity) {
+    public static Response toResponse(RecordEntity recordEntity) {
         return new Response(recordEntity);
     }
 }

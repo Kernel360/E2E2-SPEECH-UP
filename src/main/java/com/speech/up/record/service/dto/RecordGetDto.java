@@ -27,7 +27,7 @@ public class RecordGetDto {
             this.isAnalyzed = recordEntity.isAnalyzed();
         }
 
-        public static Response getRecords(RecordEntity recordEntity) {
+        public static Response toResponse(RecordEntity recordEntity) {
             return new Response(recordEntity);
         }
     }
