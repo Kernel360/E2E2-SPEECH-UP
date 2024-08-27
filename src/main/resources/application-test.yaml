@@ -1,9 +1,12 @@
 spring:
   application:
     name: speech_up
+  servlet:
+    multipart:
+      enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/SPEECH_UP_TEST?createDatabaseIfNotExist=true
+    url: ${GOOGLE_CLOUD_DATABASE}
     username: root
     password: 1234
   jpa:
@@ -15,9 +18,39 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - profile
+              - email
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope: profile_nickname
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: name,email
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 
 api:
   voice:
+    score : ${API_VOICE_TO_SCORE}
     url : ${API_VOICE_TO_TEXT_URL}
     accessKey : ${API_VOICE_TO_TEXT_ACCESS_KEY}
     language-code: ${API_VOICE_TO_LANGUAGE_CODE}
@@ -30,3 +63,16 @@ speech-flow:
   lang : ${SPEECH_FLOW_LANG}
   result :
     type : ${SPEECH_FLOW_RESULT_TYPE}
+
+
+logging:
+  level:
+    com.speech.up: DEBUG                  #com.speech.up 패키지의 로그 레벨을 DEBUG로 설정
+
+kakao:
+  map:
+    app:
+      key: ${KAKAO_MAP_APP_KEY}
+
+server:
+  forward-headers-strategy: framework  # X-Forwarded-Proto와 같은 헤더를 인식하도록 설정

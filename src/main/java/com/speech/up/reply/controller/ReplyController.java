@@ -44,13 +44,13 @@ public class ReplyController {
 	}
 
 	/**
-	 * 현재 사용자의 게시글 개수를 조회합니다.
+	 * 현재 게시글의 댓글 개수를 조회합니다.
 	 *
 	 * @param request HTTP 요청 객체
 	 * @return 사용자의 게시글 개수
 	 */
 	@GetMapping("/users/counts/me")
-	public ResponseEntity<Long> getBoardCount(HttpServletRequest request) {
+	public ResponseEntity<Long> getReplyCount(HttpServletRequest request) {
 		return ResponseEntity.ok(replyService.getReplyCount(request));
 	}
 

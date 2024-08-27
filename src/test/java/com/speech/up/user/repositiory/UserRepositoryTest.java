@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ public class UserRepositoryTest {
 	public void getUserBySocialIdTest() {
 		//given
 		String socialId = "socialId";
-		UserEntity user = mock(UserEntity.class);
+		Optional<UserEntity> user = Optional.ofNullable(mock(UserEntity.class));
 
 		//when
 		when(userRepository.findBySocialId(socialId)).thenReturn(user);
@@ -57,7 +58,7 @@ public class UserRepositoryTest {
 	public void deleteUserBySocialIdTest() {
 		//given
 		String socialId = "socialId";
-		UserEntity user = mock(UserEntity.class);
+		Optional<UserEntity> user = Optional.ofNullable(mock(UserEntity.class));
 		when(userRepository.findBySocialId(socialId)).thenReturn(user);
 
 		//when
@@ -74,7 +75,7 @@ public class UserRepositoryTest {
 	public void getUserByUserIdTest() {
 		//given
 		Long userId = 1L;
-		UserEntity user = mock(UserEntity.class);
+		Optional<UserEntity> user = Optional.ofNullable(mock(UserEntity.class));
 
 		//when
 		when(userRepository.findByUserId(userId)).thenReturn(user);
