@@ -1,6 +1,5 @@
 package com.speech.up.report.service;
 
-import static org.awaitility.Awaitility.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.speech.up.record.entity.RecordEntity;
-import com.speech.up.record.repository.RecordRepository;
 import com.speech.up.report.entity.ReportEntity;
 import com.speech.up.report.repository.ReportRepository;
 import com.speech.up.script.entity.ScriptEntity;
@@ -23,15 +21,12 @@ public class ReportServiceTest {
 	@Mock
 	private ReportRepository reportRepository;
 
-	@Mock
-	private RecordRepository recordRepository;
-
 	@InjectMocks
 	private ReportService reportService;
 
 	@DisplayName("리포트 저장하기")
 	@Test
-	public void saveReportTest(){
+	public void saveReportTest() {
 
 		// given
 		RecordEntity recordEntity = mock(RecordEntity.class); // RecordEntity 모의
@@ -56,7 +51,7 @@ public class ReportServiceTest {
 
 	@DisplayName("리포트 레코드아이디로 불러오기")
 	@Test
-	public void getReportByRecordIdTest(){
+	public void getReportByRecordIdTest() {
 		//given
 		RecordEntity recordEntity = mock(RecordEntity.class);
 		ReportEntity reportEntity = ReportEntity.create(recordEntity, "Test Recognition", 3.5);
@@ -71,7 +66,7 @@ public class ReportServiceTest {
 
 	@DisplayName("리포트 스크립트아이디로 불러오기")
 	@Test
-	public void getReportByScriptIdTest(){
+	public void getReportByScriptIdTest() {
 		//given
 		ScriptEntity scriptEntity = mock(ScriptEntity.class);
 		RecordEntity recordEntity = mock(RecordEntity.class);

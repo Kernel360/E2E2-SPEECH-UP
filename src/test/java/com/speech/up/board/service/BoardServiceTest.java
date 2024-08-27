@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.MockitoSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -24,7 +26,6 @@ import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
-
 
 public class BoardServiceTest {
 
@@ -54,7 +55,6 @@ public class BoardServiceTest {
 	@Test
 	void getAllBoardList() {
 		//given
-		BoardGetDto.Response response = mock(BoardGetDto.Response.class);
 		Pageable pageable = mock(Pageable.class);
 
 		//when
@@ -85,8 +85,8 @@ public class BoardServiceTest {
 		boardService.getBoardById(1L, httpRequest);
 
 		// 	then
-		verify(jwtProvider,times(1)).validate(socialId);
-		verify(userRepository,times(1)).findBySocialId(socialId);
+		verify(jwtProvider, times(1)).validate(socialId);
+		verify(userRepository, times(1)).findBySocialId(socialId);
 		verify(boardRepository, times(1)).findByBoardIdAndIsUseTrue(1L);
 	}
 
@@ -122,7 +122,6 @@ public class BoardServiceTest {
 	@Test
 	void updateBoard() {
 		// 	given
-
 		UserEntity userEntity = Mockito.mock(UserEntity.class);
 
 		BoardUpdateDto.Request request = Mockito.mock(BoardUpdateDto.Request.class);
@@ -178,8 +177,6 @@ public class BoardServiceTest {
 
 		given(boardRepository.countByIsUseTrue()).willReturn(count);
 
-
-
 		// 	when
 		result = boardService.getTotalBoardCount();
 
@@ -205,12 +202,10 @@ public class BoardServiceTest {
 		given(boardRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId())).willReturn(1L);
 
 		// 	when
-
 		result = boardService.getBoardCount(httpRequest);
 
 		// 	then
-
-		assert(result.equals(1L));
-
+		assert (result.equals(1L));
 	}
+
 }
