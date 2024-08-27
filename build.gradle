@@ -68,7 +68,8 @@ javadoc {
 bootJar{
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-tasks.withType(Test) {
-	// Skip tests
-	enabled = false
+
+test {
+	useJUnitPlatform() // JUnit 5를 사용하는 경우
+	include '**/*Test.class'
 }
