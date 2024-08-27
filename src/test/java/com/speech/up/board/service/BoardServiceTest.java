@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.MockitoSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -21,7 +19,6 @@ import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.board.entity.BoardEntity;
 import com.speech.up.board.repository.BoardRepository;
 import com.speech.up.board.service.dto.BoardAddDto;
-import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 import com.speech.up.user.entity.UserEntity;
@@ -44,7 +41,6 @@ public class BoardServiceTest {
 	String socialId = "socialId";
 	String bearer = "Bearer ";
 	String token = bearer + socialId;
-
 
 	@BeforeEach
 	public void setUp() {

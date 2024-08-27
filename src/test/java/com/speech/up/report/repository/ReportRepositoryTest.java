@@ -48,7 +48,6 @@ public class ReportRepositoryTest {
 	@Test
 	public void getAllReportsTest() {
 		//given
-		ReportEntity reportEntity = mock(ReportEntity.class);
 		List<ReportGetDto.Response> reportGetDtoResponse = Collections.singletonList(mock(ReportGetDto.Response.class));
 
 		//when
