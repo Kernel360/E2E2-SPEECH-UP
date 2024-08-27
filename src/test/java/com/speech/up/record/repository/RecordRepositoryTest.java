@@ -26,7 +26,7 @@ public class RecordRepositoryTest {
 
 	@DisplayName("스크립트 아이디로 사용 중인 녹음데이터 리스트 가져오기 함수 호출")
 	@Test
-	public void findByScriptIdUseTest(){
+	public void findByScriptIdUseTest() {
 		//given
 		List<RecordEntity> recordEntity = Collections.singletonList(mock(RecordEntity.class));
 		Long scriptId = 1L;

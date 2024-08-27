@@ -6,14 +6,11 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.report.entity.ReportEntity;
-import com.speech.up.report.repository.ReportRepository;
 import com.speech.up.script.entity.ScriptEntity;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,7 +30,7 @@ public class ReportServiceTest {
 		reportService.saveReport(reportEntity, recognized, score);
 
 		//then
-		verify(reportService,times(1)).saveReport(reportEntity, recognized, score);
+		verify(reportService, times(1)).saveReport(reportEntity, recognized, score);
 	}
 
 	@DisplayName("리포트 레코드아이디로 불러오기")

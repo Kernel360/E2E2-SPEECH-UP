@@ -65,7 +65,7 @@ public class UserRepositoryTest {
 		when(userRepository.findBySocialId(socialId)).thenReturn(null);
 
 		//then
-		verify(userRepository,times(1)).deleteBySocialId(socialId);
+		verify(userRepository, times(1)).deleteBySocialId(socialId);
 		assertFalse(userRepository.existsBySocialId(socialId));
 	}
 

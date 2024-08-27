@@ -1,7 +1,7 @@
 package com.speech.up.user.service;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +27,7 @@ public class UserServiceTest {
 
 	@DisplayName("모든 유저 검색")
 	@Test
-	public void getAllUserTest(){
+	public void getAllUserTest() {
 		//given
 		List<UserGetInfoDto.Response> response = Collections.singletonList(mock(UserGetInfoDto.Response.class));
 
@@ -40,7 +40,7 @@ public class UserServiceTest {
 
 	@DisplayName("나의 정보 검색")
 	@Test
-	public void getUserByToken(){
+	public void getUserByToken() {
 		//given
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		UserGetInfoDto.Response response = mock(UserGetInfoDto.Response.class);
@@ -54,7 +54,7 @@ public class UserServiceTest {
 
 	@DisplayName("나의 유저 정보 삭제")
 	@Test
-	public void deleteUserByToken(){
+	public void deleteUserByToken() {
 		//given
 		HttpServletRequest hasAuthorizationRequest = mock(HttpServletRequest.class);
 		HttpServletRequest noHasAuthorizationRequest = mock(HttpServletRequest.class);
@@ -70,7 +70,7 @@ public class UserServiceTest {
 
 	@DisplayName("나의 유저 정보 정지")
 	@Test
-	public void bannedUserByToken(){
+	public void bannedUserByToken() {
 		//given
 		Long userId = 1L;
 
@@ -83,7 +83,7 @@ public class UserServiceTest {
 
 	@DisplayName("나의 유저 정보 복구")
 	@Test
-	public void restoreUserByToken(){
+	public void restoreUserByToken() {
 		//given
 		Long userId = 1L;
 

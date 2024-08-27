@@ -54,7 +54,7 @@ public class RecordServiceTest {
 		RecordAddDto.Response response = mock(RecordAddDto.Response.class);
 
 		try {
-		//when
+			//when
 			when(recordService.addRecord(file, languageCode, scriptId)).thenReturn(response);
 			//then
 			assertEquals(response, recordService.addRecord(file, languageCode, scriptId));
