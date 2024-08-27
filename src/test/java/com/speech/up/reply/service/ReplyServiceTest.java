@@ -5,13 +5,14 @@ import static org.mockito.BDDMockito.*;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.MockitoSession;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import com.speech.up.auth.provider.JwtProvider;
@@ -51,9 +52,13 @@ class ReplyServiceTest {
 	ReplyEntity replyEntity;
 	BoardEntity boardEntity;
 
+	private MockitoSession mockitoSession;
+
 	@BeforeEach
 	public void setUp() {
-		MockitoAnnotations.openMocks(this);
+		mockitoSession = Mockito.mockitoSession()
+			.initMocks(this)
+			.startMocking();
 
 		userEntity = Mockito.mock(UserEntity.class);
 		given(userEntity.getUserId()).willReturn(1L);
@@ -86,7 +91,7 @@ class ReplyServiceTest {
 		// given
 		Long boardId = 1L;
 
-		List<ReplyEntity> replyEntities = List.of(replyEntity,replyEntity);
+		List<ReplyEntity> replyEntities = List.of(replyEntity, replyEntity);
 
 		ReplyGetDto.Response replyGetResponse = Mockito.mock(ReplyGetDto.Response.class);
 		given(replyGetResponse.getReplyId()).willReturn(1L);
@@ -100,13 +105,11 @@ class ReplyServiceTest {
 		given(replyRepository.findAllByBoardBoardIdAndIsUseTrueOrderByCreatedAtDesc(boardId)).willReturn(replyEntities);
 
 		// when
-
 		replyGetResponseList = replyService.getAllReplyList(boardId);
+
 		//then
-
-		assert(replyGetResponseList.size() == replyEntities.size());
-		verify(replyRepository,times(1)).findAllByBoardBoardIdAndIsUseTrueOrderByCreatedAtDesc(boardId);
-
+		assert (replyGetResponseList.size() == replyEntities.size());
+		verify(replyRepository, times(1)).findAllByBoardBoardIdAndIsUseTrueOrderByCreatedAtDesc(boardId);
 
 	}
 
@@ -121,7 +124,6 @@ class ReplyServiceTest {
 		ReplyGetDto.Response replyGetResponse;
 
 		// when
-
 		replyGetResponse = replyService.getReply(replyId);
 
 		// then
@@ -134,7 +136,6 @@ class ReplyServiceTest {
 	@Test
 	void addReply() {
 		// given
-
 		ReplyAddDto.Request replyAddRequest = Mockito.mock(ReplyAddDto.Request.class);
 		given(replyAddRequest.getBoard()).willReturn(boardEntity);
 		given(replyAddRequest.getUser()).willReturn(userEntity);
@@ -156,7 +157,6 @@ class ReplyServiceTest {
 	@Test
 	void updateReply() {
 		// 	given
-
 		ReplyUpdateDto.Request replyUpdateRequest = Mockito.mock(ReplyUpdateDto.Request.class);
 		given(replyUpdateRequest.getReplyId()).willReturn(1L);
 		given(replyUpdateRequest.getBoard()).willReturn(boardEntity);
@@ -172,11 +172,9 @@ class ReplyServiceTest {
 		given(replyRepository.existsByReplyIdAndIsUseTrue(any(long.class))).willReturn(true);
 
 		// 	when
-
 		response = replyService.updateReply(replyUpdateRequest);
 
 		// 	then
-
 		assertNotNull(response);
 		assert (response.getReplyId()).equals(replyUpdateRequest.getReplyId());
 		verify(replyRepository, times(1)).save(any(ReplyEntity.class));
@@ -191,7 +189,6 @@ class ReplyServiceTest {
 	@Test
 	void isUseReply() {
 		// given
-
 		ReplyEntity modifiedReplyEntity = Mockito.mock(ReplyEntity.class);
 		given(modifiedReplyEntity.getReplyId()).willReturn(1L);
 		given(modifiedReplyEntity.getIsUse()).willReturn(false);
@@ -216,11 +213,9 @@ class ReplyServiceTest {
 		ReplyIsUseDto.Response response;
 
 		// when
-
 		response = replyService.isUseReply(replyIsUseRequest);
 
 		// then
-
 		assertNotNull(response);
 		assert (response.getReplyId()).equals(replyEntity.getReplyId());
 		assert (response.getIsUse()).equals(false);
@@ -229,28 +224,6 @@ class ReplyServiceTest {
 		verify(boardRepository, times(1)).existsById(any(Long.class));
 		verify(replyRepository, times(1)).existsById(any(Long.class));
 		verify(replyRepository, times(1)).existsByReplyIdAndIsUseTrue(any(long.class));
-	}
-
-	@Test
-	void checkReply() {
-	}
-
-	@Test
-	void checkUserEntity() {
-	}
-
-	@Test
-	void checkBoardEntity() {
-	}
-
-	@Test
-	void checkReplyEntity() {
-		// given
-
-		// when
-
-		// then
-
 	}
 
 	@DisplayName("리플 갯수 확인")
@@ -264,13 +237,20 @@ class ReplyServiceTest {
 		given(jwtProvider.validate(socialId)).willReturn(socialId);
 		given(userRepository.findBySocialId(socialId)).willReturn(userEntity);
 		given(replyRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId())).willReturn(1L);
+
 		// when
 		result = replyService.getReplyCount(httpRequest);
+
 		// then
 		assertNotNull(result);
 		assert (result.equals(userEntity.getUserId()));
 		verify(jwtProvider, times(1)).validate(socialId);
 		verify(userRepository, times(1)).findBySocialId(socialId);
 		verify(replyRepository, times(1)).countByUserUserIdAndIsUseTrue(userEntity.getUserId());
+	}
+
+	@AfterEach
+	void tearDown() {
+		mockitoSession.finishMocking();
 	}
 }
