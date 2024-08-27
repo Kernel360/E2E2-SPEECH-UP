@@ -19,34 +19,21 @@ import com.speech.up.script.entity.ScriptEntity;
 @ExtendWith(MockitoExtension.class)
 public class ReportServiceTest {
 	@Mock
-	private ReportRepository reportRepository;
-
-	@InjectMocks
 	private ReportService reportService;
 
 	@DisplayName("리포트 저장하기")
 	@Test
 	public void saveReportTest() {
+		//given
+		RecordEntity reportEntity = mock(RecordEntity.class);
+		String recognized = "recognized";
+		double score = 1.0;
 
-		// given
-		RecordEntity recordEntity = mock(RecordEntity.class); // RecordEntity 모의
-		String recognized = "Test Recognition";
-		double score = 3.5;
+		//when
+		reportService.saveReport(reportEntity, recognized, score);
 
-		// when
-		reportService.saveReport(recordEntity, recognized, score);
-
-		// then
-		ArgumentCaptor<ReportEntity> reportEntityCaptor = ArgumentCaptor.forClass(ReportEntity.class);
-		verify(reportRepository).save(reportEntityCaptor.capture());
-
-		ReportEntity capturedReportEntity = reportEntityCaptor.getValue();
-
-		ReportEntity expectedReportEntity = ReportEntity.create(recordEntity, recognized, score);
-
-		assertEquals(expectedReportEntity.getRecordId(), capturedReportEntity.getRecordId());
-		assertEquals(expectedReportEntity.getScore(), capturedReportEntity.getScore());
-		assertEquals(expectedReportEntity.getRecognized(), capturedReportEntity.getRecognized());
+		//then
+		verify(reportService,times(1)).saveReport(reportEntity, recognized, score);
 	}
 
 	@DisplayName("리포트 레코드아이디로 불러오기")

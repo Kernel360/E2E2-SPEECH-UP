@@ -25,7 +25,7 @@ public class ScriptRepositoryTest {
 
 	@DisplayName("유저 아이디로 스크립트 리스트 검색")
 	@Test
-	public void getScriptListByUserIdTest(){
+	public void getScriptListByUserIdTest() {
 		//given
 		Long userId = 1L;
 		List<ScriptEntity> scriptEntity = Collections.singletonList(mock(ScriptEntity.class));
@@ -39,7 +39,7 @@ public class ScriptRepositoryTest {
 
 	@DisplayName("유저 아이디로 사용 중인 스크립트 갯수 검색")
 	@Test
-	public void getCountScriptListByUserIdTest(){
+	public void getCountScriptListByUserIdTest() {
 		//given
 		Long userId = 1L;
 		Long count = 1L;
