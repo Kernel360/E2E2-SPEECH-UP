@@ -66,7 +66,7 @@ public class WebSecurityConfig {
 					"api/v1/auth/**", "/oauth2/**", "/sign-up", "/logout", "/login",
 					"/boards", "/boards/**", "/api/upload",
 					"/.well-known/**", "/api/open/data/*",
-					"/report", "/scripts", "/script-write", "/script-list", "/replies/**",
+					"/report", "/scripts", "/script-write", "/scripts-list", "/replies/**",
 					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
 				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")
 				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER")

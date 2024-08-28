@@ -3,17 +3,16 @@ package com.speech.up.api.converter;
 import javax.sound.sampled.*;
 import java.io.*;
 import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 public class WavToRaw {
 
-	private static final Logger log = LoggerFactory.getLogger(WavToRaw.class);
 	private static final AudioFormat FORMAT = new AudioFormat(16000, 16, 1, true, false);
 	private static final int HEADER_SIZE = 44; // WAV 파일 헤더 크기
 
@@ -28,15 +27,7 @@ public class WavToRaw {
 		multipartFile.transferTo(file);
 		try (AudioInputStream sourceStream = AudioSystem.getAudioInputStream(file)) {
 			AudioFormat sourceFormat = sourceStream.getFormat();
-			AudioFormat targetFormat = new AudioFormat(
-				AudioFormat.Encoding.PCM_SIGNED,
-				16000,
-				16,
-				1,
-				2,
-				16000,
-				false
-			);
+			AudioFormat targetFormat = FORMAT;
 
 			if (!AudioSystem.isConversionSupported(targetFormat, sourceFormat)) {
 				throw new UnsupportedAudioFileException("The source format is not supported.");
@@ -51,7 +42,6 @@ public class WavToRaw {
 					byteArrayOutputStream.write(buffer, 0, bytesRead);
 				}
 
-				// WAV 헤더를 제거하고 PCM 데이터만 반환
 				byte[] rawPcmData = byteArrayOutputStream.toByteArray();
 				return formatWav2Raw(rawPcmData);
 			}

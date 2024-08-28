@@ -1,6 +1,6 @@
 function confirmDelete() {
     const jwtToken =  getItemWithExpiry("jwtToken");
-    if (confirm("정말 회원을 탈퇴하실 껀가요?")) {
+    if (confirm("회원을 탈퇴하시겠습니까?")) {
                 fetch("/users/me",{
                     method:"DELETE",
                     headers: {
