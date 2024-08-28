@@ -41,9 +41,9 @@ public class UserEntity {
 
 	private String email;
 
-	private String level; // => ENUM 값으로 대체 필요
+	private String level;
 
-	private String authorization; // => ENUM 값으로 대체 필요
+	private String authorization;
 
 	private String providerType;
 
