@@ -3,16 +3,17 @@ package com.speech.up.board.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import com.speech.up.board.service.BoardService;
 import com.speech.up.board.service.dto.BoardAddDto;
 import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
@@ -22,6 +23,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class BoardControllerTest {
 	@Mock
+	BoardService boardService;
+
+	@InjectMocks
 	private BoardController boardController;
 
 	@BeforeEach
@@ -33,30 +37,28 @@ public class BoardControllerTest {
 	@Test
 	public void getAllBoardsTest() {
 		// given
-		List<BoardGetDto.Response> response = Collections.singletonList(mock(BoardGetDto.Response.class));
 		int page = 1;
 		int size = 10;
 
 		// when
-		when(boardController.getBoardAll(page, size)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<List<BoardGetDto.Response>> actualResponse = boardController.getBoardAll(page, size);
 
 		//then
-		assertEquals(ResponseEntity.ok(response), boardController.getBoardAll(page, size));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("getBoard 테스트")
 	@Test
 	public void getBoardTest() {
 		//given
-		BoardGetDto.Response response = mock(BoardGetDto.Response.class);
 		Long boardId = 1L;
 		HttpServletRequest request = mock(HttpServletRequest.class);
 
 		//when
-		when(boardController.getBoard(boardId, request)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<BoardGetDto.Response> actualResponse = boardController.getBoard(boardId, request);
 
 		//then
-		assertEquals(ResponseEntity.ok(response), boardController.getBoard(boardId, request));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("getBoardCount 테스트")
@@ -67,10 +69,10 @@ public class BoardControllerTest {
 		Long boardId = 1L;
 
 		//when
-		when(boardController.getBoardCount(request)).thenReturn(ResponseEntity.ok(boardId));
+		ResponseEntity<Long> actualResponse = boardController.getBoardCount(request);
 
 		//then
-		assertEquals(ResponseEntity.ok(boardId), boardController.getBoardCount(request));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("addBoard 테스트")
@@ -79,13 +81,12 @@ public class BoardControllerTest {
 		//given
 		BoardAddDto.Request request = mock(BoardAddDto.Request.class);
 		HttpServletRequest requestServlet = mock(HttpServletRequest.class);
-		BoardAddDto.Response response = mock(BoardAddDto.Response.class);
 
 		//when
-		when(boardController.addBoard(request, requestServlet)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<BoardAddDto.Response> actualResponse = boardController.addBoard(request, requestServlet);
 
 		//then
-		assertEquals(ResponseEntity.ok(response), boardController.addBoard(request, requestServlet));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("updateBoard 테스트")
@@ -93,13 +94,12 @@ public class BoardControllerTest {
 	public void updateBoardTest() {
 		//given
 		BoardUpdateDto.Request request = mock(BoardUpdateDto.Request.class);
-		BoardUpdateDto.Response response = mock(BoardUpdateDto.Response.class);
 
 		//when
-		when(boardController.updateBoard(request)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<BoardUpdateDto.Response> actualResponse = boardController.updateBoard(request);
 
 		//then
-		assertEquals(ResponseEntity.ok(response), boardController.updateBoard(request));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("deleteBoard 테스트")
@@ -107,12 +107,11 @@ public class BoardControllerTest {
 	public void deleteBoardTest() {
 		//given
 		BoardIsUseDto.Request request = mock(BoardIsUseDto.Request.class);
-		BoardIsUseDto.Response response = mock(BoardIsUseDto.Response.class);
 
 		//when
-		when(boardController.deleteBoard(request)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<BoardIsUseDto.Response> actualResponse = boardController.deleteBoard(request);
 
 		//then
-		assertEquals(ResponseEntity.ok(response), boardController.deleteBoard(request));
+		assertNotNull(actualResponse);
 	}
 }
