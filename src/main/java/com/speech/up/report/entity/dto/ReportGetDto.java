@@ -16,5 +16,9 @@ public class ReportGetDto {
 			this.score = score;
 			this.isUse = isUse;
 		}
+
+		public static ReportGetDto.Response toResponse(Long reportId, double score, boolean isUse) {
+			return new ReportGetDto.Response(reportId, score, isUse);
+		}
 	}
 }

@@ -32,7 +32,7 @@ public class RequestPronunciationDto {
 		this.argument = argument;
 	}
 
-	public static RequestPronunciationDto createPronunciation(String requestId, String audio, String script){
+	public static RequestPronunciationDto createPronunciation(String requestId, String audio, String script) {
 		ArgumentDTO argumentDTO = ArgumentDTO.builder()
 			.audio(audio)
 			.script(script)
