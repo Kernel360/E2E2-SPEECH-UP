@@ -53,13 +53,31 @@
     </div>
 </section>
 
-<section class="cta-section">
+<section class="cta-section" style="display:block;">
     <div class="container">
-        <h2>Get Started with AI-Powered Script Recording Today!</h2>
-        <a href="/login" class="btn btn-light btn-lg">Sign Up Now</a>
+        <h2>간단한 소셜 로그인으로 서비스를 이용해보세요.</h2>
+        <a href="/login" class="btn btn-light btn-lg">소셜로 로그인</a>
     </div>
 </section>
-
+<section>
+    <div class="container">
+        <div class="testimonials">
+            <h4>사용자 후기</h4>
+            <div class="testimonial-item">
+                <p>"이 서비스 덕분에 스피치 실력이 크게 향상되었습니다!"</p>
+                <small>- 이강민</small>
+            </div>
+            <div class="testimonial-item">
+                <p>"아주 유용한 도구입니다. 강력 추천합니다."</p>
+                <small>- 이재윤</small>
+            </div>
+            <div class="testimonial-item">
+                <p>"제 스피치 점수를 늘려가는 재미가 있어요."</p>
+                <small>- 김택준</small>
+            </div>
+        </div>
+    </div>
+</section>
 <footer class="footer">
     <div class="container">
         <p>&copy; 2024 AI Script Recorder & Processor. All rights reserved.</p>
@@ -68,5 +86,19 @@
 <script src="/js/home.js"></script>
 <script src="/js/userMe.js"></script>
 <script src="/js/addTokenSession.js"></script>
+
+<script>
+    function isLogin() {
+        const jwtToken =  getItemWithExpiry("jwtToken");
+        const signUpSection = document.querySelector('.cta-section');
+        if(jwtToken!= null){
+            signUpSection.style.display = 'none';
+            return;
+        }
+        signUpSection.style.display = 'block';
+    }
+    isLogin();
+</script>
+
 </body>
 </html>

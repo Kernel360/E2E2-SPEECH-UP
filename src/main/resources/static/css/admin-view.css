@@ -1,26 +1,22 @@
-
 .user-list-container {
     margin-top: 50px;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 테이블 제목 */
 .user-list-container h2 {
     text-align: center;
     color: #333;
     margin-bottom: 20px;
 }
 
-/* 테이블 */
 .user-list-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-/* 테이블 헤더 */
 .user-list-table thead th {
     background-color: #4CAF50;
     color: white;
@@ -29,7 +25,6 @@
     border-bottom: 2px solid #ddd;
 }
 
-/* 테이블 바디 */
 .user-list-table tbody td {
     padding: 12px;
     text-align: center;
@@ -37,20 +32,18 @@
     color: #555;
 }
 
-/* 테이블 행 hover 효과 */
 .user-list-table tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-/* 짝수 행 배경색 */
 .user-list-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* 마지막 셀 텍스트 정렬 */
 .user-list-table tbody td:last-child {
     text-align: center;
 }
+
 .action-btn {
     margin: 0 5px;
     padding: 5px 10px;
@@ -68,9 +61,11 @@
     background-color: #ffc107;
     color: black;
 }
+
 .use-btn{
     background-color: #4cff00;
 }
+
 .handler{
     display: flex;
 }

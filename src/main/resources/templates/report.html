@@ -24,6 +24,14 @@
             <p th:text="${score}"></p>
         </div>
     </div>
+    <div>
+        <button class="close-button">닫기</button>
+    </div>
 </div>
+<script>
+    document.querySelector('.close-button').addEventListener('click', function() {
+        window.close();
+    });
+</script>
 </body>
 </html>
