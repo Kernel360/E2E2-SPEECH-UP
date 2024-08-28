@@ -1,21 +1,26 @@
 package com.speech.up.user.controller;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import com.speech.up.user.service.UserService;
 import com.speech.up.user.service.dto.UserGetInfoDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 public class UserControllerTest {
 	@Mock
+	UserService userService;
+
+	@InjectMocks
 	UserController userController;
 
 	@BeforeEach
@@ -28,13 +33,12 @@ public class UserControllerTest {
 	public void getUserInfoTest() {
 		//given
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		UserGetInfoDto.Response response = mock(UserGetInfoDto.Response.class);
 
 		//when
-		when(userController.getUserInfo(request)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<UserGetInfoDto.Response> actualResponse = userController.getUserInfo(request);
 
 		//then
-		assertEquals(userController.getUserInfo(request), ResponseEntity.ok(response));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("deleteUser 테스트")
@@ -47,6 +51,6 @@ public class UserControllerTest {
 		userController.deleteUser(request);
 
 		//then
-		verify(userController, times(1)).deleteUser(request);
+		verify(userService, times(1)).deleteUser(request);
 	}
 }

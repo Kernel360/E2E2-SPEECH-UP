@@ -12,10 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.speech.up.board.entity.BoardEntity;
 import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
 import com.speech.up.report.entity.ReportEntity;
@@ -28,7 +26,6 @@ public class ReportServiceTest {
 	ReportRepository reportRepository;
 	@Mock
 	RecordRepository recordRepository;
-
 
 	@InjectMocks
 	private ReportService reportService;
@@ -99,6 +96,5 @@ public class ReportServiceTest {
 		assertEquals(expectedScriptContent, actualScriptContent);
 		verify(recordRepository, times(1)).findById(recordId);
 	}
-
 
 }

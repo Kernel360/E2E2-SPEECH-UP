@@ -1,5 +1,7 @@
 package com.speech.up.report.entity.dto;
 
+import com.speech.up.report.entity.ReportEntity;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -15,6 +17,10 @@ public class ReportGetDto {
 			this.reportId = reportId;
 			this.score = score;
 			this.isUse = isUse;
+		}
+
+		public static ReportGetDto.Response toResponse(Long reportId, double score, boolean isUse) {
+			return new ReportGetDto.Response(reportId, score, isUse);
 		}
 	}
 }
