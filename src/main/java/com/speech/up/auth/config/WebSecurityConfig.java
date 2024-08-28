@@ -50,7 +50,7 @@ public class WebSecurityConfig {
 			.requestMatchers(
 				new AntPathRequestMatcher("/images/**"),
 				new AntPathRequestMatcher("/css/**"),
-				new AntPathRequestMatcher("/scriptPage/js/**"),
+				new AntPathRequestMatcher("/js/**"),
 				new AntPathRequestMatcher("/map")
 			);
 	}
