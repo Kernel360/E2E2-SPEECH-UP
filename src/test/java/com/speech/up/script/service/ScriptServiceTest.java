@@ -1,8 +1,9 @@
 package com.speech.up.script.service;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +13,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import com.speech.up.auth.provider.JwtProvider;
-import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 import com.speech.up.script.service.dto.ScriptAddDto;
@@ -31,173 +30,146 @@ import com.speech.up.user.repository.UserRepository;
 import jakarta.persistence.EntityListeners;
 
 @EntityListeners(AuditingEntityListener.class)
-public class ScriptServiceTest {
-
-	// private Scrip
+class ScriptServiceTest {
 
 	@Mock
-	private ScriptRepository scriptRepository;
-
+	ScriptRepository scriptRepository;
 	@Mock
-	private UserRepository userRepository;
-
+	UserRepository userRepository;
 	@Mock
-	private JwtProvider jwtProvider;
+	JwtProvider jwtProvider;
+	@Mock
+	UserEntity mockUserEntity;
+	@Mock
+	ScriptEntity mockScriptEntity;
 
 	@InjectMocks
-	private ScriptService scriptService;
+	ScriptService scriptService;
 
-	UserEntity userEntity;
-	ScriptEntity scriptEntity;
-	RecordEntity recordEntity;
-
-	String socialId = "socialId";
-	String bearer = "Bearer ";
-	String token = bearer + socialId;
+	String socialId;
+	Long userId;
+	LocalDateTime modifiedAt;
+	Long scriptId;
+	String title;
+	String content;
+	boolean isUse;
+	ScriptEntity expectedEntity;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		MockitoAnnotations.openMocks(this);
+		socialId = "mockSocialId";
+		userId = 1L;
+		modifiedAt = LocalDateTime.now();
+		scriptId = 1L;
+		title = "title";
+		content = "content";
+		isUse = false;
 
-		userEntity = Mockito.mock(UserEntity.class);
-		given(userEntity.getUserId()).willReturn(1L);
-		given(userEntity.getName()).willReturn("name");
-		given(userEntity.getSocialId()).willReturn("socialId");
-		given(userEntity.getEmail()).willReturn("email");
-		given(userEntity.getLevel()).willReturn("level");
-		given(userEntity.getAuthorization()).willReturn(token);
+		mockUserEntity = mock(UserEntity.class);
+		mockScriptEntity = mock(ScriptEntity.class);
+		when(mockUserEntity.getUserId()).thenReturn(userId);
+		when(userRepository.findBySocialId(socialId)).thenReturn(Optional.of(mockUserEntity));
+		when(userRepository.findById(userId)).thenReturn(Optional.of(mockUserEntity));
 
-		recordEntity = mock(RecordEntity.class);
-		given(recordEntity.getRecordId()).willReturn(1L);
-
-		List<RecordEntity> recordEntities = List.of(recordEntity);
-
-		scriptEntity = mock(ScriptEntity.class);
-		given(scriptEntity.getScriptId()).willReturn(1L);
-		given(scriptEntity.getTitle()).willReturn("title");
-		given(scriptEntity.getContent()).willReturn("content");
-		given(scriptEntity.getUser()).willReturn(userEntity);
-		given(scriptEntity.getRecordId()).willReturn(recordEntities);
+		expectedEntity = new ScriptEntity(content, mockUserEntity, title, false);
+		when(scriptRepository.save(any(ScriptEntity.class))).thenReturn(expectedEntity);
 	}
 
 	@DisplayName("대본을 조회하는 기능을 테스트")
 	@Test
-	public void getScriptListTest() {
+	void getScriptListTest() {
 		// Given
-
-		MockHttpServletRequest httpRequest = new MockHttpServletRequest();
-		httpRequest.addHeader("Authorization", token);
-
-		List<ScriptEntity> scriptEntities = Collections.singletonList(scriptEntity);
-
-		given(jwtProvider.validate(socialId)).willReturn(socialId);
-		given(userRepository.findBySocialId(socialId)).willReturn(userEntity);
-		given(scriptRepository.findByUserUserIdAndIsUseTrue(anyLong())).willReturn(scriptEntities);
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		List<ScriptEntity> mockScripts = Collections.singletonList(mockScriptEntity);
 
 		// When
-		List<ScriptGetDto.Response> response = scriptService.getScriptList(httpRequest);
+		when(jwtProvider.getHeader(request)).thenReturn(socialId);
+		when(scriptRepository.findByUserUserIdAndIsUseTrue(userId)).thenReturn(mockScripts);
+
+		List<ScriptGetDto.Response> result = scriptService.getScriptList(request);
 
 		// Then
-		assertThat(response).hasSize(1);
-		verify(jwtProvider, times(1)).validate(socialId);
-		verify(userRepository, times(1)).findBySocialId(socialId);
-		verify(scriptRepository, times(1)).findByUserUserIdAndIsUseTrue(anyLong());
+		assertNotNull(result);
+		assertEquals(1, result.size());
 	}
 
 	@DisplayName("스크립트 단건 조회")
 	@Test
-	public void getScript() {
-		// 	given
-		Long userId = 1L;
-		Long scriptId = 1L;
+	void getScript() {
+		// Given
+		ScriptGetDto.Response expectedResponse = ScriptGetDto.Response.toResponse(mockScriptEntity);
 
-		given(scriptRepository.findById(scriptId)).willReturn(Optional.of(scriptEntity));
+		when(scriptRepository.findById(scriptId)).thenReturn(Optional.of(mockScriptEntity));
+		when(mockScriptEntity.getUser()).thenReturn(mockUserEntity);
+		when(mockScriptEntity.getModifiedAt()).thenReturn(modifiedAt);
 
-		ScriptGetDto.Response scriptGetResponse;
+		// When
+		ScriptGetDto.Response actualResponse = scriptService.getScript(userId, scriptId);
 
-		// 	when
-
-		scriptGetResponse = scriptService.getScript(userId, scriptId);
-
-		// 	then
-
-		verify(scriptRepository, times(2)).findById(scriptId);
-		assertThat(scriptGetResponse).isNotNull();
-		assert (scriptGetResponse.getScriptId()).equals(scriptEntity.getScriptId());
+		// Then
+		assertNotNull(actualResponse);
+		assertEquals(expectedResponse.getScriptId(), actualResponse.getScriptId());
 	}
 
 	@DisplayName("대본 수정 기능 테스트")
 	@Test
-	public void updateScriptTest() {
-		//given
+	void updateScriptTest() {
+		// Given
+		ScriptUpdateDto.Request request = mock(ScriptUpdateDto.Request.class);
 
-		ScriptUpdateDto.Request scriptUpdateRequestDto = Mockito.mock(ScriptUpdateDto.Request.class);
-		given(scriptUpdateRequestDto.getScriptId()).willReturn(1L);
-		given(scriptUpdateRequestDto.getTitle()).willReturn("title");
-		given(scriptUpdateRequestDto.getContent()).willReturn("content");
-		given(scriptUpdateRequestDto.getUser()).willReturn(userEntity);
-
-		ScriptUpdateDto.Response scriptUpdateResponse;
-
-		given(userRepository.findById(anyLong())).willReturn(Optional.of(userEntity));
-		given(scriptRepository.save(any(ScriptEntity.class))).willReturn(scriptEntity);
+		when(request.getTitle()).thenReturn(title);
+		when(request.getContent()).thenReturn(content);
+		when(request.getUser()).thenReturn(mockUserEntity);
+		when(request.getScriptId()).thenReturn(1L);
 
 		//when
-		scriptUpdateResponse = scriptService.updateScript(scriptUpdateRequestDto);
+		ScriptUpdateDto.Response actualResponse = scriptService.updateScript(request);
+		ScriptUpdateDto.Response response = ScriptUpdateDto.toResponse(expectedEntity);
 
-		//then
-		assertThat(scriptUpdateResponse.getContent()).isEqualTo("content");
-		verify(userRepository, times(1)).findById(anyLong());
-		verify(scriptRepository, times(1)).save(any(ScriptEntity.class));
-
+		// Then
+		assertEquals(response.getTitle(), actualResponse.getTitle());
+		assertEquals(response.getContent(), actualResponse.getContent());
 	}
 
 	@DisplayName("대본을 생성하는 기능 테스트")
 	@Test
-	public void addScriptTest() {
+	void addScriptTest() {
 		// Given
+		ScriptAddDto.Request request = mock(ScriptAddDto.Request.class);
 
-		ScriptAddDto.Request scriptAddRequest = Mockito.mock(ScriptAddDto.Request.class);
-		given(scriptAddRequest.getTitle()).willReturn("title");
-		given(scriptAddRequest.getContent()).willReturn("content");
-		given(scriptAddRequest.getUser()).willReturn(userEntity);
-		ScriptAddDto.Response response;
+		when(request.getTitle()).thenReturn(title);
+		when(request.getContent()).thenReturn(content);
+		when(request.getUser()).thenReturn(mockUserEntity);
 
-		given(scriptRepository.save(any(ScriptEntity.class))).willReturn(scriptEntity);
 		// When
-		response = scriptService.addScript(scriptAddRequest);
+		ScriptAddDto.Response actualResponse = scriptService.addScript(request);
 
 		// Then
-		assertThat(response).isNotNull();
-		assertThat(response.getContent()).isEqualTo("content");
-		assertThat(response.getTitle()).isEqualTo("title");
-
+		assertNotNull(actualResponse);
+		assertEquals(title, actualResponse.getTitle());
+		assertEquals(content, actualResponse.getContent());
 	}
 
 	@DisplayName("대본을 삭제하는 기능 테스트")
 	@Test
-	public void deleteScriptByIdTest() {
+	void deleteScriptByIdTest() {
 		// Given
+		ScriptIsUseDto.Request request = mock(ScriptIsUseDto.Request.class);
 
-		ScriptIsUseDto.Request scriptIsUseRequestDto = Mockito.mock(ScriptIsUseDto.Request.class);
-		given(scriptIsUseRequestDto.getScriptId()).willReturn(1L);
-		given(scriptIsUseRequestDto.getTitle()).willReturn("title");
-		given(scriptIsUseRequestDto.getContent()).willReturn("content");
-		given(scriptIsUseRequestDto.getUser()).willReturn(userEntity);
-		given(scriptIsUseRequestDto.isUse()).willReturn(true);
+		when(request.getTitle()).thenReturn(title);
+		when(request.getContent()).thenReturn(content);
+		when(request.getUser()).thenReturn(mockUserEntity);
+		when(request.getScriptId()).thenReturn(1L);
 
-		ScriptIsUseDto.Response scriptIsUseResponse;
-
-		given(scriptRepository.save(any(ScriptEntity.class))).willReturn(scriptEntity);
-
-		// When
-		scriptIsUseResponse = scriptService.deleteScriptById(scriptIsUseRequestDto);
+		//when
+		ScriptIsUseDto.Response actualResponse = scriptService.deleteScriptById(request);
+		ScriptIsUseDto.Response response = ScriptIsUseDto.toResponse(expectedEntity);
 
 		// Then
-		assertThat(scriptIsUseResponse).isNotNull();
-		assertThat(scriptIsUseResponse.isUse()).isFalse();
-		verify(scriptRepository, times(1)).save(any(ScriptEntity.class));
-
+		assertEquals(response.getTitle(), actualResponse.getTitle());
+		assertFalse(response.isUse());
+		assertFalse(actualResponse.isUse());
 	}
 
 }

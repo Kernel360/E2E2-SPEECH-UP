@@ -14,7 +14,7 @@ public class BoardUpdateDto {
 	@Getter
 	@ToString
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-	public static class Request{
+	public static class Request {
 		private final Long boardId;
 		private final String title;
 		private final String content;
@@ -30,11 +30,10 @@ public class BoardUpdateDto {
 
 	@Getter
 	@ToString
-	public static class Response{
+	public static class Response {
 		private final String title;
 		private final String content;
 		private final LocalDateTime modifiedAt;
-
 
 		public Response(BoardEntity boardEntity) {
 			this.title = boardEntity.getTitle();

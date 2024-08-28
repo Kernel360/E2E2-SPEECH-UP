@@ -9,6 +9,7 @@ import com.speech.up.record.service.dto.RecordIsUseDto;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class RecordService {
 
 	private List<RecordGetDto.Response> mapToResponse(List<RecordEntity> records) {
 		return records.stream()
-			.map(RecordGetDto.Response::getRecords)
+			.map(RecordGetDto.Response::toResponse)
 			.collect(Collectors.toList());
 	}
 
@@ -45,26 +46,27 @@ public class RecordService {
 	public RecordAddDto.Response addRecord(MultipartFile file, String languageCode, Long scriptId)
 		throws IOException, UnsupportedAudioFileException {
 
-		ScriptEntity scriptEntity = scriptRepository.findById(scriptId).get();
+		ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
+			.orElseThrow(() -> new EntityNotFoundException("script not found by scriptId : " + scriptId));
 
 		WavToRaw wavToRaw = new WavToRaw();
 		byte[] audio = wavToRaw.convertToRawPcm(file);
 		RecordAddDto.Request request = new RecordAddDto.Request(file, languageCode, scriptEntity);
 		RecordEntity recordEntity = RecordEntity.create(audio, request, scriptEntity);
 
-		return RecordAddDto.toEntity(recordRepository.save(recordEntity));
+		return RecordAddDto.toResponse(recordRepository.save(recordEntity));
 	}
 
 	public RecordIsUseDto.Response deleteRecord(RecordIsUseDto.Request recordIsUseRequestDto) {
 		RecordEntity recordEntity = RecordEntity.delete(recordIsUseRequestDto);
-		return RecordIsUseDto.deleteRecord(recordRepository.save(recordEntity));
+		return RecordIsUseDto.toResponse(recordRepository.save(recordEntity));
 	}
 
 	@Transactional
-	public void analyzed(Long recordId){
+	public void analyzed(Long recordId) {
 		RecordEntity recordEntity = recordRepository.findById(recordId)
 			.orElseThrow(() -> new IllegalStateException("not found record by recordId : " + recordId));
-		recordEntity.analyze(true);
+		recordRepository.save(RecordEntity.analyze(recordEntity));
 	}
 
 }

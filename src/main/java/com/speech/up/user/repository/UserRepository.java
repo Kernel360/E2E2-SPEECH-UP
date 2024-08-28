@@ -2,8 +2,10 @@ package com.speech.up.user.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import com.speech.up.user.entity.UserEntity;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,14 +14,14 @@ import org.springframework.data.repository.query.Param;
 import jakarta.transaction.Transactional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-	UserEntity findBySocialId(String socialId);
+	Optional<UserEntity> findBySocialId(String socialId);
 
 	boolean existsBySocialId(String socialId);
 
 	@Transactional
 	void deleteBySocialId(String socialId);
 
-	UserEntity findByUserId(Long userId);
+	Optional<UserEntity> findByUserId(Long userId);
 
 	List<UserEntity> findAllByLastAccessedAtBeforeAndIsUseTrue(LocalDateTime oneWeekAgo);
 

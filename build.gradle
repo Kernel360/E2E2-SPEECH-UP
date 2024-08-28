@@ -68,7 +68,9 @@ javadoc {
 bootJar{
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-tasks.withType(Test) {
-	// Skip tests
-	enabled = false
+
+test {
+	useJUnitPlatform()
+	include '**/*Test.class'
+	include '**/*Tests.class'
 }

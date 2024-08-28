@@ -20,14 +20,13 @@ public class ReplyIsUseDto {
 		private final String content;
 		private final Boolean isUse;
 
-		public Request(Long replyId, UserEntity user, BoardEntity board, String content, Boolean isUse) {
+		private Request(Long replyId, UserEntity user, BoardEntity board, String content, Boolean isUse) {
 			this.replyId = replyId;
 			this.user = user;
 			this.board = board;
 			this.content = content;
 			this.isUse = isUse;
 		}
-
 	}
 
 	@Getter
@@ -40,18 +39,16 @@ public class ReplyIsUseDto {
 		private final String content;
 		private final Boolean isUse;
 
-		public Response(ReplyEntity replyEntity) {
+		private Response(ReplyEntity replyEntity) {
 			this.replyId = replyEntity.getReplyId();
 			this.userEntity = replyEntity.getUser();
 			this.boardEntity = replyEntity.getBoard();
 			this.content = replyEntity.getContent();
 			this.isUse = replyEntity.getIsUse();
 		}
-
 	}
 
 	public static Response toResponse(ReplyEntity replyEntity) {
 		return new Response(replyEntity);
 	}
-
 }

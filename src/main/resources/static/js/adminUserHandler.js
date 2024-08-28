@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', init);
+
 let jwtToken;
+
 function init(){
     jwtToken = getItemWithExpiry("jwtToken");
     adminGetUser();
@@ -48,7 +50,6 @@ function adminGetUser() {
         }
     }).catch(() => window.location.href = "/login");
 }
-
 
 function deleteUser(userId){
     if(!confirm("정말 삭제하시겠습니까?")) return;

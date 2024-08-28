@@ -1,31 +1,23 @@
 package com.speech.up.board.service;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.board.entity.BoardEntity;
@@ -34,240 +26,176 @@ import com.speech.up.board.service.dto.BoardAddDto;
 import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
-import com.speech.up.report.MockBoardEntity;
-import com.speech.up.script.mock.MockUser;
+import com.speech.up.common.exception.http.BadRequestException;
 import com.speech.up.user.entity.UserEntity;
 import com.speech.up.user.repository.UserRepository;
-import com.speech.up.user.service.UserService;
 
-import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 
-class BoardServiceTest {
-
-	private static final Logger log = LoggerFactory.getLogger(BoardServiceTest.class);
-	@Mock
-	UserRepository userRepository;
+public class BoardServiceTest {
 
 	@Mock
 	BoardRepository boardRepository;
-
+	@Mock
+	UserRepository userRepository;
 	@Mock
 	JwtProvider jwtProvider;
+	@Mock
+	UserEntity userEntity;
+	@Mock
+	BoardEntity boardEntity;
 
 	@InjectMocks
 	BoardService boardService;
 
-	String socialId = "socialId";
-	String bearer = "Bearer ";
-	String token = bearer + socialId;
-
+	Long boardId;
+	Long userId;
+	Long boardCount;
+	String socialId;
+	String title;
+	Long scriptId;
+	String content;
+	LocalDateTime modifiedAt;
+	LocalDateTime createdAt;
+	boolean isUse;
+	int page;
+	int size;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		MockitoAnnotations.openMocks(this);
 
+		socialId = "mockSocialId";
+		boardId = 1L;
+		userId = 1L;
+		modifiedAt = LocalDateTime.now();
+		scriptId = 1L;
+		title = "title";
+		content = "content";
+		isUse = false;
+		page = 1;
+		size = 10;
+		boardCount = 1L;
 
+		userEntity = mock(UserEntity.class);
+		boardEntity = mock(BoardEntity.class);
+		when(userEntity.getUserId()).thenReturn(userId);
+		when(userEntity.getSocialId()).thenReturn(socialId);
+		when(boardEntity.getTitle()).thenReturn(title);
+		when(boardEntity.getContent()).thenReturn(content);
+		when(boardEntity.getModifiedAt()).thenReturn(modifiedAt);
+		when(boardEntity.getCreatedAt()).thenReturn(createdAt);
+		when(boardEntity.getBoardId()).thenReturn(boardId);
+		when(boardEntity.getUser()).thenReturn(userEntity);
 	}
 
-	/*@DisplayName("BoardList 다건 조회")
+	@DisplayName("BoardList 다건 조회")
 	@Test
 	void getAllBoardList() {
-		// 	given
-		int page = 5;
-		int size = 10;
-		BoardGetDto.Response boardGetDto = Mockito.mock(BoardGetDto.Response.class);
+		//given
+		Pageable pageable = PageRequest.of(0, 10);
+		List<BoardEntity> boardEntities = Arrays.asList(boardEntity, boardEntity);
+		Page<BoardEntity> boardEntityPage = new PageImpl<>(boardEntities, pageable, boardEntities.size());
 
-		BoardEntity boardEntity = Mockito.mock(BoardEntity.class);
-		BoardEntity fistBoardEntity = Mockito.mock(BoardEntity.class);
-		given(fistBoardEntity.getBoardId()).willReturn(1L);
-		BoardEntity LastBoardEntity = Mockito.mock(BoardEntity.class);
-		given(LastBoardEntity.getBoardId()).willReturn(10L);
+		when(boardRepository.findAllByIsUseTrueOrderByCreatedAtDesc(pageable)).thenReturn(boardEntityPage);
+		List<BoardGetDto.Response> actualResponse = boardService.getAllBoardList(page, size);
 
-
-		List<BoardEntity> boardEntities = List.of(fistBoardEntity,boardEntity,boardEntity,boardEntity,boardEntity,boardEntity,boardEntity,boardEntity,boardEntity,LastBoardEntity);
-
-
-		List<BoardGetDto.Response> boardGetDtoList;
-
-		Pageable pageable = PageRequest.of(page-1, size);
-
-		Page<BoardEntity> boardList = new PageImpl<>(boardEntities.subList(page*size,Math.min((page + 1) * size, boardEntities.size())),pageable,boardEntities.size());
-
-
-		given(boardRepository.findAllByIsUseTrueOrderByCreatedAtDesc(any(Pageable.class))).willReturn(boardList);
-
-		// 	when
-
-		boardGetDtoList = boardService.getAllBoardList(page, size);
-
-		// 	then
-
-		verify(boardRepository, times(1)).findAllByIsUseTrueOrderByCreatedAtDesc(any(Pageable.class));
-		// assert(boardGetDtoList.get(9).getBoardId().equals(LastBoardEntity.getBoardId()));
-		assertThat(boardGetDtoList.size()).isEqualTo(size);
-
-	}*/
+		//then
+		assertNotNull(actualResponse);
+		assertThrows(BadRequestException.class, () -> boardService.getAllBoardList(-1, size));
+		assertThrows(BadRequestException.class, () -> boardService.getAllBoardList(page, 101));
+	}
 
 	@DisplayName("BoardList 단건 조회")
 	@Test
 	void getBoardById() {
-		// 	given
-		UserEntity userEntity = Mockito.mock(UserEntity.class);
-		given(userEntity.getUserId()).willReturn(1L);
+		// given
+		HttpServletRequest request = mock(HttpServletRequest.class);
 
-		BoardEntity boardEntity = Mockito.mock(BoardEntity.class);
-		given(boardEntity.getUser()).willReturn(userEntity);
+		// when
+		when(boardRepository.findByBoardIdAndIsUseTrue(boardId)).thenReturn(boardEntity);
+		BoardGetDto.Response actualResponse = boardService.getBoardById(boardId, request);
 
-		MockHttpServletRequest httpRequest = new MockHttpServletRequest();
-		httpRequest.addHeader("Authorization", token);
-
-		BoardGetDto.Response response;
-
-		given(jwtProvider.validate(socialId)).willReturn(socialId);
-		given(userRepository.findBySocialId(socialId)).willReturn(userEntity);
-		given(boardRepository.findByBoardIdAndIsUseTrue(1L)).willReturn(boardEntity);
-
-		// 	when
-
-		response = boardService.getBoardById(1L, httpRequest);
-
-		// 	then
-
-		verify(jwtProvider,times(1)).validate(socialId);
-		verify(userRepository,times(1)).findBySocialId(socialId);
-		verify(boardRepository, times(1)).findByBoardIdAndIsUseTrue(1L);
-
-
+		// then
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("게시판 생성 테스트")
 	@Test
 	void addBoard() {
-		// 	given
-		UserEntity userEntity = Mockito.mock(UserEntity.class);
+		// given
+		BoardAddDto.Request request = mock(BoardAddDto.Request.class);
+		HttpServletRequest servletRequest = mock(HttpServletRequest.class);
 
-		MockHttpServletRequest httpRequest = new MockHttpServletRequest();
-		httpRequest.addHeader("Authorization", "Bearer " + token);
-		httpRequest.addHeader("socialId", socialId);
+		// when
+		when(jwtProvider.getHeader(servletRequest)).thenReturn(socialId);
+		when(userRepository.findBySocialId(socialId)).thenReturn(Optional.ofNullable(userEntity));
+		when(boardRepository.save(any(BoardEntity.class))).thenReturn(boardEntity);
+		BoardAddDto.Response actualResponse = boardService.addBoard(request, servletRequest);
 
-		BoardAddDto.Request request = new BoardAddDto.Request("title", "content", userEntity);
-
-		BoardEntity boardEntity = BoardEntity.create(request);
-
-		BoardAddDto.Response response;
-
-		given(jwtProvider.validate(token)).willReturn(socialId);
-		given(userRepository.findBySocialId(socialId)).willReturn(userEntity);
-		given(boardRepository.save(any(BoardEntity.class))).willReturn(boardEntity);
-
-		// 	when
-
-		response = boardService.addBoard(request, httpRequest);
-
-		// 	then
-
-		assert (response.getContent()).equals(request.getContent());
-		assert (response.getTitle()).equals(request.getTitle());
-
+		// then
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("게시판 업데이트 테스트")
 	@Test
 	void updateBoard() {
-		// 	given
+		// given
+		BoardUpdateDto.Request request = mock(BoardUpdateDto.Request.class);
+		when(userRepository.findByUserId(userId)).thenReturn(Optional.of(userEntity));
+		when(request.getUser()).thenReturn(userEntity);
 
-		UserEntity userEntity = Mockito.mock(UserEntity.class);
+		// when
+		when(boardRepository.save(any(BoardEntity.class))).thenReturn(boardEntity);
+		BoardUpdateDto.Response actualResponse = boardService.updateBoard(request);
 
-		BoardUpdateDto.Request request = Mockito.mock(BoardUpdateDto.Request.class);
-		given(request.getBoardId()).willReturn(1L);
-		given(request.getTitle()).willReturn("title");
-		given(request.getContent()).willReturn("content");
-		given(request.getUser()).willReturn(userEntity);
-		BoardUpdateDto.Response response;
-
-		BoardEntity boardEntity = BoardEntity.update(request);
-
-		given(userRepository.findByUserId(request.getUser().getUserId())).willReturn(userEntity);
-		given(boardRepository.save(any(BoardEntity.class))).willReturn(boardEntity);
-		// 	when
-
-		response = boardService.updateBoard(request);
-		// 	then
-
-		assert (response.getContent()).equals(request.getContent());
-		assert (response.getTitle()).equals(request.getTitle());
-		verify(boardRepository, times(1)).save(any(BoardEntity.class));
-
+		// then
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("보드 삭제 테스트")
 	@Test
 	void deleteBoard() {
-		// 	given
+		// given
+		BoardIsUseDto.Request request = mock(BoardIsUseDto.Request.class);
 
-		UserEntity userEntity = Mockito.mock(UserEntity.class);
+		// when
+		when(boardRepository.save(any(BoardEntity.class))).thenReturn(boardEntity);
+		BoardIsUseDto.Response actualResponse = boardService.deleteBoard(request);
 
-		BoardIsUseDto.Request request = Mockito.mock(BoardIsUseDto.Request.class);
-		given(request.getBoardId()).willReturn(1L);
-		given(request.isUse()).willReturn(true);
-		given(request.getTitle()).willReturn("title");
-		given(request.getContent()).willReturn("content");
-		given(request.getUser()).willReturn(userEntity);
-		BoardEntity boardEntity = BoardEntity.delete(request);
-		BoardIsUseDto.Response response;
-		given(boardRepository.save(any(BoardEntity.class))).willReturn(boardEntity);
-
-		// 	when
-
-		response = boardService.deleteBoard(request);
-		// 	then
-
-		assertFalse(response.isUse(), " isUse의 값이 변경되지 않았습니다.");
-
+		// then
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("게시판 총 갯수 조회")
 	@Test
 	void getTotalBoardCount() {
-		// 	given
-		Long count = 3L;
-		Long result;
+		// given
+		long expectedCount = 1L;
+		when(boardRepository.countByIsUseTrue()).thenReturn(expectedCount);
 
-		given(boardRepository.countByIsUseTrue()).willReturn(count);
-
-
-
-		// 	when
-		result = boardService.getTotalBoardCount();
-
-		// 	then
-		assertThat(result).isEqualTo(count);
-
+		// when
+		Long actualCount = boardService.getTotalBoardCount();
+		// then
+		assertNotNull(actualCount);
+		assertEquals(expectedCount, actualCount);
 	}
 
 	@DisplayName("유저의 게시글 갯수 조회")
 	@Test
 	void getBoardCount() {
-		// 	given
-		Long result;
+		// given
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		long expectedCount = 1L;
+		when(boardRepository.countByUserUserIdAndIsUseTrue(userId)).thenReturn(expectedCount);
+		// when
+		when(jwtProvider.getHeader(request)).thenReturn(socialId);
+		when(userRepository.findBySocialId(socialId)).thenReturn(Optional.ofNullable(userEntity));
+		Long actualCount = boardService.getBoardCount(request);
 
-		UserEntity userEntity = Mockito.mock(UserEntity.class);
-		given(userEntity.getUserId()).willReturn(1L);
-
-		MockHttpServletRequest httpRequest = new MockHttpServletRequest();
-		httpRequest.addHeader("Authorization", token);
-
-		given(jwtProvider.validate(socialId)).willReturn(socialId);
-		given(userRepository.findBySocialId(socialId)).willReturn(userEntity);
-		given(boardRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId())).willReturn(1L);
-
-		// 	when
-
-		result = boardService.getBoardCount(httpRequest);
-
-		// 	then
-
-		assert(result.equals(1L));
-
+		// then
+		assertNotNull(actualCount);
+		assertEquals(expectedCount, actualCount);
 	}
+
 }

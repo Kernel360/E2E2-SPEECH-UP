@@ -19,13 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional // => 예상하지 못한 상황에서 오류가 발생하여 하여 데이터의 부정합이 발생하는 경우, 다시 원상복귀 해야 하는 상황에 대비 하기 위해
+@Transactional
 public class ScriptService {
 	private final ScriptRepository scriptRepository;
 	private final UserRepository userRepository;
@@ -42,54 +43,58 @@ public class ScriptService {
 	}
 
 	public List<ScriptGetDto.Response> getScriptList(HttpServletRequest request) {
-		String authorization = request.getHeader("Authorization");
-		if(authorization != null && authorization.startsWith("Bearer ")) {
-			authorization = authorization.substring(7);
-		}
-		String socialId = jwtProvider.validate(authorization);
-		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		String socialId = jwtProvider.getHeader(request);
+
+		UserEntity userEntity = userRepository.findBySocialId(socialId)
+			.orElseThrow(() -> new NoSuchElementException("not found UserEntity by socialId: " + socialId));
 
 		List<ScriptEntity> activeScripts = getActiveScriptsByUserId(userEntity.getUserId());
+
 		return mapToResponse(activeScripts);
 	}
 
 	public ScriptGetDto.Response getScript(Long userId, Long scriptId) {
-		if (!scriptRepository.findById(scriptId).get().getUser().getUserId().equals(userId)) {
-			throw new NotFoundException("Has No Script with Id: " + scriptId);
-		} else {
-			ScriptEntity scriptEntity = scriptRepository.findById(scriptId).get();
-			return ScriptGetDto.Response.toResponse(scriptEntity);
-		}
-	}
-	public ScriptAddDto.Response addScript(ScriptAddDto.Request scriptAddRequestDto) {
+		ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
+			.orElseThrow(() -> new NoSuchElementException("Not found Script with Id: " + scriptId));
 
+		if (!scriptEntity.getUser().getUserId().equals(userId)) {
+			throw new NotFoundException("No Script found with Id: " + scriptId);
+		}
+
+		return ScriptGetDto.Response.toResponse(scriptEntity);
+	}
+
+	public ScriptAddDto.Response addScript(ScriptAddDto.Request scriptAddRequestDto) {
 		log.debug("Add Script : {}", scriptAddRequestDto);
+
 		ScriptEntity scriptEntity = ScriptEntity.create(scriptAddRequestDto);
+
 		return ScriptAddDto.toResponse(scriptRepository.save(scriptEntity));
 	}
 
 	public ScriptUpdateDto.Response updateScript(ScriptUpdateDto.Request scriptUpdateRequestDto) {
 		Optional<UserEntity> userEntity = userRepository.findById(scriptUpdateRequestDto.getUser().getUserId());
+
 		if (userEntity.isEmpty()) {
 			throw new NotFoundException("Has No User with Id: " + scriptUpdateRequestDto.getUser().getUserId());
 		}
 
 		ScriptEntity scriptEntity = ScriptEntity.update(scriptUpdateRequestDto);
+
 		return ScriptUpdateDto.toResponse(scriptRepository.save(scriptEntity));
 	}
 
 	public ScriptIsUseDto.Response deleteScriptById(ScriptIsUseDto.Request scriptIsUseRequestDto) {
 		ScriptEntity scriptEntity = ScriptEntity.delete(scriptIsUseRequestDto);
+
 		return ScriptIsUseDto.toResponse(scriptRepository.save(scriptEntity));
 	}
 
 	public Long getScriptCount(HttpServletRequest request) {
-		String authorization = request.getHeader("Authorization");
-		if(authorization != null && authorization.startsWith("Bearer ")) {
-			authorization = authorization.substring(7);
-		}
-		String socialId = jwtProvider.validate(authorization);
-		UserEntity userEntity = userRepository.findBySocialId(socialId);
+		String socialId = jwtProvider.getHeader(request);
+		UserEntity userEntity = userRepository.findBySocialId(socialId)
+			.orElseThrow(() -> new NoSuchElementException("not found UserEntity by socialId : " + socialId));
+
 		return scriptRepository.countByUserUserIdAndIsUseTrue(userEntity.getUserId());
 	}
 }

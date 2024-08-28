@@ -34,6 +34,10 @@ async function loadScripts() {
 
 async function getScriptsFromData() {
     const checkBefore = localStorage.getItem("jwtToken");
+    if(checkBefore == null) {
+        alert("로그인이 필요한 서비스입니다.");
+        window.location.href = "/login";
+    }
     const item = JSON.parse(checkBefore);
     const now = new Date();
     if (now.getTime() > item.expiry) {

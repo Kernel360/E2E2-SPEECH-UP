@@ -10,8 +10,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +28,12 @@ import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class VoiceToTextService {
-
-	private static final Logger log = LoggerFactory.getLogger(VoiceToTextService.class);
 
 	@Value("${api.voice.accessKey}")
 	private String accessKey;

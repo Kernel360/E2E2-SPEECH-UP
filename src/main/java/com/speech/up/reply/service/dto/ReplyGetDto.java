@@ -28,7 +28,7 @@ public class ReplyGetDto {
 		private final LocalDateTime modifiedAt;
 
 
-		public Response(ReplyEntity replyEntity) {
+		private Response(ReplyEntity replyEntity) {
 			this.replyId = replyEntity.getReplyId();
 			this.userId = replyEntity.getUser().getUserId();
 			this.boardId = replyEntity.getBoard().getBoardId();
@@ -37,8 +37,6 @@ public class ReplyGetDto {
 			this.createdAt = replyEntity.getCreatedAt();
 			this.modifiedAt = replyEntity.getModifiedAt();
 		}
-
-
 
 		public static List<ReplyGetDto.Response> of(List<ReplyEntity> replyEntities) {
 			return replyEntities

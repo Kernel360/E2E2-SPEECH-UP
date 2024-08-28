@@ -22,7 +22,7 @@ public class ScriptUpdateDto {
 		private final UserEntity user;
 		private final boolean isUse;
 
-		Request(Long scriptId, String content, String title, UserEntity user, boolean isUse) {
+		private Request(Long scriptId, String content, String title, UserEntity user, boolean isUse) {
 			this.scriptId = scriptId;
 			this.content = content;
 			this.title = title;
@@ -39,7 +39,7 @@ public class ScriptUpdateDto {
 		private final LocalDateTime createdAt;
 		private final LocalDateTime modifiedAt;
 
-		Response(ScriptEntity scriptEntity) {
+		private Response(ScriptEntity scriptEntity) {
 			this.title = scriptEntity.getTitle();
 			this.content = scriptEntity.getContent();
 			this.createdAt = scriptEntity.getCreatedAt();

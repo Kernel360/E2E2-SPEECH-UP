@@ -21,12 +21,11 @@ public class ReplyAddDto {
 		private final BoardEntity board;
 		private final String content;
 
-		public Request(UserEntity user, BoardEntity board, String content) {
+		private Request(UserEntity user, BoardEntity board, String content) {
 			this.user = user;
 			this.board = board;
 			this.content = content;
 		}
-
 	}
 
 	@Getter
@@ -38,12 +37,11 @@ public class ReplyAddDto {
 		private final String content;
 		private final LocalDateTime createdAt;
 
-		public Response(ReplyEntity replyEntity) {
+		private Response(ReplyEntity replyEntity) {
 			this.user = replyEntity.getUser();
 			this.board = replyEntity.getBoard();
 			this.content = replyEntity.getContent();
 			this.createdAt = replyEntity.getCreatedAt();
-
 		}
 	}
 

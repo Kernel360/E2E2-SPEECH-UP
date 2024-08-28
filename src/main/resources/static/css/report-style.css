@@ -48,3 +48,23 @@
     color: #007bff;
     text-align: center;
 }
+
+.report-container .close-button {
+    display: block;
+    width: 120px;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.report-container .close-button:hover {
+    background-color: #0056b3;
+}

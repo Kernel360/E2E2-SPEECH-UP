@@ -13,7 +13,7 @@ public class BoardIsUseDto {
 	@Getter
 	@ToString
 	@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-	public static class Request{
+	public static class Request {
 		private final Long boardId;
 		private final boolean isUse;
 		private final String title;
@@ -32,7 +32,7 @@ public class BoardIsUseDto {
 
 	@Getter
 	@ToString
-	public static class Response{
+	public static class Response {
 		private final Long boardId;
 		private final boolean isUse;
 
