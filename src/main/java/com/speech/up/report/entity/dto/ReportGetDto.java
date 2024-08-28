@@ -1,7 +1,5 @@
 package com.speech.up.report.entity.dto;
 
-import com.speech.up.report.entity.ReportEntity;
-
 import lombok.Getter;
 import lombok.ToString;
 
