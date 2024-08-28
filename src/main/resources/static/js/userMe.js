@@ -25,6 +25,7 @@ function getItemWithExpiry(key) {
 
     return item.value;
 }
+
 async function userMe() {
    const jwtToken =  getItemWithExpiry("jwtToken");
     try {
@@ -84,6 +85,7 @@ function myPage(userData){
         lastAccessedAt.innerHTML = `${userData.lastAccessedAt.replace("T", " ")}`
     }
 }
+
 function showLoggedOutNav() {
     const navButtons = document.getElementById('nav-buttons');
     navButtons.innerHTML = `
@@ -91,6 +93,7 @@ function showLoggedOutNav() {
         <a href="/login" class="nav-button">로그인</a>
     `;
 }
+
 function logout(){
     localStorage.removeItem("jwtToken");
     window.location.href = "/logout";
