@@ -89,7 +89,7 @@
 
 <script>
     function isLogin() {
-        const jwtToken =  getItemWithExpiry("jwtToken");
+        const jwtToken = getItemWithExpiry("jwtToken");
         const signUpSection = document.querySelector('.cta-section');
         if(jwtToken!= null){
             signUpSection.style.display = 'none';
