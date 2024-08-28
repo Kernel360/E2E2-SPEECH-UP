@@ -28,9 +28,25 @@
                 </ul>
             </div>
             <div class="file-upload">
+                <span class="help-icon">⚠️업로드 전에 확인해주세요!⚠️</span>
                 <h2>파일 업로드</h2>
                 <input type="file" id="file-input" />
                 <button id="upload-btn" >업로드</button>
+            </div>
+            <div id="tooltip-modal" class="tooltip-modal">
+                <div class="tooltip-content">
+                    <span class="close-btn">&times;</span>
+                    <p>녹음 분석을 위해 wav(비압축파일)로 변환이 필요합니다.</p>
+                    <p>wav 파일이 아니시라면, 아래의 순서에 맞게 진행 후 업로드 부탁드립니다.</p>
+                    <p>1. <a href="https://cloudconvert.com/mp3-to-wav" target="_blank">mp3 to wav</a> 링크로 접속 후,</p>
+                    <p>2. 파일을 업로드 하고 아래 메뉴에서 설정을 클릭합니다.</p>
+                    <img src="/images/tooltip-image1.png" alt="설명 이미지 1" />
+                    <p>3. 설정탭의 Audio 에서 아래와 같이 설정합니다.</p>
+                    <img src="/images/tooltip-image2.png" alt="설명 이미지 2" />
+                    <p>4. 설정이 완료 되었으면 'Okay'를 누르고 'Convert'를 클릭합니다.</p>
+                    <p>5. 변환이 완료되었다면, 다운로드 후 왼쪽 파일 선택에서 파일을 선택합니다.</p>
+                    <p>6. 선택한 파일을 업로드 하면 하단 리스트에 회원님의 녹음 파일이 업로드 됩니다.</p>
+                </div>
             </div>
             <!--<div class="recording-controls">
                 <button id="record-btn" onclick="startRecording()">녹음 추가</button>

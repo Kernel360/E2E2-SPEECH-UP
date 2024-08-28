@@ -18,3 +18,19 @@ function loadScriptDetail() {
 function goBack() {
     window.history.back();
 }
+
+document.querySelector('.help-icon').addEventListener('click', function() {
+    document.getElementById('tooltip-modal').style.display = 'block';
+});
+
+document.querySelector('.close-btn').addEventListener('click', function() {
+    document.getElementById('tooltip-modal').style.display = 'none';
+});
+
+// 팝업 외부 클릭 시 팝업 닫기
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('tooltip-modal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
