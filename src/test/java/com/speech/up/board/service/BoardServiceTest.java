@@ -3,50 +3,105 @@ package com.speech.up.board.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import com.speech.up.auth.provider.JwtProvider;
+import com.speech.up.board.entity.BoardEntity;
+import com.speech.up.board.repository.BoardRepository;
 import com.speech.up.board.service.dto.BoardAddDto;
 import com.speech.up.board.service.dto.BoardGetDto;
 import com.speech.up.board.service.dto.BoardIsUseDto;
 import com.speech.up.board.service.dto.BoardUpdateDto;
 import com.speech.up.common.exception.http.BadRequestException;
+import com.speech.up.user.entity.UserEntity;
+import com.speech.up.user.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 public class BoardServiceTest {
 
 	@Mock
+	BoardRepository boardRepository;
+	@Mock
+	UserRepository userRepository;
+	@Mock
+	JwtProvider jwtProvider;
+	@Mock
+	UserEntity userEntity;
+	@Mock
+	BoardEntity boardEntity;
+
+	@InjectMocks
 	BoardService boardService;
 
+	Long boardId;
+	Long userId;
+	Long boardCount;
+	String socialId;
+	String title;
+	Long scriptId;
+	String content;
+	LocalDateTime modifiedAt;
+	LocalDateTime createdAt;
+	boolean isUse;
+	int page;
+	int size;
+
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		MockitoAnnotations.openMocks(this);
+
+		socialId = "mockSocialId";
+		boardId = 1L;
+		userId = 1L;
+		modifiedAt = LocalDateTime.now();
+		scriptId = 1L;
+		title = "title";
+		content = "content";
+		isUse = false;
+		page = 1;
+		size = 10;
+		boardCount = 1L;
+
+		userEntity = mock(UserEntity.class);
+		boardEntity = mock(BoardEntity.class);
+		when(userEntity.getUserId()).thenReturn(userId);
+		when(userEntity.getSocialId()).thenReturn(socialId);
+		when(boardEntity.getTitle()).thenReturn(title);
+		when(boardEntity.getContent()).thenReturn(content);
+		when(boardEntity.getModifiedAt()).thenReturn(modifiedAt);
+		when(boardEntity.getCreatedAt()).thenReturn(createdAt);
+		when(boardEntity.getBoardId()).thenReturn(boardId);
+		when(boardEntity.getUser()).thenReturn(userEntity);
 	}
 
 	@DisplayName("BoardList 다건 조회")
 	@Test
 	void getAllBoardList() {
 		//given
-		List<BoardGetDto.Response> response = Collections.singletonList(mock(BoardGetDto.Response.class));
-		int page = 1;
-		int size = 10;
+		Pageable pageable = PageRequest.of(0, 10);
+		List<BoardEntity> boardEntities = Arrays.asList(boardEntity, boardEntity);
+		Page<BoardEntity> boardEntityPage = new PageImpl<>(boardEntities, pageable, boardEntities.size());
 
-		//when
-		when(boardService.getAllBoardList(page, size)).thenReturn(response);
-		when(boardService.getAllBoardList(-1, size)).thenThrow(
-			new BadRequestException("page or size can not be less than zero"));
-		when(boardService.getAllBoardList(page, 101)).thenThrow(
-			new BadRequestException("size is must be less than 100."));
+		when(boardRepository.findAllByIsUseTrueOrderByCreatedAtDesc(pageable)).thenReturn(boardEntityPage);
+		List<BoardGetDto.Response> actualResponse = boardService.getAllBoardList(page, size);
 
 		//then
-		assertEquals(response, boardService.getAllBoardList(page, size));
+		assertNotNull(actualResponse);
 		assertThrows(BadRequestException.class, () -> boardService.getAllBoardList(-1, size));
 		assertThrows(BadRequestException.class, () -> boardService.getAllBoardList(page, 101));
 	}
@@ -56,14 +111,13 @@ public class BoardServiceTest {
 	void getBoardById() {
 		// given
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		BoardGetDto.Response response = mock(BoardGetDto.Response.class);
-		Long boardId = 1L;
 
 		// when
-		when(boardService.getBoardById(boardId, request)).thenReturn(response);
+		when(boardRepository.findByBoardIdAndIsUseTrue(boardId)).thenReturn(boardEntity);
+		BoardGetDto.Response actualResponse = boardService.getBoardById(boardId, request);
 
 		// then
-		assertEquals(response, boardService.getBoardById(boardId, request));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("게시판 생성 테스트")
@@ -71,14 +125,16 @@ public class BoardServiceTest {
 	void addBoard() {
 		// given
 		BoardAddDto.Request request = mock(BoardAddDto.Request.class);
-		BoardAddDto.Response response = mock(BoardAddDto.Response.class);
 		HttpServletRequest servletRequest = mock(HttpServletRequest.class);
 
 		// when
-		when(boardService.addBoard(request, servletRequest)).thenReturn(response);
+		when(jwtProvider.getHeader(servletRequest)).thenReturn(socialId);
+		when(userRepository.findBySocialId(socialId)).thenReturn(Optional.ofNullable(userEntity));
+		when(boardRepository.save(any(BoardEntity.class))).thenReturn(boardEntity);
+		BoardAddDto.Response actualResponse = boardService.addBoard(request, servletRequest);
 
 		// then
-		assertEquals(response, boardService.addBoard(request, servletRequest));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("게시판 업데이트 테스트")
@@ -86,13 +142,15 @@ public class BoardServiceTest {
 	void updateBoard() {
 		// given
 		BoardUpdateDto.Request request = mock(BoardUpdateDto.Request.class);
-		BoardUpdateDto.Response response = mock(BoardUpdateDto.Response.class);
+		when(userRepository.findByUserId(userId)).thenReturn(Optional.of(userEntity));
+		when(request.getUser()).thenReturn(userEntity);
 
 		// when
-		when(boardService.updateBoard(request)).thenReturn(response);
+		when(boardRepository.save(any(BoardEntity.class))).thenReturn(boardEntity);
+		BoardUpdateDto.Response actualResponse = boardService.updateBoard(request);
 
 		// then
-		assertEquals(response, boardService.updateBoard(request));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("보드 삭제 테스트")
@@ -100,26 +158,27 @@ public class BoardServiceTest {
 	void deleteBoard() {
 		// given
 		BoardIsUseDto.Request request = mock(BoardIsUseDto.Request.class);
-		BoardIsUseDto.Response response = mock(BoardIsUseDto.Response.class);
 
 		// when
-		when(boardService.deleteBoard(request)).thenReturn(response);
+		when(boardRepository.save(any(BoardEntity.class))).thenReturn(boardEntity);
+		BoardIsUseDto.Response actualResponse = boardService.deleteBoard(request);
 
 		// then
-		assertEquals(response, boardService.deleteBoard(request));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("게시판 총 갯수 조회")
 	@Test
 	void getTotalBoardCount() {
 		// given
-		Long boardCount = 132131L;
+		long expectedCount = 1L;
+		when(boardRepository.countByIsUseTrue()).thenReturn(expectedCount);
 
 		// when
-		when(boardService.getTotalBoardCount()).thenReturn(boardCount);
-
+		Long actualCount = boardService.getTotalBoardCount();
 		// then
-		assertEquals(boardCount, boardService.getTotalBoardCount());
+		assertNotNull(actualCount);
+		assertEquals(expectedCount, actualCount);
 	}
 
 	@DisplayName("유저의 게시글 갯수 조회")
@@ -127,13 +186,16 @@ public class BoardServiceTest {
 	void getBoardCount() {
 		// given
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Long boardCount = 132131L;
-
+		long expectedCount = 1L;
+		when(boardRepository.countByUserUserIdAndIsUseTrue(userId)).thenReturn(expectedCount);
 		// when
-		when(boardService.getBoardCount(request)).thenReturn(boardCount);
+		when(jwtProvider.getHeader(request)).thenReturn(socialId);
+		when(userRepository.findBySocialId(socialId)).thenReturn(Optional.ofNullable(userEntity));
+		Long actualCount = boardService.getBoardCount(request);
 
 		// then
-		assertEquals(boardCount, boardService.getBoardCount(request));
+		assertNotNull(actualCount);
+		assertEquals(expectedCount, actualCount);
 	}
 
 }
