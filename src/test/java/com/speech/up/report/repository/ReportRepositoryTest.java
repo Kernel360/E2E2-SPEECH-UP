@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,14 +35,14 @@ public class ReportRepositoryTest {
 	@Test
 	public void findReportByReportIdTest() {
 		//given
-		ReportEntity reportEntity = mock(ReportEntity.class);
+		Optional<ReportEntity> reportEntity = Optional.ofNullable(mock(ReportEntity.class));
 		Long id = 1L;
 
 		//when
-		when(reportRepository.findReportEntityByReportId(id)).thenReturn(reportEntity);
+		when(reportRepository.findReportEntityByRecordIdRecordId(id)).thenReturn(reportEntity);
 
 		//then
-		assertEquals(reportRepository.findReportEntityByReportId(id), reportEntity);
+		assertEquals(reportRepository.findReportEntityByRecordIdRecordId(id), reportEntity);
 	}
 
 	@DisplayName("모든 리포트 가져오기")
