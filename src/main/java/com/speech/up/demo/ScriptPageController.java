@@ -28,7 +28,7 @@ public class ScriptPageController {
 	 *
 	 * @return 스크립트 목록 페이지의 템플릿 이름
 	 */
-	@GetMapping("/script-list")
+	@GetMapping("/scripts-list")
 	public String scriptList() {
 		return "script-list";
 	}

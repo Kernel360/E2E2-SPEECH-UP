@@ -8,8 +8,6 @@ if(token != null ){
     window.location.href = "/";
 }
 
-
-
 function setItemWithExpiry(key, value, ttl) {
     const now = new Date();
 
