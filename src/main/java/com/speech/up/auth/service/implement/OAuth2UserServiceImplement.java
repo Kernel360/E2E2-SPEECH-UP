@@ -39,7 +39,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 			UserEntity user = userRepository.findBySocialId(userEntity.getSocialId())
 				.orElseThrow(
 					() -> new NoSuchElementException("not found UserEntity by socialId: " + userEntity.getSocialId()));
-			UserEntity updateUserAccess = new UserEntity(user);
+			UserEntity updateUserAccess = UserEntity.updateUserAccess(user);
 			userRepository.save(updateUserAccess);
 		}
 		return new CustomOAuth2User(userEntity.getSocialId());
