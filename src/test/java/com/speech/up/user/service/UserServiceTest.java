@@ -78,7 +78,7 @@ public class UserServiceTest {
 
 		servletRequest = mock(HttpServletRequest.class);
 
-		expectedEntity = new UserEntity(mockUserEntity);
+		expectedEntity = UserEntity.updateUserAccess(mockUserEntity);
 	}
 
 	@DisplayName("모든 유저 검색")

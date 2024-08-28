@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -12,11 +11,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.speech.up.record.service.RecordService;
 import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.record.service.dto.RecordGetDto;
 import com.speech.up.record.service.dto.RecordIsUseDto;
@@ -24,6 +25,9 @@ import com.speech.up.record.service.dto.RecordIsUseDto;
 public class RecordControllerTest {
 
 	@Mock
+	RecordService recordService;
+
+	@InjectMocks
 	RecordController recordController;
 
 	@BeforeEach
@@ -36,13 +40,12 @@ public class RecordControllerTest {
 	public void getRecordAllTest() {
 		//given
 		Long scriptId = 1L;
-		List<RecordGetDto.Response> response = Collections.singletonList(mock(RecordGetDto.Response.class));
 
 		//when
-		when(recordController.getRecordALl(scriptId)).thenReturn(ResponseEntity.ok(response));
+		ResponseEntity<List<RecordGetDto.Response>> actualResponse = recordController.getRecordALl(scriptId);
 
 		//then
-		assertEquals(recordController.getRecordALl(scriptId), ResponseEntity.ok(response));
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("addRecord 테스트")
@@ -56,9 +59,11 @@ public class RecordControllerTest {
 
 		//when
 		try {
-			when(recordController.addRecord(file, languageCode, scriptId)).thenReturn(ResponseEntity.ok(response));
+			ResponseEntity<RecordAddDto.Response> actualResponse = recordController.addRecord(file, languageCode,
+				scriptId);
+
 			//then
-			assertEquals(recordController.addRecord(file, languageCode, scriptId), ResponseEntity.ok(response));
+			assertNotNull(actualResponse);
 		} catch (UnsupportedAudioFileException | IOException e) {
 			//then
 			assertEquals("Test Exception", e.getMessage());
@@ -70,13 +75,12 @@ public class RecordControllerTest {
 	public void deleteRecordTest() {
 		//given
 		RecordIsUseDto.Request request = mock(RecordIsUseDto.Request.class);
-		ResponseEntity<RecordIsUseDto.Response> response = mock(String.valueOf(RecordIsUseDto.Response.class));
 
 		//when
-		when(recordController.deleteRecord(request)).thenReturn(response);
+		ResponseEntity<RecordIsUseDto.Response> actualResponse = recordController.deleteRecord(request);
 
 		//then
-		assertEquals(recordController.deleteRecord(request), response);
+		assertNotNull(actualResponse);
 	}
 
 	@DisplayName("isRecordAnalyzed 테스트")
@@ -84,11 +88,9 @@ public class RecordControllerTest {
 	public void isRecordAnalyzedTest() {
 		//given
 		Long recordId = 1L;
-		ResponseEntity<Void> response = mock(String.valueOf(Void.class));
 		//when
-		when(recordController.isRecordAnalyzed(recordId)).thenReturn(response);
-
+		ResponseEntity<Void> actualResponse = recordController.isRecordAnalyzed(recordId);
 		//then
-		assertEquals(recordController.isRecordAnalyzed(recordId), response);
+		assertNotNull(actualResponse);
 	}
 }
