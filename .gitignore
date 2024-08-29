@@ -1,4 +1,4 @@
 /.env
 /build/
 /src/main/resources/.env
-/src/main/resources/logback-spring.xml
+logback-spring.xml
