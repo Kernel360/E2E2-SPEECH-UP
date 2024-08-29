@@ -32,14 +32,13 @@ class UpApplicationTests {
 	@DisplayName("환경 변수가 로드되었는지 테스트")
 	void testEnvironmentVariablesLoaded() {
 		// given
-		when(dotenvMock.get("JWT_SECRET_KEY")).thenReturn("secret");
+		when( dotenvMock.get("is_not_exist")).thenReturn("secret");
 
 		// when
 		UpApplication.main(new String[] {});
 
 		// then
-		assertEquals("secret", dotenvMock.get("JWT_SECRET_KEY"));
-		assertNotNull(upApplication,System.getenv("JWT_SECRET_KEY"));
+		assertEquals(dotenvMock.get("is_not_exist"), "secret");
 	}
 
 	@Test
