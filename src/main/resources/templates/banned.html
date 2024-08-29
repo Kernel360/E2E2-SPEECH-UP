@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 120px;
+            margin: 0;
+            color: #e74c3c;
+        }
+        h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #555;
+        }
+        p {
+            font-size: 18px;
+            color: #777;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>403</h1>
+    <h2>Forbidden</h2>
+    <p>계정이 정지된 사용자입니다.</p>
+    <p>
+        <a href="mailto:admin@example.com">관리자에게 문의하세요.</a>
+    </p>
+    <p>
+        <a onclick=logout() class="nav-button" id="logout-button">페이지 돌아가기</a>
+    </p>
+</div>
+</body>
+<script>
+    function logout(){
+        localStorage.removeItem("jwtToken");
+        window.location.href = "/logout";
+    }
+</script>
+<script src="/js/checkBanned.js"></script>
+</html>

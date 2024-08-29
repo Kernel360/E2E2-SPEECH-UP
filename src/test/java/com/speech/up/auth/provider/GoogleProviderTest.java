@@ -12,9 +12,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.speech.up.auth.service.implement.UserAuthorizationType;
 import com.speech.up.auth.service.servicetype.LevelType;
 import com.speech.up.auth.service.servicetype.ProviderType;
+import com.speech.up.common.enums.UserStatusCode;
 import com.speech.up.user.entity.UserEntity;
 
 class GoogleProviderTest {
@@ -47,7 +47,7 @@ class GoogleProviderTest {
 		assertEquals("testuser@gmail.com", user.getEmail());
 		assertEquals(LevelType.BRONZE.name(), user.getLevel());
 		assertEquals("Test User", user.getName());
-		assertEquals(UserAuthorizationType.ROLE_GENERAL_USER.name(), user.getAuthorization());
+		assertEquals(UserStatusCode.ROLE_GENERAL_USER.name(), user.getAuthorization());
 		assertEquals(ProviderType.GOOGLE.name(), user.getProviderType());
 	}
 

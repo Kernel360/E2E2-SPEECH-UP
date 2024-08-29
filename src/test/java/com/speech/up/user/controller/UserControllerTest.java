@@ -53,4 +53,16 @@ public class UserControllerTest {
 		//then
 		verify(userService, times(1)).deleteUser(request);
 	}
+
+	@DisplayName("checkBanned 테스트")
+	@Test
+	public void checkBannedTest() {
+		//given
+		String expected = "ok";
+		//when
+		String actualResponse = userController.checkBanned();
+
+		//then
+		assertEquals(expected, actualResponse);
+	}
 }
