@@ -1,11 +1,9 @@
 package com.speech.up.api.etri.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.speech.up.api.etri.dto.ResponsePronunciationApiDto;
 import com.speech.up.api.etri.service.VoiceToTextService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,7 @@ public class ETRIApiController {
 	public void createTask(
 		@RequestPart("script") String script,
 		@RequestPart("recordId") String recordId
-		) {
+	) {
 		voiceToTextService.callRecognitionApi(script, Long.parseLong(recordId));
 	}
 }

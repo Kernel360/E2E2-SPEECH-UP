@@ -67,7 +67,7 @@ speech-flow:
 
 logging:
   level:
-    com.speech.up: DEBUG                  #com.speech.up 패키지의 로그 레벨을 DEBUG로 설정
+    com.speech.up: INFO                  #com.speech.up 패키지의 로그 레벨을 INFO 로 설정
 
 kakao:
   map:
@@ -75,4 +75,4 @@ kakao:
       key: ${KAKAO_MAP_APP_KEY}
 
 server:
-  forward-headers-strategy: framework  # X-Forwarded-Proto와 같은 헤더를 인식하도록 설정
+  forward-headers-strategy: framework  # X-Forwarded-Proto 와 같은 헤더를 인식하도록 설정

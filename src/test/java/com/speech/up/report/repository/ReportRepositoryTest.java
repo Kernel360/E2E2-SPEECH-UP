@@ -7,13 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoSession;
+import org.mockito.MockitoAnnotations;
 
 import com.speech.up.report.entity.ReportEntity;
 import com.speech.up.report.entity.dto.ReportGetDto;
@@ -22,13 +20,9 @@ public class ReportRepositoryTest {
 	@Mock
 	private ReportRepository reportRepository;
 
-	private MockitoSession mockitoSession;
-
 	@BeforeEach
-	void setUp() {
-		mockitoSession = Mockito.mockitoSession()
-			.initMocks(this)
-			.startMocking();
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
 	}
 
 	@DisplayName("리포트아이디로 리포트 내용 찾기")
@@ -58,8 +52,4 @@ public class ReportRepositoryTest {
 		assertEquals(reportRepository.findAllBy(), reportGetDtoResponse);
 	}
 
-	@AfterEach
-	void tearDown() {
-		mockitoSession.finishMocking();
-	}
 }

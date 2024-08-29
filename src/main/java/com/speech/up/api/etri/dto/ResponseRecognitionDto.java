@@ -15,4 +15,9 @@ public class ResponseRecognitionDto {
 	public static class ReturnObjectDTO {
 		private String recognized;
 	}
+	public ResponseRecognitionDto(String request_id, int result, ReturnObjectDTO return_object) {
+		this.request_id = request_id;
+		this.result = result;
+		this.return_object = return_object;
+	}
 }
