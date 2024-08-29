@@ -5,7 +5,6 @@
     <title>Board Detail</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/header-style.css">
-    <link rel="icon" href="/images/speechup.png">
 </head>
 <body>
 
@@ -22,8 +21,9 @@
         <div class="card-body">
             <h5 id="board-title" class="card-title" th:text="${board.title}">Sample Title</h5>
             <p id="board-text"  class="card-text" th:text="${board.getContent}">Sample Content</p>
-            <p class="card-text"><small class="text-muted" th:text="${board.createdAt}">2024-08-14</small></p>
-            <p class="card-text"><small class="text-muted" th:text="${board.modifiedAt}">2024-08-14</small></p>
+            <p class="card-text"><small class="text-muted" th:text="${#temporals.format(board.createdAt, 'yyyy년 MM월 dd일 HH:mm:ss')}">2024-08-14</small></p>
+            <p class="card-text"><small class="text-muted" th:text="${#temporals.format(board.modifiedAt, 'yyyy년 MM월 dd일 HH:mm:ss')}">2024-08-14</small></p>
+
         </div>
     </div>
 
