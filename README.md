@@ -67,9 +67,13 @@
 ```
 📦 
 ├─ .github
-│  └─ ISSUE_TEMPLATE
-│     ├─ 기능-구현.md
-│     └─ 버그-리포트.md
+│  ├─ ISSUE_TEMPLATE
+│  │  ├─ code-refactor.md
+│  │  ├─ 기능-구현.md
+│  │  └─ 버그-리포트.md
+│  └─ workflows
+│     ├─ gradle-publish.yml
+│     └─ gradle.yml
 ├─ .gitignore
 ├─ .idea
 │  └─ .gitignore
@@ -77,10 +81,6 @@
 ├─ HELP.md
 ├─ README.md
 ├─ build.gradle
-├─ build
-│  └─ resources
-│     └─ main
-│        └─ application.yaml
 ├─ gradle
 │  └─ wrapper
 │     ├─ gradle-wrapper.jar
@@ -95,73 +95,43 @@
    │  │     └─ speech
    │  │        └─ up
    │  │           ├─ UpApplication.java
+   │  │           ├─ admin
+   │  │           │  ├─ controller
+   │  │           │  │  ├─ AdminController.java
+   │  │           │  │  ├─ AdminPageController.java
+   │  │           │  │  └─ OpenDataController.java
+   │  │           │  ├─ dto
+   │  │           │  │  ├─ StatisticsAdd.java
+   │  │           │  │  └─ StatisticsGet.java
+   │  │           │  ├─ entity
+   │  │           │  │  └─ StatisticsEntity.java
+   │  │           │  ├─ repository
+   │  │           │  │  └─ StatisticsRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ StatisticsScheduling.java
+   │  │           │     └─ StatisticsService.java
    │  │           ├─ api
    │  │           │  ├─ converter
    │  │           │  │  └─ WavToRaw.java
-   │  │           │  ├─ etri
-   │  │           │  │  ├─ controller
-   │  │           │  │  │  └─ ETRIApiController.java
-   │  │           │  │  ├─ dto
-   │  │           │  │  │  ├─ AiRequest.java
-   │  │           │  │  │  ├─ RequestVoiceToTextApiDto.java
-   │  │           │  │  │  └─ ResponseVoiceToTextApiDto.java
-   │  │           │  │  ├─ service
-   │  │           │  │  │  └─ VoiceToTextService.java
-   │  │           │  │  ├─ type
-   │  │           │  │  │  └─ ApiType.java
-   │  │           │  │  └─ url
-   │  │           │  │     ├─ ApiUrl.java
-   │  │           │  │     ├─ PronunciationAI.java
-   │  │           │  │     ├─ RecognizedAI.java
-   │  │           │  │     └─ UrlCollector.java
-   │  │           │  └─ speechFlow
+   │  │           │  └─ etri
    │  │           │     ├─ controller
-   │  │           │     │  └─ SpeechFlowAPIController.java
-   │  │           │     └─ service
-   │  │           │        └─ VoiceToTextSpeechFlowService.java
-   │  │           ├─ board
-   │  │           │  ├─ controller
-   │  │           │  │  └─ BoardController.java
-   │  │           │  ├─ entity
-   │  │           │  │  ├─ BaseBoardEntity.java
-   │  │           │  │  └─ BoardEntity.java
-   │  │           │  ├─ repository
-   │  │           │  │  └─ BoardRepository.java
-   │  │           │  └─ service
-   │  │           │     ├─ BoardService.java
-   │  │           │     ├─ checkValue
-   │  │           │     │  ├─ CheckListForPagination.java
-   │  │           │     │  └─ CheckParamForPagination.java
-   │  │           │     └─ dto
-   │  │           │        ├─ BoardAddDto.java
-   │  │           │        ├─ BoardGetDto.java
-   │  │           │        ├─ BoardIsUseDto.java
-   │  │           │        └─ BoardUpdateDto.java
-   │  │           ├─ common
-   │  │           │  ├─ dto
-   │  │           │  │  └─ ApiExceptionResponse.java
-   │  │           │  ├─ enums
-   │  │           │  │  └─ StatusCode.java
-   │  │           │  └─ exception
-   │  │           │     ├─ custom
-   │  │           │     │  ├─ CustomIOException.java
-   │  │           │     │  ├─ CustomIllegalArgumentException.java
-   │  │           │     │  └─ CustomRuntimeException.java
-   │  │           │     ├─ handler
-   │  │           │     │  └─ ExceptionController.java
-   │  │           │     └─ http
-   │  │           │        ├─ BadRequestException.java
-   │  │           │        ├─ ForbiddenException.java
-   │  │           │        ├─ HttpBaseException.java
-   │  │           │        ├─ InternalServerErrorException.java
-   │  │           │        ├─ NotFoundException.java
-   │  │           │        └─ UnAuthorizedException.java
-   │  │           ├─ demo
-   │  │           │  ├─ BoardPageController.java
-   │  │           │  ├─ HomePageController.java
-   │  │           │  ├─ RegisterPageController.java
-   │  │           │  └─ ScriptPageController.java
-   │  │           ├─ oAuth
+   │  │           │     │  └─ ETRIApiController.java
+   │  │           │     ├─ dto
+   │  │           │     │  ├─ AiRequest.java
+   │  │           │     │  ├─ RequestPronunciationDto.java
+   │  │           │     │  ├─ RequestRecognitionDto.java
+   │  │           │     │  ├─ ResponsePronunciationApiDto.java
+   │  │           │     │  └─ ResponseRecognitionDto.java
+   │  │           │     ├─ service
+   │  │           │     │  └─ VoiceToTextService.java
+   │  │           │     ├─ type
+   │  │           │     │  └─ ApiType.java
+   │  │           │     └─ url
+   │  │           │        ├─ ApiUrl.java
+   │  │           │        ├─ PronunciationAI.java
+   │  │           │        ├─ RecognizedAI.java
+   │  │           │        └─ UrlCollector.java
+   │  │           ├─ auth
    │  │           │  ├─ common
    │  │           │  │  ├─ ResponseCode.java
    │  │           │  │  └─ ResponseMessage.java
@@ -187,45 +157,104 @@
    │  │           │     └─ servicetype
    │  │           │        ├─ LevelType.java
    │  │           │        └─ ProviderType.java
-   │  │           ├─ report
+   │  │           ├─ board
    │  │           │  ├─ controller
-   │  │           │  │  └─ ReportController.java
+   │  │           │  │  └─ BoardController.java
    │  │           │  ├─ entity
-   │  │           │  │  ├─ BaseReportEntity.java
+   │  │           │  │  ├─ BaseBoardEntity.java
+   │  │           │  │  └─ BoardEntity.java
+   │  │           │  ├─ repository
+   │  │           │  │  └─ BoardRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ BoardService.java
+   │  │           │     ├─ checkValue
+   │  │           │     │  ├─ CheckListForPagination.java
+   │  │           │     │  └─ CheckParamForPagination.java
+   │  │           │     └─ dto
+   │  │           │        ├─ BoardAddDto.java
+   │  │           │        ├─ BoardGetDto.java
+   │  │           │        ├─ BoardIsUseDto.java
+   │  │           │        └─ BoardUpdateDto.java
+   │  │           ├─ common
+   │  │           │  ├─ aspect
+   │  │           │  │  └─ LoggingAspect.java
+   │  │           │  ├─ dto
+   │  │           │  │  └─ ApiExceptionResponse.java
+   │  │           │  ├─ enums
+   │  │           │  │  └─ StatusCode.java
+   │  │           │  └─ exception
+   │  │           │     ├─ custom
+   │  │           │     │  ├─ CustomIOException.java
+   │  │           │     │  ├─ CustomIllegalArgumentException.java
+   │  │           │     │  └─ CustomRuntimeException.java
+   │  │           │     ├─ handler
+   │  │           │     │  └─ ExceptionController.java
+   │  │           │     └─ http
+   │  │           │        ├─ BadRequestException.java
+   │  │           │        ├─ ForbiddenException.java
+   │  │           │        ├─ HttpBaseException.java
+   │  │           │        ├─ InternalServerErrorException.java
+   │  │           │        ├─ NotFoundException.java
+   │  │           │        └─ UnAuthorizedException.java
+   │  │           ├─ demo
+   │  │           │  ├─ BoardPageController.java
+   │  │           │  ├─ HomePageController.java
+   │  │           │  ├─ RegisterPageController.java
+   │  │           │  ├─ ReportPageController.java
+   │  │           │  └─ ScriptPageController.java
+   │  │           ├─ record
+   │  │           │  ├─ controller
+   │  │           │  │  └─ RecordController.java
+   │  │           │  ├─ entity
+   │  │           │  │  ├─ BaseRecordEntity.java
+   │  │           │  │  └─ RecordEntity.java
+   │  │           │  ├─ repository
+   │  │           │  │  └─ RecordRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ RecordService.java
+   │  │           │     └─ dto
+   │  │           │        ├─ RecordAddDto.java
+   │  │           │        ├─ RecordGetDto.java
+   │  │           │        └─ RecordIsUseDto.java
+   │  │           ├─ reply
+   │  │           │  ├─ controller
+   │  │           │  │  └─ ReplyController.java
+   │  │           │  ├─ entity
+   │  │           │  │  ├─ ReplyBaseEntity.java
+   │  │           │  │  └─ ReplyEntity.java
+   │  │           │  ├─ repository
+   │  │           │  │  └─ ReplyRepository.java
+   │  │           │  └─ service
+   │  │           │     ├─ ReplyService.java
+   │  │           │     └─ dto
+   │  │           │        ├─ ReplyAddDto.java
+   │  │           │        ├─ ReplyGetDto.java
+   │  │           │        ├─ ReplyIsUseDto.java
+   │  │           │        └─ ReplyUpdateDto.java
+   │  │           ├─ report
+   │  │           │  ├─ entity
    │  │           │  │  ├─ ReportEntity.java
-   │  │           │  │  └─ type
-   │  │           │  │     └─ ReportContentAndScore.java
+   │  │           │  │  └─ dto
+   │  │           │  │     └─ ReportGetDto.java
    │  │           │  ├─ repository
    │  │           │  │  └─ ReportRepository.java
    │  │           │  └─ service
-   │  │           │     ├─ ReportService.java
-   │  │           │     └─ dto
-   │  │           │        └─ ReportAddDto.java
+   │  │           │     └─ ReportService.java
    │  │           ├─ script
    │  │           │  ├─ controller
-   │  │           │  │  ├─ RecordController.java
    │  │           │  │  └─ ScriptController.java
    │  │           │  ├─ entity
-   │  │           │  │  ├─ BaseRecordEntity.java
    │  │           │  │  ├─ BaseScriptEntity.java
-   │  │           │  │  ├─ RecordEntity.java
    │  │           │  │  └─ ScriptEntity.java
    │  │           │  ├─ repository
-   │  │           │  │  ├─ RecordRepository.java
    │  │           │  │  └─ ScriptRepository.java
    │  │           │  └─ service
-   │  │           │     ├─ RecordService.java
    │  │           │     ├─ ScriptService.java
-   │  │           │     ├─ dto
-   │  │           │     │  ├─ RecordAddDto.java
-   │  │           │     │  ├─ RecordGetDto.java
-   │  │           │     │  ├─ RecordIsUseDto.java
-   │  │           │     │  ├─ ScriptAddDto.java
-   │  │           │     │  ├─ ScriptGetDto.java
-   │  │           │     │  ├─ ScriptIsUseDto.java
-   │  │           │     │  └─ ScriptUpdateDto.java
-   │  │           │     └─ recordFile
-   │  │           │        └─ RecordFile.java
+   │  │           │     └─ dto
+   │  │           │        ├─ ScriptAddDto.java
+   │  │           │        ├─ ScriptGetDto.java
+   │  │           │        ├─ ScriptIsUseDto.java
+   │  │           │        └─ ScriptUpdateDto.java
    │  │           └─ user
    │  │              ├─ controller
    │  │              │  └─ UserController.java
@@ -234,45 +263,74 @@
    │  │              ├─ repository
    │  │              │  └─ UserRepository.java
    │  │              └─ service
+   │  │                 ├─ UserScheduling.java
    │  │                 ├─ UserService.java
    │  │                 └─ dto
    │  │                    └─ UserGetInfoDto.java
    │  └─ resources
    │     ├─ application-test.yaml
    │     ├─ application.yaml
+   │     ├─ logback-spring.xml
    │     ├─ static
+   │     │  ├─ .well-known
+   │     │  │  └─ pki-validation
+   │     │  │     └─ 8EF57DB308F91206366EB1DC0CF95E15.txt
    │     │  ├─ css
+   │     │  │  ├─ admin-view.css
+   │     │  │  ├─ board-style.css
    │     │  │  ├─ board-write.css
    │     │  │  ├─ header-style.css
    │     │  │  ├─ home-style.css
+   │     │  │  ├─ kakaomap-style.css
+   │     │  │  ├─ land-style.css
+   │     │  │  ├─ my-page.css
    │     │  │  ├─ record-style.css
+   │     │  │  ├─ report-style.css
    │     │  │  ├─ script-style.css
    │     │  │  ├─ script-write.css
    │     │  │  └─ signIn-style.css
    │     │  ├─ images
    │     │  │  ├─ github-logo.png
    │     │  │  ├─ google-logo.png
-   │     │  │  └─ kakao-logo.png
-   │     │  └─ scriptPage
-   │     │     └─ js
-   │     │        ├─ addRecordingToList.js
-   │     │        ├─ addTokenSession.js
-   │     │        ├─ analyticRecord.js
-   │     │        ├─ boardModify.js
-   │     │        ├─ checkBoardOwner.js
-   │     │        ├─ loadLocalRecord.js
-   │     │        ├─ localStoragePath.js
-   │     │        ├─ record.js
-   │     │        ├─ saveRecord.js
-   │     │        ├─ scriptDetail.js
-   │     │        ├─ scriptList.js
-   │     │        ├─ scriptWrite.js
-   │     │        └─ userMe.js
+   │     │  │  ├─ kakao-logo.png
+   │     │  │  ├─ tooltip-image1.png
+   │     │  │  └─ tooltip-image2.png
+   │     │  └─ js
+   │     │     ├─ addRecordingToList.js
+   │     │     ├─ addTokenSession.js
+   │     │     ├─ adminUserHandler.js
+   │     │     ├─ analyticRecord.js
+   │     │     ├─ boardCount.js
+   │     │     ├─ boardModify.js
+   │     │     ├─ boardWrite.js
+   │     │     ├─ checkAdministration.js
+   │     │     ├─ checkBoardOwner.js
+   │     │     ├─ checkLogined.js
+   │     │     ├─ home.js
+   │     │     ├─ loadLocalRecord.js
+   │     │     ├─ localStoragePath.js
+   │     │     ├─ map.js
+   │     │     ├─ myPage.js
+   │     │     ├─ record.js
+   │     │     ├─ reply.js
+   │     │     ├─ replyCount.js
+   │     │     ├─ saveRecord.js
+   │     │     ├─ scriptCount.js
+   │     │     ├─ scriptDetail.js
+   │     │     ├─ scriptList.js
+   │     │     ├─ scriptWrite.js
+   │     │     ├─ userDelete.js
+   │     │     └─ userMe.js
    │     └─ templates
+   │        ├─ admin-page.html
    │        ├─ board-detail.html
+   │        ├─ board-edit.html
    │        ├─ board-write.html
    │        ├─ board.html
    │        ├─ home.html
+   │        ├─ map.html
+   │        ├─ myPage.html
+   │        ├─ report.html
    │        ├─ script-list.html
    │        ├─ script-write.html
    │        ├─ script.html
@@ -283,14 +341,98 @@
             └─ speech
                └─ up
                   ├─ UpApplicationTests.java
+                  ├─ admin
+                  │  ├─ controller
+                  │  │  ├─ AdminControllerTest.java
+                  │  │  ├─ AdminPageControllerTest.java
+                  │  │  └─ OpenDataControllerTest.java
+                  │  └─ service
+                  │     ├─ StatisticsSchedulingTest.java
+                  │     └─ StatisticsServiceTest.java
                   ├─ api
-                  │  └─ speechFlow
-                  │     └─ VoiceToTextTest.java
+                  │  └─ etri
+                  │     ├─ controller
+                  │     │  └─ ETRIApiControllerTest.java
+                  │     ├─ dto
+                  │     │  ├─ RequestPronunciationDtoTest.java
+                  │     │  ├─ RequestRecognitionDtoTest.java
+                  │     │  ├─ ResponsePronunciationApiDtoTest.java
+                  │     │  └─ ResponseRecognitionDto.java
+                  │     ├─ type
+                  │     │  └─ ApiTypeTest.java
+                  │     └─ url
+                  │        ├─ PronunciationAITest.java
+                  │        ├─ RecognizedAITest.java
+                  │        └─ UrlCollectorTest.java
+                  ├─ auth
+                  │  ├─ entity
+                  │  │  └─ CustomOAuth2UserTest.java
+                  │  ├─ filter
+                  │  │  └─ JwtAuthenticationFilterTest.java
+                  │  ├─ handler
+                  │  │  └─ OAuth2SuccessHandlerTest.java
+                  │  └─ provider
+                  │     ├─ GithubProviderTest.java
+                  │     ├─ GoogleProviderTest.java
+                  │     ├─ JwtProviderTest.java
+                  │     ├─ KakaoProviderTest.java
+                  │     └─ ProviderTest.java
+                  ├─ board
+                  │  ├─ controller
+                  │  │  └─ BoardControllerTest.java
+                  │  ├─ repository
+                  │  │  └─ BoardRepositoryTest.java
+                  │  └─ service
+                  │     └─ BoardServiceTest.java
+                  ├─ common
+                  │  ├─ enums
+                  │  │  └─ StatusCodeTest.java
+                  │  └─ exception
+                  │     ├─ custom
+                  │     │  ├─ CustomIOExceptionTest.java
+                  │     │  ├─ CustomIllegalArgumentExceptionTest.java
+                  │     │  └─ CustomRuntimeExceptionTest.java
+                  │     └─ http
+                  │        ├─ ForbiddenExceptionTest.java
+                  │        ├─ InternalServerErrorExceptionTest.java
+                  │        ├─ NotFoundExceptionTest.java
+                  │        └─ UnAuthorizedExceptionTest.java
+                  ├─ demo
+                  │  ├─ BoardPageControllerTest.java
+                  │  ├─ HomePageControllerTest.java
+                  │  ├─ RegisterPageControllerTest.java
+                  │  ├─ ReportPageControllerTest.java
+                  │  └─ ScriptPageControllerTest.java
+                  ├─ record
+                  │  ├─ controller
+                  │  │  └─ RecordControllerTest.java
+                  │  ├─ repository
+                  │  │  └─ RecordRepositoryTest.java
+                  │  └─ service
+                  │     ├─ RecordServiceTest.java
+                  │     └─ dto
+                  │        ├─ RecordAddDtoTest.java
+                  │        └─ RecordIsUseDtoTest.java
+                  ├─ reply
+                  │  ├─ controller
+                  │  │  └─ ReplyControllerTest.java
+                  │  ├─ entity
+                  │  │  └─ ReplyBaseEntityTest.java
+                  │  ├─ repository
+                  │  │  └─ ReplyRepositoryTest.java
+                  │  └─ service
+                  │     └─ ReplyServiceTest.java
+                  ├─ report
+                  │  ├─ entity
+                  │  │  └─ dto
+                  │  │     └─ ReportGetDtoTest.java
+                  │  ├─ repository
+                  │  │  └─ ReportRepositoryTest.java
+                  │  └─ service
+                  │     └─ ReportServiceTest.java
                   ├─ script
                   │  ├─ controller
                   │  │  └─ ScriptControllerTest.java
-                  │  ├─ entity
-                  │  │  └─ ScriptEntityTest.java
                   │  ├─ repository
                   │  │  └─ ScriptRepositoryTest.java
                   │  └─ service
@@ -298,20 +440,18 @@
                   └─ user
                      ├─ controller
                      │  └─ UserControllerTest.java
-                     ├─ entity
-                     │  └─ UserEntityTest.java
+                     ├─ repositiory
+                     │  └─ UserRepositoryTest.java
                      └─ service
+                        ├─ UserSchedulingTest.java
                         └─ UserServiceTest.java
 ```
-©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)
-</details>
+©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)</details>
 
 ---
-
-초기 화면입니다. **게시판**이 들어갈 곳입니다.<br>
-비회원이 접근할 수 있는 페이지입니다.<br>
-게시글 작성은 로그인이 필요합니다.
-![스크린샷 2024-08-14 09 59 02](https://github.com/user-attachments/assets/91e53434-cebc-4769-9f6f-6998f504e208)
+**홈** 화면 입니다.
+대표적인 기능 및 미로그인 상태의 사용자가 사용할 수 있는 메뉴가 있고, 사용자의 후기를 보여줍니다.
+<img width="1673" alt="스크린샷 2024-08-29 12 47 08" src="https://github.com/user-attachments/assets/32e48752-7300-42e7-b9f0-ff18cc4607ea">
 
 **로그인 화면**입니다. 별도의 회원가입 없이 **소셜 로그인**(최초 회원등록) 후 바로 이용 가능합니다.
 ![스크린샷 2024-08-14 09 59 30](https://github.com/user-attachments/assets/df2e6056-704e-4e01-a7e7-74b1832d2a26)
@@ -339,8 +479,8 @@
 ![스크린샷 2024-07-31 10 36 25](https://github.com/user-attachments/assets/6c47baf1-2169-45a5-8bff-c2f2ae587e83)
 ---
 
-### ERD
-### ![스크린샷 2024-07-31 10 38 09](https://github.com/user-attachments/assets/3bdeebce-412f-41c6-8883-96cd2fc4d7cf)
+### Diagram
+<img width="722" alt="스크린샷 2024-08-29 12 27 03" src="https://github.com/user-attachments/assets/1293a3fd-12c3-4b71-a97c-f68c78a10f4e">
 ---
 
 ### 기능 명세서
