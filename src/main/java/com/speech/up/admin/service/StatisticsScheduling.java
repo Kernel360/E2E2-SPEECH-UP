@@ -15,6 +15,7 @@ import com.speech.up.report.entity.dto.ReportGetDto;
 import com.speech.up.report.repository.ReportRepository;
 import com.speech.up.script.repository.ScriptRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,7 +28,8 @@ public class StatisticsScheduling {
 	private final StatisticsRepository statisticsRepository;
 
 
-	@Scheduled(cron = "0 0 0 * * ?")  // 매일 자정에 실행
+	@Scheduled(cron = "0 0 1 * * *")
+	@Transactional
 	public void runStatisticsSetter() {
 		statisticsSetter();
 	}
@@ -45,8 +47,9 @@ public class StatisticsScheduling {
 			.score(getAvgScore())
 			.createAt(LocalDateTime.now())
 			.build();
+		StatisticsEntity statisticsEntity = StatisticsEntity.create(request);
 
-		statisticsRepository.save(StatisticsEntity.create(request));
+		statisticsRepository.save(statisticsEntity);
 	}
 
 	double getAvgScore(){
