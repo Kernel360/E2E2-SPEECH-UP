@@ -22,7 +22,7 @@ jobs:
 
     - name: Set environment values
       run: |
-        cd ./src/main/resources
+        cd ./
         touch ./.env
         echo "${{ secrets.ENV }}" > ./.env
       shell: bash
