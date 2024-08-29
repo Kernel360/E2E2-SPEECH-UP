@@ -18,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import com.speech.up.auth.provider.JwtProvider;
 import com.speech.up.board.entity.BoardEntity;
 import com.speech.up.board.repository.BoardRepository;
-import com.speech.up.board.service.dto.BoardAddDto;
 import com.speech.up.reply.entity.ReplyEntity;
 import com.speech.up.reply.repository.ReplyRepository;
 import com.speech.up.reply.service.dto.ReplyAddDto;
