@@ -48,4 +48,14 @@ public class UserController {
     public void deleteUser(HttpServletRequest request) {
         userService.deleteUser(request);
     }
+
+    /**
+     * 벤 유저 여부를 검사합니다.
+     *
+     */
+    @GetMapping("/banned/me")
+    public String checkBanned() {
+        return "ok";
+    }
+
 }

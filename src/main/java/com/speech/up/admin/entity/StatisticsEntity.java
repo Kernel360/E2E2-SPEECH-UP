@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.speech.up.admin.dto.StatisticsAdd;
-import com.speech.up.script.entity.ScriptEntity;
-import com.speech.up.script.service.dto.ScriptAddDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
