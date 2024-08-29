@@ -16,8 +16,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 class UpApplicationTests {
 
-	private static Dotenv dotenv;
-
 	@InjectMocks
 	private UpApplication upApplication;
 
@@ -28,7 +26,7 @@ class UpApplicationTests {
 	@BeforeAll
 	public static void setup() {
 		try {
-			dotenv = Dotenv.load(); // .env 파일을 로드
+			Dotenv.load(); // .env 파일을 로드
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to load .env file", e);
 		}
