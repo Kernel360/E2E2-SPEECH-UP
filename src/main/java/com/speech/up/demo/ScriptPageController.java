@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import lombok.RequiredArgsConstructor;
 
 /**
- * ScriptPageController는 스크립트 관련 페이지 요청을 처리하는 컨트롤러입니다.
+ * ScriptPageController 는 스크립트 관련 페이지 요청을 처리하는 컨트롤러입니다.
  * 이 컨트롤러는 스크립트 목록, 스크립트 작성, 스크립트 페이지 등을 제공합니다.
  */
 @Controller

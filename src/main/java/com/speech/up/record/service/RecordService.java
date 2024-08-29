@@ -5,7 +5,6 @@ import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
 import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.record.service.dto.RecordGetDto;
-import com.speech.up.record.service.dto.RecordIsUseDto;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 
@@ -57,9 +56,11 @@ public class RecordService {
 		return RecordAddDto.toResponse(recordRepository.save(recordEntity));
 	}
 
-	public RecordIsUseDto.Response deleteRecord(RecordIsUseDto.Request recordIsUseRequestDto) {
-		RecordEntity recordEntity = RecordEntity.delete(recordIsUseRequestDto);
-		return RecordIsUseDto.toResponse(recordRepository.save(recordEntity));
+	@Transactional
+	public void deleteRecord(Long recordId) {
+		RecordEntity recordEntity = recordRepository.findById(recordId)
+			.orElseThrow(() -> new EntityNotFoundException("record not found by id : " + recordId));
+		recordRepository.save(RecordEntity.delete(recordId, recordEntity));
 	}
 
 	@Transactional

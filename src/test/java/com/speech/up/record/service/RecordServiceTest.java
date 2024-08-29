@@ -24,7 +24,6 @@ import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
 import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.record.service.dto.RecordGetDto;
-import com.speech.up.record.service.dto.RecordIsUseDto;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.script.repository.ScriptRepository;
 import com.speech.up.user.entity.UserEntity;
@@ -91,7 +90,7 @@ public class RecordServiceTest {
 		when(recordEntity.getCreatedAt()).thenReturn(LocalDateTime.now());
 		when(recordEntity.getAudio()).thenReturn(audio);
 		when(recordEntity.getLanguageCode()).thenReturn(languageCode);
-
+		when(recordEntity.getRecordId()).thenReturn(recordId);
 	}
 
 	@DisplayName("스크립트 아이디로 녹음 데이터 리스트 가져오기")
@@ -136,19 +135,16 @@ public class RecordServiceTest {
 
 	@DisplayName("녹음 데이터 삭제하기")
 	@Test
-	public void deleteRecordTest() {
-		// given
-		RecordIsUseDto.Request request = mock(RecordIsUseDto.Request.class);
-		when(request.getRecordEntity()).thenReturn(recordEntity);
-		when(recordEntity.getRecordId()).thenReturn(recordId);
+	void deleteRecordTest() {
+		Long recordId = 1L;
+		when(recordRepository.findById(recordId)).thenReturn(Optional.of(recordEntity));
 
-		// when
-		RecordEntity recordResult = RecordEntity.delete(request);
-		when(recordRepository.save(any(RecordEntity.class))).thenReturn(recordEntity);
-		RecordIsUseDto.Response actualResponse = recordService.deleteRecord(request);
+		RecordEntity recordResult = mock(RecordEntity.delete(recordId, recordEntity).getClass());
+		when(recordRepository.save(any(RecordEntity.class))).thenReturn(recordResult);
+		when(recordResult.getRecordId()).thenReturn(recordId);
 
-		// then
-		assertEquals(recordResult.getRecordId(), actualResponse.getRecordId());
+		assertEquals(recordId, recordResult.getRecordId());
+		assertEquals(recordId, recordEntity.getRecordId());
 	}
 
 	@DisplayName("녹음 아이디로 분석 메서드 호출하기")

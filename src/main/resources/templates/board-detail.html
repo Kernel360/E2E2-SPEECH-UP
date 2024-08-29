@@ -53,25 +53,5 @@
 <script src="/js/checkBoardOwner.js"></script>
 <script src="/js/userMe.js"></script>
 <script src="/js/reply.js"></script>
-<script>
-    let commentTextArea;
-    let addCommentButton;
-    document.addEventListener('DOMContentLoaded', function() {
-        commentTextArea = document.getElementById('comment-text');
-        addCommentButton = document.getElementById('add-comment-btn');
-    });
-
-    function handleComment() {
-        const commentTextArea = document.getElementById('comment-text');
-        const content = commentTextArea.value.trim();
-
-        if (content === '') {
-            alert('댓글 내용을 입력해주세요.');
-            return;
-        }
-
-        addComment();
-    }
-</script>
 </body>
 </html>

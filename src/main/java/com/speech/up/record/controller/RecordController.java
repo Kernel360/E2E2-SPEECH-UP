@@ -3,7 +3,6 @@ package com.speech.up.record.controller;
 import com.speech.up.record.service.RecordService;
 import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.record.service.dto.RecordGetDto;
-import com.speech.up.record.service.dto.RecordIsUseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -67,15 +66,16 @@ public class RecordController {
 	/**
 	 * 특정 녹음을 삭제합니다. 실제로 데이터를 삭제하지 않고, 삭제 상태로 표시합니다.
 	 *
-	 * @param recordIsUseRequestDto 삭제할 녹음의 ID와 관련 정보를 포함하는 요청 객체
+	 * @param recordId 삭제할 녹음의 ID
 	 * @return 삭제 상태로 변경된 녹음의 세부 정보
 	 */
-	@PatchMapping("")
+	@PatchMapping("/{recordId}")
 	@PreAuthorize("hasAnyRole('GENERAL_USER', 'ADMIN_USER')")
-	public ResponseEntity<RecordIsUseDto.Response> deleteRecord(
-		@RequestBody RecordIsUseDto.Request recordIsUseRequestDto
+	public ResponseEntity<Void> deleteRecord(
+		@PathVariable Long recordId
 	) {
-		return ResponseEntity.ok(recordService.deleteRecord(recordIsUseRequestDto));
+		recordService.deleteRecord(recordId);
+		return ResponseEntity.ok().build();
 	}
 
 	/**

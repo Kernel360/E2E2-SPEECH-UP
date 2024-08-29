@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.speech.up.record.service.RecordService;
 import com.speech.up.record.service.dto.RecordAddDto;
 import com.speech.up.record.service.dto.RecordGetDto;
-import com.speech.up.record.service.dto.RecordIsUseDto;
 
 public class RecordControllerTest {
 
@@ -74,10 +73,10 @@ public class RecordControllerTest {
 	@Test
 	public void deleteRecordTest() {
 		//given
-		RecordIsUseDto.Request request = mock(RecordIsUseDto.Request.class);
+		Long recordId = 1L;
 
 		//when
-		ResponseEntity<RecordIsUseDto.Response> actualResponse = recordController.deleteRecord(request);
+		ResponseEntity<Void> actualResponse = recordController.deleteRecord(recordId);
 
 		//then
 		assertNotNull(actualResponse);

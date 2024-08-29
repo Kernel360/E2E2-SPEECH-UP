@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.speech.up.report.entity.ReportEntity;
 import com.speech.up.script.entity.ScriptEntity;
 import com.speech.up.record.service.dto.RecordAddDto;
-import com.speech.up.record.service.dto.RecordIsUseDto;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -56,12 +55,13 @@ public class RecordEntity extends BaseRecordEntity {
 		this(audio, request.getLanguageCode(), scriptEntity, true, false);
 	}
 
-	private RecordEntity(RecordIsUseDto.Request recordIsUseRequestDto) {
-		this(recordIsUseRequestDto.getRecordEntity().getAudio(),
-			recordIsUseRequestDto.getRecordEntity()
-				.getLanguageCode(),
-			recordIsUseRequestDto.getRecordEntity().getScript(), true, false);
-		this.recordId = recordIsUseRequestDto.getRecordEntity().getRecordId();
+	private RecordEntity(Long recordId, RecordEntity recordEntity) {
+		this.recordId = recordId;
+		this.audio = recordEntity.getAudio();
+		this.languageCode = recordEntity.getLanguageCode();
+		this.isUse = false;
+		this.script = recordEntity.getScript();
+		this.report = recordEntity.getReport();
 	}
 
 	private RecordEntity(RecordEntity recordEntity) {
@@ -78,8 +78,8 @@ public class RecordEntity extends BaseRecordEntity {
 		return new RecordEntity(audio, request, scriptEntity);
 	}
 
-	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {
-		return new RecordEntity(recordIsUseRequestDto);
+	public static RecordEntity delete(Long recordId, RecordEntity recordEntity) {
+		return new RecordEntity(recordId, recordEntity);
 	}
 
 	public static RecordEntity analyze(RecordEntity recordEntity) {

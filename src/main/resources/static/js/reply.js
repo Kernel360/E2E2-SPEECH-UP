@@ -1,3 +1,6 @@
+let commentTextArea;
+let addCommentButton;
+
 document.addEventListener('DOMContentLoaded', function() {
     const targetNode = document.getElementById('script-form');
 
@@ -14,12 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
+    commentTextArea = document.getElementById('comment-text');
+    addCommentButton = document.getElementById('add-comment-btn');
 
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, config);
 });
 
+document.addEventListener('DOMContentLoaded', function() {
 
+});
 
 async function getComment(){
     const boardId = document.getElementById('board-id').value;
@@ -188,4 +195,16 @@ function checkButton(){
             submitButton.disabled = false;
         }
     });
+}
+
+function handleComment() {
+    const commentTextArea = document.getElementById('comment-text');
+    const content = commentTextArea.value.trim();
+
+    if (content === '') {
+        alert('댓글 내용을 입력해주세요.');
+        return;
+    }
+
+    addComment();
 }

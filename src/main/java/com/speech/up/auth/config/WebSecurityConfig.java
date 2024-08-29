@@ -65,7 +65,7 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests(request -> request.requestMatchers(
 					"api/v1/auth/**", "/oauth2/**", "/sign-up", "/logout", "/login",
 					"/boards", "/boards/**", "/api/upload",
-					"/.well-known/**", "/api/open/data/*", "/banned-page",
+					"/.well-known/**", "/api/open/data/*", "/banned-page", "speech-record/**",
 					"/report", "/scripts", "/script-write", "/scripts-list", "/replies/**",
 					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
 				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")
