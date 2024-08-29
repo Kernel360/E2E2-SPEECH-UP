@@ -65,13 +65,15 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests(request -> request.requestMatchers(
 					"api/v1/auth/**", "/oauth2/**", "/sign-up", "/logout", "/login",
 					"/boards", "/boards/**", "/api/upload",
-					"/.well-known/**", "/api/open/data/*",
+					"/.well-known/**", "/api/open/data/*", "/banned-page",
 					"/report", "/scripts", "/script-write", "/scripts-list", "/replies/**",
 					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
 				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")
-				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER")
+				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER","BAN_USER")
 				.requestMatchers("/speech-record").hasAnyRole("ADMIN_USER", "GENERAL_USER")
 				.requestMatchers("/speech-record/**").hasAnyRole("ADMIN_USER", "GENERAL_USER")
+				.requestMatchers("/speech-scripts/**").hasAnyRole("ADMIN_USER", "GENERAL_USER")
+				.requestMatchers("/users/banned/me").hasRole("BAN_USER")
 				.requestMatchers("/api/admin/user/all").hasRole("ADMIN_USER")
 				.requestMatchers("/api/admin/me").hasRole("ADMIN_USER")
 				.anyRequest().authenticated())

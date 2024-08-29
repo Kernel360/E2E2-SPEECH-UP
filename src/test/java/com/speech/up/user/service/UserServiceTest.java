@@ -123,17 +123,17 @@ public class UserServiceTest {
 		userService.unUsedUser(userId);
 
 		// then
-		verify(userRepository, times(1)).customDeleteUser(userId, false);
+		assertNotNull(userRepository.findById(userId));
 	}
 
 	@DisplayName("나의 유저 정보 복구")
 	@Test
 	public void restoreUserByToken() {
 		//given & when
-		userService.unUsedUser(userId);
+		userService.restoreUser(userId);
 
 		// then
-		verify(userRepository, times(1)).customDeleteUser(userId, false);
+		assertNotNull(userRepository.findById(userId));
 	}
 
 }

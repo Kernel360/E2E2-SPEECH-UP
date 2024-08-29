@@ -37,6 +37,9 @@ async function userMe() {
 
         if (response.ok) {
             const userData = await response.json();
+            if(userData.authorization === "ROLE_BAN_USER"){
+                bannedUser();
+            }
             showLoggedInNav(userData);
             myPage(userData);
         }
@@ -92,6 +95,9 @@ function showLoggedOutNav() {
         <a href="/" class="nav-button" >홈</a>
         <a href="/login" class="nav-button">로그인</a>
     `;
+}
+function bannedUser(){
+  window.location.href = "/banned-page";
 }
 
 function logout(){

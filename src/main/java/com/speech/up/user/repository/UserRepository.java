@@ -30,4 +30,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	@Modifying
 	@Query("update UserEntity u set u.isUse = :use where u.userId = :userId ")
 	void customDeleteUser(@Param("userId") Long userId, @Param("use") boolean use);
+
+
 }

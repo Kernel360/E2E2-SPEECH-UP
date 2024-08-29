@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.speech.up.auth.service.implement.UserAuthorizationType;
 import com.speech.up.auth.service.servicetype.LevelType;
 import com.speech.up.auth.service.servicetype.ProviderType;
+import com.speech.up.common.enums.UserStatusCode;
 import com.speech.up.user.entity.UserEntity;
 
 public class KakaoProvider implements ProviderOAuth {
@@ -30,7 +30,7 @@ public class KakaoProvider implements ProviderOAuth {
 		this.providerType = ProviderType.KAKAO.name();
 		this.email = "none";
 		this.name = responseMap.get("nickname");
-		this.authorization = UserAuthorizationType.ROLE_GENERAL_USER.name();
+		this.authorization = UserStatusCode.ROLE_GENERAL_USER.name();
 		this.level = LevelType.BRONZE.name();
 		this.isUse = true;
 	}

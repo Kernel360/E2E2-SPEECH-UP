@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.speech.up.script.entity.ScriptEntity;
+import com.speech.up.user.service.dto.UserUpdateDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -54,7 +55,13 @@ public class UserEntity {
 	@Null
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@ToString.Exclude
 	private List<ScriptEntity> scriptEntity;
+
+	public void setScriptEntity(
+		@Null List<ScriptEntity> scriptEntity) {
+		this.scriptEntity = scriptEntity;
+	}
 
 	private UserEntity(String socialId, String email, String level,
 		String name, String authorization, String providerType) {
@@ -80,6 +87,18 @@ public class UserEntity {
 		this.isUse = true;
 	}
 
+	private UserEntity(UserUpdateDto.Request userUpdateDto) {
+		this.userId = userUpdateDto.getUserId();
+		this.name = userUpdateDto.getName();
+		this.socialId = userUpdateDto.getSocialId();
+		this.email = userUpdateDto.getEmail();
+		this.level = userUpdateDto.getLevel();
+		this.providerType = userUpdateDto.getProviderType();
+		this.authorization = userUpdateDto.getAuthorization();
+		this.lastAccessedAt = userUpdateDto.getLastAccessedAt();
+		this.isUse = userUpdateDto.isUse();
+	}
+
 	public static UserEntity providerOf(String socialId, String email, String level,
 		String name, String authorization, String providerType) {
 		return new UserEntity(socialId, email, level, name, authorization, providerType);
@@ -87,5 +106,9 @@ public class UserEntity {
 
 	public static UserEntity updateUserAccess(UserEntity user) {
 		return new UserEntity(user);
+	}
+
+	public static UserEntity update(UserUpdateDto.Request userUpdateDto) {
+		return new UserEntity(userUpdateDto);
 	}
 }
