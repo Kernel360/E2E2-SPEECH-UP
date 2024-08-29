@@ -11,15 +11,13 @@ public class StatisticsAdd {
 	@Builder
 	@ToString
 	public static class Request{
-		private final Long id;
 		private final Long report;
 		private final Long script;
 		private final Long record;
 		private final double score;
 		private final LocalDateTime createAt;
 
-		private Request(Long id, Long report, Long script, Long record, double score, LocalDateTime createAt) {
-			this.id = id;
+		private Request(Long report, Long script, Long record, double score, LocalDateTime createAt) {
 			this.report = report;
 			this.script = script;
 			this.record = record;

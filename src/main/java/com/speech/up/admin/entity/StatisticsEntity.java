@@ -36,7 +36,6 @@ public class StatisticsEntity {
 	private LocalDateTime createAt;
 
 	public StatisticsEntity(StatisticsAdd.Request statisticsAdd) {
-		this.id = statisticsAdd.getId();
 		this.report = statisticsAdd.getReport();
 		this.script = statisticsAdd.getScript();
 		this.record = statisticsAdd.getRecord();
