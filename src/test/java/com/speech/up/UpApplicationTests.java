@@ -22,7 +22,7 @@ class UpApplicationTests {
 	}
 
 	@Test
-	@DisplayName("환경 변수가 로드되었는지 테스트")
+	@DisplayName("실행 테스트")
 	void testEnvironmentVariablesLoaded() {
 		// given
 		// when
