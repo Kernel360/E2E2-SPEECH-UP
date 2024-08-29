@@ -32,27 +32,46 @@
         <a class="btn btn-primary mt-3" href="/boards">Back to List</a>
     </div>
 <hr/>
-<!-- 댓글 목록 -->
-<h2 class="my-4">Comments</h2>
-<!-- 댓글 작성 폼 -->
-<div class="mt-4">
-    <h5>Add a comment</h5>
-    <form id="script-form">
-        <div class="form-group">
-            <label for="board-id"></label><input type="text" id="board-id" name="board-id" th:value="${board.boardId}" hidden="hidden"/>
-            <label for="comment-text"></label><textarea id="comment-text" class="form-control" rows="3" ></textarea>
-        </div>
-        <button type="button" class="btn btn-primary" id="submit_button" disabled onclick="addComment()">댓글달기</button>
-    </form>
-</div>
+    <!-- 댓글 목록 -->
+    <h2 class="my-4">Comments</h2>
+    <!-- 댓글 작성 폼 -->
+    <div class="mt-4">
+        <h5>Add a comment</h5>
+        <form id="script-form">
+            <div class="form-group">
+                <label for="board-id"></label><input type="text" id="board-id" name="board-id" th:value="${board.boardId}" hidden="hidden"/>
+                <label for="comment-text"></label><textarea id="comment-text" class="form-control" rows="3" placeholder="Write your comment here"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-comment-btn" onclick="handleComment()">댓글달기</button>
+        </form>
+    </div>
     <div id="comment-list" class="list-group">
         <!-- 자바스크립트로 댓글을 동적으로 추가합니다. -->
     </div>
 </div>
 
-</body>
 <script src="/js/checkBoardOwner.js"></script>
 <script src="/js/userMe.js"></script>
 <script src="/js/reply.js"></script>
+<script>
+    let commentTextArea;
+    let addCommentButton;
+    document.addEventListener('DOMContentLoaded', function() {
+        commentTextArea = document.getElementById('comment-text');
+        addCommentButton = document.getElementById('add-comment-btn');
+    });
 
+    function handleComment() {
+        const commentTextArea = document.getElementById('comment-text');
+        const content = commentTextArea.value.trim();
+
+        if (content === '') {
+            alert('댓글 내용을 입력해주세요.');
+            return;
+        }
+
+        addComment();
+    }
+</script>
+</body>
 </html>
