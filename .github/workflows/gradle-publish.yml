@@ -20,6 +20,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Set environment values
+      run: |
+        cd ./src/main/resources
+        touch ./.env
+        echo "${{ secrets.ENV }}" > ./.env
+      shell: bash
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4.0.0
 
