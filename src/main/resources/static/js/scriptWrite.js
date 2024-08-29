@@ -28,7 +28,7 @@ document.getElementById('script-form').addEventListener('submit', async function
 
         if (response.ok) {
             alert('대본이 성공적으로 저장되었습니다.');
-            window.location.href = '/script-list';
+            window.location.href = '/scripts-list';
         } else {
             alert('대본 저장 중 오류가 발생했습니다.');
         }
