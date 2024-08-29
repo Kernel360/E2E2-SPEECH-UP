@@ -173,3 +173,19 @@ async function deleteReply(replyId, userId, name, boardId){
         }
     ).catch((e) => console.error(e))
 }
+
+
+function checkButton(){
+    const commentTextArea = document.getElementById('comment-text');
+    const submitButton = document.getElementById('submit_button');
+
+    // 입력값이 변경될 때마다 호출되는 함수
+    commentTextArea.addEventListener('input', () => {
+        // 텍스트 영역의 값이 비어 있으면 버튼 비활성화, 아니면 활성화
+        if (commentTextArea.value.trim() === '') {
+            submitButton.disabled = true;
+        } else {
+            submitButton.disabled = false;
+        }
+    });
+}
