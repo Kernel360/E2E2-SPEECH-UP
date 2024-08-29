@@ -1,8 +1,8 @@
 name: Run Test Code For Check
 
 on:
-  release:
-    types: [develop]
+  push:
+    branches: [ "develop" ]
 
 jobs:
   test:
