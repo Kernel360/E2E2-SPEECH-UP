@@ -17,7 +17,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
-
   security:
     oauth2:
       client:
@@ -47,7 +46,11 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-
+  cloud:
+    gcp:
+      project-id: inbound-stage-433103-i9
+      logging:
+        enabled: true
 api:
   voice:
     score : ${API_VOICE_TO_SCORE}
