@@ -67,7 +67,7 @@ public class WebSecurityConfig {
 					"/boards", "/boards/**", "/api/upload",
 					"/.well-known/**", "/api/open/data/*", "/banned-page",
 					"/report", "/scripts", "/script-write", "/scripts-list", "/replies/**",
-					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
+					"/admin/view", "/page/me", "reports/**", "/", "/speech-record").permitAll()
 				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")
 				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER","BAN_USER")
 				.requestMatchers("/speech-record").hasAnyRole("ADMIN_USER", "GENERAL_USER")
@@ -108,7 +108,7 @@ class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 		AuthenticationException authException) throws
-		IOException, ServletException {
+		IOException {
 		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		response.getWriter().write("{\"code\" : \"NP\", \"message\" : \"No Permission\"}");
