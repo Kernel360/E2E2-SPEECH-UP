@@ -49,9 +49,12 @@ function displayRecords(records) {
                 const url = URL.createObjectURL(blob);
 
                 const li = document.createElement('li');
+
+                console.log(record.record_id);
                 li.innerHTML = `
                     <div class="recording-item">
                         <audio controls src="${url}"></audio>
+                        <button onclick="deleteRecord('${record.record_id}')" style="background-color: darkred">삭제하기</button>
                         <button onclick="navigate('${btoa(JSON.stringify(record))}')">
                             ${record.analyzed ? '분석결과' : '분석하기'}
                         </button>
@@ -60,7 +63,6 @@ function displayRecords(records) {
 
                 list.appendChild(li);
 
-                // URL을 해제하여 메모리 누수 방지
                 li.querySelector('audio').onended = () => {
                     URL.revokeObjectURL(url);
                 };
