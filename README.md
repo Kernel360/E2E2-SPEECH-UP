@@ -31,29 +31,57 @@
 </details>
 
 ---
-**홈** 화면 입니다.
+### 홈 페이지
 대표적인 기능 및 미로그인 상태의 사용자가 사용할 수 있는 메뉴가 있고, 사용자의 후기를 보여줍니다.
-<img width="1673" alt="스크린샷 2024-08-29 12 47 08" src="https://github.com/user-attachments/assets/32e48752-7300-42e7-b9f0-ff18cc4607ea">
+![landingPage](https://github.com/user-attachments/assets/d71683e1-78a0-4d10-8500-3faa167a370e)
 
-**로그인 화면**입니다. 별도의 회원가입 없이 **소셜 로그인**(최초 회원등록) 후 바로 이용 가능합니다.
-![스크린샷 2024-08-14 09 59 30](https://github.com/user-attachments/assets/df2e6056-704e-4e01-a7e7-74b1832d2a26)
+
+### 로그인 페이지
+별도의 회원가입 없이 **소셜 로그인**(최초 회원등록) 후 바로 이용 가능합니다.
+![login](https://github.com/user-attachments/assets/0bfb65da-a517-4636-a700-eda461d0d6d0)
+
 
 로그인 시 좌측 상단의 메뉴에 마이페이지, 로그아웃, 스피치 분석 버튼이 생깁니다.<br>
 이 메뉴는 로그인시 항상 활성화 되는 버튼입니다.
-![스크린샷 2024-08-14 09 59 45](https://github.com/user-attachments/assets/21609e17-31e4-4dff-bdac-459f08a1edcd)
 
-현재 사용자의 **대본 리스트**입니다.<br>
+
+### 대본 리스트 페이지
 사용자의 대본들을 모두 확인할 수 있습니다.<br>
 대본 작성하기 버튼을 누르면 작성 페이지로, 리스트 목록의 아이템을 선택하면 조회 및 녹음 페이지로 넘어갑니다.
-![스크린샷 2024-08-14 09 59 58](https://github.com/user-attachments/assets/76af2fcd-fc0c-4c6f-8716-612de9b918dd)
+![script-list](https://github.com/user-attachments/assets/65057b11-ca71-478c-a1f3-b6ee5a6c33fd)
 
-**대본 작성** 페이지입니다. 
+
+### 대본 작성 페이지
 새로운 대본을 생성할 수 있습니다.
-![스크린샷 2024-08-14 10 00 09](https://github.com/user-attachments/assets/800cfac5-ea9f-4f82-97e9-1a3371658693)
+![script-write](https://github.com/user-attachments/assets/e9e8462d-813d-4251-8a90-ace564c6957a)
 
-**녹음 분석** 페이지 입니다.
+
+### 녹음 분석 페이지
 녹음하기 버튼을 눌러 녹음을 진행하고, 업로드 버튼을 클릭합니다. 클릭 시 생기는 아이템은 녹음 파일이며, 분석하기 버튼을 누르면 API를 호출하여 인식된 음성을 텍스트 파일로 보여주고 1~5점 사이로 점수가 매겨집니다.
-![스크린샷 2024-08-14 10 00 18](https://github.com/user-attachments/assets/931ee61a-026a-4088-9a14-dce7ba8785db)
+![MainGif](https://github.com/user-attachments/assets/3321c0dc-5e7e-43ca-9e2e-72ff5e81b810)
+
+### 분석 페이지
+분석 결과를 보여줍니다. 
+![report](https://github.com/user-attachments/assets/c1b15f2b-54a4-47e2-af9c-f630172e6def)
+
+### 마이 페이지
+등급과 권한, 활동 내역을 확인 할 수 있습니다.
+![mypage](https://github.com/user-attachments/assets/826257d5-809c-4df5-a981-110d94986ec9)
+
+
+### 게시판 리스트 페이지
+사용자의 대본들을 모두 확인할 수 있습니다.<br>
+대본 작성하기 버튼을 누르면 작성 페이지로, 리스트 목록의 아이템을 선택하면 조회 및 녹음 페이지로 넘어갑니다.
+![board-list](https://github.com/user-attachments/assets/e94e6644-ce74-4fb0-bc8e-65925e065af2)
+
+
+### 게시글 작성 페이지
+새로운 대본을 생성할 수 있습니다.
+![Board-edit](https://github.com/user-attachments/assets/a65acd64-4366-4e31-80cb-d5e999c709cb)
+
+### 게시글 페이지
+위에서 작성한 내용은 아래와 같이 보여집니다.
+![board-Detail](https://github.com/user-attachments/assets/506329ac-eabb-4bab-95c4-bcae7928da0a)
 
 ---
 
