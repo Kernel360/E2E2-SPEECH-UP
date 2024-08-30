@@ -56,12 +56,14 @@ public class RecordEntity extends BaseRecordEntity {
 		this(audio, request.getLanguageCode(), scriptEntity, true, false);
 	}
 
-	private RecordEntity(RecordIsUseDto.Request recordIsUseRequestDto) {
-		this(recordIsUseRequestDto.getRecordEntity().getAudio(),
-			recordIsUseRequestDto.getRecordEntity()
-				.getLanguageCode(),
-			recordIsUseRequestDto.getRecordEntity().getScript(), true, false);
-		this.recordId = recordIsUseRequestDto.getRecordEntity().getRecordId();
+	private RecordEntity(Long recordId, RecordEntity recordEntity) {
+		this.recordId = recordId;
+		this.script = recordEntity.getScript();
+		this.languageCode = recordEntity.getLanguageCode();
+		this.isUse = false;
+		this.isAnalyzed = recordEntity.isAnalyzed();
+		this.report = recordEntity.getReport();
+		this.audio = recordEntity.getAudio();
 	}
 
 	private RecordEntity(RecordEntity recordEntity) {
@@ -78,8 +80,8 @@ public class RecordEntity extends BaseRecordEntity {
 		return new RecordEntity(audio, request, scriptEntity);
 	}
 
-	public static RecordEntity delete(RecordIsUseDto.Request recordIsUseRequestDto) {
-		return new RecordEntity(recordIsUseRequestDto);
+	public static RecordEntity delete(Long recordId, RecordEntity recordEntity) {
+		return new RecordEntity(recordId, recordEntity);
 	}
 
 	public static RecordEntity analyze(RecordEntity recordEntity) {

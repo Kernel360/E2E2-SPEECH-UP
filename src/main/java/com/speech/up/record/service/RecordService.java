@@ -57,8 +57,10 @@ public class RecordService {
 		return RecordAddDto.toResponse(recordRepository.save(recordEntity));
 	}
 
-	public RecordIsUseDto.Response deleteRecord(RecordIsUseDto.Request recordIsUseRequestDto) {
-		RecordEntity recordEntity = RecordEntity.delete(recordIsUseRequestDto);
+	@Transactional
+	public RecordIsUseDto.Response deleteRecord(Long recordId) {
+		RecordEntity record = recordRepository.findById(recordId).get();
+		RecordEntity recordEntity = RecordEntity.delete(recordId, record);
 		return RecordIsUseDto.toResponse(recordRepository.save(recordEntity));
 	}
 

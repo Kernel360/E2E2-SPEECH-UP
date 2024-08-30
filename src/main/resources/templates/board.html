@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Board List</title>
@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/header-style.css">
     <link rel="stylesheet" type="text/css" href="/css/board-style.css">
     <script src="/js/userMe.js"></script>
-
+    <link rel="icon" href="/images/speechup.png">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
     </div>
 </header>
 <div class="container">
-    <h1 class="my-4">Board List</h1>
+    <h1 class="my-4">게시판 목록</h1>
 
     <!-- 게시판 테이블 -->
     <table class="table table-striped">
@@ -26,7 +26,7 @@
         <tr>
             <th>ID</th>
             <th>Title</th>
-            <th>Content</th>
+<!--            <th>Content</th>-->
             <th>Created At</th>
             <th>Modified At</th>
         </tr>
@@ -36,9 +36,9 @@
         <tr th:each="post : ${boardList}">
             <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.boardId}">1</a></td>
             <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.title}">Sample Title</a></td>
-            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.content}">Sample Content</a></td>
-            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.createdAt}">2024-08-14</a></td>
-            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.modifiedAt}">2024-08-14</a></td>
+<!--            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${post.content}">Sample Content</a></td>-->
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${#temporals.format(post.createdAt,'yyyy년 MM월 dd일')}">2024-08-14</a></td>
+            <td><a th:href="@{/boards/{id}(id=${post.boardId})}" th:text="${#temporals.format(post.modifiedAt,'yyyy년 MM월 dd일')}">2024-08-14</a></td>
         </tr>
         </tbody>
     </table>

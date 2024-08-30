@@ -59,14 +59,14 @@ jobs:
           sudo docker pull ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
           
           # Stop and remove the existing container if it exists
-          sudo docker ps -q -f name=speech2 | xargs -r sudo docker stop
+          sudo docker ps -q -f name=speechup-spring | xargs -r sudo docker stop
           sudo docker images --filter "dangling=true" -q | xargs sudo docker rmi
-          sudo docker ps -a -q -f name=speech2 | xargs -r sudo docker rm
+          sudo docker ps -a -q -f name=speechup-spring | xargs -r sudo docker rm
           
           # Run the new container with environment variables
           sudo docker run -d \
             -p 8080:8080 \
-            --name speech2 \
+            --name speechup-spring -v /root/logs/:/root/logs/ \
             ${{ secrets.DOCKERHUB_CONTAINERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
           # Clean up old Docker images on the server
