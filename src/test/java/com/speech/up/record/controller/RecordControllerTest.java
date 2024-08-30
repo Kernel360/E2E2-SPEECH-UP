@@ -74,10 +74,10 @@ public class RecordControllerTest {
 	@Test
 	public void deleteRecordTest() {
 		//given
-		RecordIsUseDto.Request request = mock(RecordIsUseDto.Request.class);
+		Long recordId = 1L;
 
 		//when
-		ResponseEntity<RecordIsUseDto.Response> actualResponse = recordController.deleteRecord(request);
+		ResponseEntity<RecordIsUseDto.Response> actualResponse = recordController.deleteRecord(recordId);
 
 		//then
 		assertNotNull(actualResponse);

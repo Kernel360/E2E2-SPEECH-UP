@@ -27,9 +27,12 @@ class RecordIsUseDtoTest {
 	@Test
 	void testRequestDto() {
 		RecordIsUseDto.Request requestDto = new RecordIsUseDto.Request(mockRecordEntity);
+		when(mockRecordEntity.getRecordId()).thenReturn(1L);
+		when(mockRecordEntity.isUse()).thenReturn(true);
 
 		// Validate the Request DTO properties
-		assertEquals(mockRecordEntity, requestDto.getRecordEntity());
+		assertEquals(1L, requestDto.getRecordId());
+		assertEquals(true, requestDto.isUse());
 	}
 
 	@DisplayName("RecordIsUseDto.Response 생성자 및 getter 테스트")
