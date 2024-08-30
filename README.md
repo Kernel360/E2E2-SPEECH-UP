@@ -66,7 +66,8 @@
 
 ### 마이 페이지
 등급과 권한, 활동 내역을 확인 할 수 있습니다.
-![mypage](https://github.com/user-attachments/assets/826257d5-809c-4df5-a981-110d94986ec9)
+![mypage](https://github.com/user-attachments/assets/e249ab3c-443c-41bd-a54b-0559db894df4)
+
 
 
 ### 게시판 리스트 페이지
