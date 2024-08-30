@@ -76,6 +76,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/users/banned/me").hasRole("BAN_USER")
 				.requestMatchers("/api/admin/user/all").hasRole("ADMIN_USER")
 				.requestMatchers("/api/admin/me").hasRole("ADMIN_USER")
+				.requestMatchers("/actuator/**").hasRole("ADMIN_USER")
 				.anyRequest().authenticated())
 			.oauth2Login(oauth2 -> oauth2
 				.authorizationEndpoint(endpoint -> endpoint.baseUri("/oauth2/authorization/**"))
