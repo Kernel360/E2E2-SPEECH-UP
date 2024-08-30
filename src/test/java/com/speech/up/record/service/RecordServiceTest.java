@@ -138,14 +138,14 @@ public class RecordServiceTest {
 	@Test
 	public void deleteRecordTest() {
 		// given
-		RecordIsUseDto.Request request = mock(RecordIsUseDto.Request.class);
-		when(request.getRecordEntity()).thenReturn(recordEntity);
+		Long recordId = 1L;
+		when(recordRepository.findById(recordId)).thenReturn(Optional.of(recordEntity));
 		when(recordEntity.getRecordId()).thenReturn(recordId);
 
 		// when
-		RecordEntity recordResult = RecordEntity.delete(request);
+		RecordEntity recordResult = RecordEntity.delete(recordId, recordEntity);
 		when(recordRepository.save(any(RecordEntity.class))).thenReturn(recordEntity);
-		RecordIsUseDto.Response actualResponse = recordService.deleteRecord(request);
+		RecordIsUseDto.Response actualResponse = recordService.deleteRecord(recordId);
 
 		// then
 		assertEquals(recordResult.getRecordId(), actualResponse.getRecordId());

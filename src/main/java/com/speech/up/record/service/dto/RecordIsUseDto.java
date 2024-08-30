@@ -23,17 +23,11 @@ public class RecordIsUseDto {
 	@ToString
 	public static class Request {
 		private final Long recordId;
-
 		private final byte[] audio;
-
 		private final String languageCode;
-
 		private final boolean isAnalyzed;
-
 		private final ScriptEntity script;
-
 		private final boolean isUse;
-
 		private final ReportEntity report;
 
 		public Request(RecordEntity recordEntity) {
