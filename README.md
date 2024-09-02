@@ -1,6 +1,7 @@
 # SpeechUp
 
 ## 소개
+# [호스팅 페이지 바로가기](https://speechup.duckdns.org)
 
 [SpeechUp](https://speechup.duckdns.org/)는 발음 연습과 음성 인식 기술을 활용하여 사용자의 발음 능력을 향상시키기 위한 서비스입니다.<br> 이 사이트는 발음 테스트 도구를 제공하여 사용자들이 보다 정확하고 자연스러운 발음을 구사할 수 있도록 돕습니다.
 ---
