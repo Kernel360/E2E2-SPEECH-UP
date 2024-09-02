@@ -1,64 +1,39 @@
-# Speech up
+# SpeechUp
 
----
-## 발음 향상을 원하는 당신을 위한 AI가 스피치 분석 서비스 😎
+## 소개
 
----
-- 발음 연습과 비교를 위한 대본
-- 녹음을 AI가 분석하고, 점수 책정
-- 여러 사람들과 내 녹음에 대한 공유 및 피드백
-- 상위 5% 이내 회원에게 1대1 멘토자격 부여
-  - 멘토 
-    - 1대1 10분 멘토링 가능 (회당 3000₩)
-    - 공유된 녹음에 대한 피드백 가능
-
-- rank
-  - ~ 71%     <span style="color: yellow;">초급</span>
-  - 70% ~ 41% <span style="color: skyblue;">중급</span>
-  - 40% ~ 21% <span style="color: cyan;">고급</span>
-  - 20% ~ 6%  <span style="color: green;">달인</span>
-  - 5% ~      <span style="color: red;">마스터</span>
----
-## 컨벤션
-[네이버 코딩 컨벤션](https://naver.github.io/hackday-conventions-java/)
-
----
->### Framework
-> > <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=Spring-Boot&logoColor=white"> <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=Spring-Security&logoColor=white"><br>
->
->### Language
-> > <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"> <img src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"><br>
->
->### DB
-> > <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"><br>
+[SpeechUp](https://speechup.duckdns.org/)는 발음 연습과 음성 인식 기술을 활용하여 사용자의 발음 능력을 향상시키기 위한 서비스입니다.<br> 이 사이트는 발음 테스트 도구를 제공하여 사용자들이 보다 정확하고 자연스러운 발음을 구사할 수 있도록 돕습니다.
 ---
 
-## 현재 추가 된 기능
-- 소셜 로그인 기능
-  - OAuth 적용
-  - Google 로그인 구현
-  - Kakao 로그인 구현
-  - GitHub 로그인 구현
-- 토큰을 사용한 인증
-- 녹음 파일 업로드 (local → server)
-  - wav > pcm > byte[]
-- 재생 가능한 녹음 파일 (server → local)
-  - byte[] > pcm > wav
-- 분석을 위한 API 호출
-  - AI API/DATA (ETRI) 사용
-  - pcm 형식의 비압축파일 (wav) 파일 지원
-  - AI가 인식한 발음과 내 대본을 비교 (1 ~ 5점)
-- Kakao Map Api 연동
-  - 사용자 주변의 스피치 학원 탐색 (5km 이내)
-- 회원 정보 관리
-- 녹음 페이지 수정 필요
-- 관리자 기능<br>
+## 주요 기능
+
+- ETRI 의 음성 인식 API을 활용하여 발음 연습을 지원합니다.
+- 사용자의 녹음 파일(.wav)을 기반으로 발음을 분석하고 점수를 책정하는 기능을 제공합니다.
+- 발음 연습과 관련된 질문과 정보를 공유할 수 있는 포럼을 제공합니다.
+- 사용자의 위치를 받아와 주변의 스피치 학원 정보를 재공합니다.
 ---
 
-초기 화면입니다. **게시판**이 들어갈 곳입니다.<br>
-비회원이 접근할 수 있는 페이지입니다.<br>
-게시글 작성은 로그인이 필요합니다.
-![스크린샷 2024-08-14 09 59 02](https://github.com/user-attachments/assets/91e53434-cebc-4769-9f6f-6998f504e208)
+## 사용 방법
+
+1. **회원 가입**: 일반적인 회원가입 필요 없이 소셜로 로그인합니다.
+2. **발음 분석**: 사용자가 발음할 대본을 작성하고, 녹음한 파일을 업로드하여 분석을 진행합니다.
+3. **발음 점수 책정**: 분석이 완료되면 활성화된 분석결과 버튼을 클릭하고 분석 결과를 확인합니다.
+4. **포럼 이용**: 커뮤니티 포럼에서 질문을 하고 정보를 공유합니다.
+---
+
+## 예제
+<details>
+다음은 발음 연습을 위한 예제 문장입니다:
+
+- "간장 공장 공장장은 강 공장장이고 된장 공장 공장장은 공 공장장이다."
+- "내가 그린 기린 그림은 긴 기린 그림이고 니가 그린 기린 그림은 안긴 기린 그림이다."
+- "상표 붙인 큰 깡통은 깐 깡통인가 안 깐 깡통인가."
+</details>
+
+---
+**홈** 화면 입니다.
+대표적인 기능 및 미로그인 상태의 사용자가 사용할 수 있는 메뉴가 있고, 사용자의 후기를 보여줍니다.
+<img width="1673" alt="스크린샷 2024-08-29 12 47 08" src="https://github.com/user-attachments/assets/32e48752-7300-42e7-b9f0-ff18cc4607ea">
 
 **로그인 화면**입니다. 별도의 회원가입 없이 **소셜 로그인**(최초 회원등록) 후 바로 이용 가능합니다.
 ![스크린샷 2024-08-14 09 59 30](https://github.com/user-attachments/assets/df2e6056-704e-4e01-a7e7-74b1832d2a26)
@@ -82,7 +57,98 @@
 
 ---
 
-### ERD
-### ![스크린샷 2024-07-31 10 38 09](https://github.com/user-attachments/assets/3bdeebce-412f-41c6-8883-96cd2fc4d7cf)
+## API
+ - ETRI
+   - 음성 인식 및 분석
+ - Kakao
+   - 소셜 로그인, 카카오맵
+ - Google
+   - 소셜 로그인
+ - GitHub
+   - 소셜 로그인
+
+## 컨벤션
+- 코딩 컨벤션
+  - [네이버 코딩 컨벤션](https://naver.github.io/hackday-conventions-java/)
+- git 컨벤션
+  - git flow 브랜치 전략 사용
+  - mile stone 으로 해야할 일과 진척도 확인
+  - issue 템플릿 이용
+
+---
+> ### Framework
+> > <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"> 
+>
+> ### Language
+> > <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/Thymeleaf-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+>
+> ### Test
+> > <img src="https://img.shields.io/badge/JUnit-25A162?style=for-the-badge&logo=junit5&logoColor=white"> 
+>
+> ### Docs
+> > <img src="https://img.shields.io/badge/Javadoc-007396?style=for-the-badge&logo=java&logoColor=white"> 
+>
+> ### DB
+> > <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+>
+> ### Auth
+> > <img src="https://img.shields.io/badge/OAuth%202.0-3D9B3F?style=for-the-badge&logo=oauth&logoColor=white"> <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white"> <img src="https://img.shields.io/badge/Kakao-FFCD00?style=for-the-badge&logo=kakao&logoColor=white"> <img src="https://img.shields.io/badge/Google-4285F4?style=for-the-badge&logo=google&logoColor=white"> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/SSL-4D4D4D?style=for-the-badge&logo=ssl&logoColor=white">
+>
+> ### Infra
+> > <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/GCP-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white"> <img src="https://img.shields.io/badge/.env-4C4C4C?style=for-the-badge&logo=dotenv&logoColor=white">
+>
+> ### CI/CD
+> > <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white"> 
+>
+> ### Version Control
+> > <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
 ---
 
+## 현재 추가 된 기능
+- 소셜 로그인 기능
+  - OAuth 적용
+  - Google 로그인 구현
+  - Kakao 로그인 구현
+  - GitHub 로그인 구현
+- 토큰을 사용한 인증
+- 게시글 기능
+- 댓글 기능
+- 대본 기능
+- 녹음 분석 기능
+- 회원 정보 열람 및 탈퇴 기능
+- 녹음 파일 업로드 (local → server)
+  - wav > pcm > byte[]
+- 재생 가능한 녹음 파일 (server → local)
+  - byte[] > pcm > wav
+- 분석을 위한 API 호출
+  - AI API/DATA (ETRI) 사용
+  - pcm 형식의 비압축파일 (wav) 파일 지원
+  - AI가 인식한 발음과 내 대본을 비교 (1 ~ 5점)
+- Kakao Map Api 연동
+  - 사용자 주변의 스피치 학원 탐색 (5km 이내)
+- 관리자 페이지
+  - 회원 계정 정지기능
+---
+
+
+### DB Diagram
+<img width="722" alt="스크린샷 2024-08-29 12 27 03" src="https://github.com/user-attachments/assets/1293a3fd-12c3-4b71-a97c-f68c78a10f4e">
+
+---
+
+## 기획
+<details>
+
+### 기능 명세서
+https://sincere-nova-ec6.notion.site/495b3e7a2488442fa52a310af4f77766?pvs=4
+---
+
+### API 명세서
+https://km2535.github.io/speech-up-java-doc/
+---
+
+### 요구 사항 명세서
+https://sincere-nova-ec6.notion.site/9058005fe69c4dbb926c547cf7a1f145?pvs=4
+
+</details>
