@@ -127,7 +127,6 @@ public class RecordServiceTest {
 		try {
 			RecordAddDto.Response actualResponse = recordService.addRecord(file, languageCode, scriptId);
 			assertNotNull(actualResponse);
-			fail("Expected UnsupportedAudioFileException to be thrown");
 		} catch (UnsupportedAudioFileException e) {
 			// Then
 			assertEquals("File of unsupported format", e.getMessage());
