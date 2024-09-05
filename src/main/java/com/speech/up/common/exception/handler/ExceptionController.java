@@ -1,7 +1,5 @@
 package com.speech.up.common.exception.handler;
 
-import java.io.IOException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import com.speech.up.common.exception.http.HttpBaseException;
 
 @ControllerAdvice
 public class ExceptionController {
-
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ApiExceptionResponse<Void>> handleMethodArgumentNotValidException(
 		MethodArgumentNotValidException exception) {
@@ -70,7 +67,6 @@ public class ExceptionController {
 			HttpStatusCode.valueOf(exception.getErrorCode().getCode())
 		);
 	}
-
 	@ExceptionHandler(CustomIOException.class)
 	public ResponseEntity<ApiExceptionResponse<Void>> handleCustomException(CustomIOException exception) {
 		ApiExceptionResponse<Void> responseDto = ApiExceptionResponse.<Void>builder()
@@ -82,16 +78,6 @@ public class ExceptionController {
 			responseDto,
 			HttpStatusCode.valueOf(exception.getErrorCode().getCode())
 		);
-	}
-
-	@ExceptionHandler(NullPointerException.class)
-	public ResponseEntity<ApiExceptionResponse<Void>> handleNullPointerException(NullPointerException exception) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-	}
-
-	@ExceptionHandler(IOException.class)
-	public ResponseEntity<ApiExceptionResponse<Void>> handleIOException(IOException exception) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
 }

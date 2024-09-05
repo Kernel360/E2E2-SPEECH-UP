@@ -31,6 +31,8 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 		Provider provider = new Provider(oAuth2User);
 		UserEntity userEntity = provider.getUser(ProviderType.valueOf(oauthClientName.toUpperCase()));
 
+		assert userEntity != null;
+
 		if (!userRepository.existsBySocialId(userEntity.getSocialId())) {
 			userRepository.save(userEntity);
 		} else {
@@ -40,7 +42,7 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 			UserEntity updateUserAccess = UserEntity.updateUserAccess(user);
 			userRepository.save(updateUserAccess);
 		}
-		return new CustomOAuth2User(userEntity.getSocialId(), userEntity.getAuthorization());
+		return new CustomOAuth2User(userEntity.getSocialId());
 	}
 
 }

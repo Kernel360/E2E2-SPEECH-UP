@@ -9,7 +9,6 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,12 +22,10 @@ import com.speech.up.api.etri.dto.ResponsePronunciationApiDto;
 import com.speech.up.api.etri.dto.ResponseRecognitionDto;
 import com.speech.up.api.etri.type.ApiType;
 import com.speech.up.api.etri.url.UrlCollector;
-import com.speech.up.common.enums.StatusCode;
-import com.speech.up.common.exception.custom.CustomIOException;
 import com.speech.up.common.exception.http.BadRequestException;
+import com.speech.up.report.service.ReportService;
 import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
-import com.speech.up.report.service.ReportService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,13 +55,10 @@ public class VoiceToTextService {
 			String audioContents = encodeAudioToBase64(recordEntity.getAudio());
 
 			RequestPronunciationDto pronunciationRequest = createPronunciationRequest(audioContents, script);
-			RequestRecognitionDto recognizedRequest = createRecognizedRequest(audioContents,
-				recordEntity.getLanguageCode());
+			RequestRecognitionDto recognizedRequest = createRecognizedRequest(audioContents, recordEntity.getLanguageCode());
 
-			ResponseEntity<ResponseRecognitionDto> recognizedResponse = sendPostRequest(ApiType.RECOGNITION,
-				recognizedRequest, ResponseRecognitionDto.class);
-			ResponseEntity<ResponsePronunciationApiDto> pronunciationResponse = sendPostRequest(ApiType.PRONUNCIATION,
-				pronunciationRequest, ResponsePronunciationApiDto.class);
+			ResponseEntity<ResponseRecognitionDto> recognizedResponse = sendPostRequest(ApiType.RECOGNITION, recognizedRequest, ResponseRecognitionDto.class);
+			ResponseEntity<ResponsePronunciationApiDto> pronunciationResponse = sendPostRequest(ApiType.PRONUNCIATION, pronunciationRequest, ResponsePronunciationApiDto.class);
 
 			handleApiResponses(recognizedResponse, pronunciationResponse);
 
@@ -73,8 +67,7 @@ public class VoiceToTextService {
 
 			saveReportIfValid(recognizedBody, pronunciationBody, recordEntity);
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-			throw new CustomIOException(StatusCode.IO_ERROR);
+			throw new RuntimeException("Error during API request", e);
 		}
 	}
 
@@ -95,17 +88,21 @@ public class VoiceToTextService {
 		return RequestRecognitionDto.createRecognition("reserved field", audioContents, languageCode);
 	}
 
-	private <T> ResponseEntity<T> sendPostRequest(ApiType apiType, Object requestDTO, Class<T> responseType) throws
-		IOException {
+	private <T> ResponseEntity<T> sendPostRequest(ApiType apiType, Object requestDTO, Class<T> responseType) throws IOException {
 		URL url = getUrl(apiType);
-		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		configureConnection(con);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		String jsonRequest = gson.toJson(requestDTO);
-		wr.write(jsonRequest.getBytes(StandardCharsets.UTF_8));
-		wr.flush();
+
+		try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+			String jsonRequest = gson.toJson(requestDTO);
+			log.info("Sending request to {} API: {}", apiType, jsonRequest);
+			wr.write(jsonRequest.getBytes(StandardCharsets.UTF_8));
+			wr.flush();
+		}
 
 		int responseCode = con.getResponseCode();
+		log.info("Response code from {} API: {}", apiType, responseCode);
+
 		if (responseCode != HttpURLConnection.HTTP_OK) {
 			String errorResponse = readErrorResponse(con);
 			log.error("Error response from {} API: {}", apiType, errorResponse);
@@ -133,11 +130,12 @@ public class VoiceToTextService {
 	}
 
 	private String readErrorResponse(HttpURLConnection con) throws IOException {
-		InputStream errorStream = con.getErrorStream();
-		if (Objects.nonNull(errorStream)) {
-			return new String(errorStream.readAllBytes(), StandardCharsets.UTF_8);
-		} else {
-			return "No error stream available";
+		try (InputStream errorStream = con.getErrorStream()) {
+			if (errorStream != null) {
+				return new String(errorStream.readAllBytes(), StandardCharsets.UTF_8);
+			} else {
+				return "No error stream available";
+			}
 		}
 	}
 
@@ -155,7 +153,7 @@ public class VoiceToTextService {
 	private void saveReportIfValid(ResponseRecognitionDto recognizedBody,
 		ResponsePronunciationApiDto pronunciationBody,
 		RecordEntity recordEntity) {
-		if (Objects.nonNull(recognizedBody) && Objects.nonNull(pronunciationBody)) {
+		if (recognizedBody != null && pronunciationBody != null) {
 			String recognized = recognizedBody.getReturn_object().getRecognized();
 			Double score = pronunciationBody.getReturn_object().getScore();
 			reportService.saveReport(recordEntity, recognized, score);

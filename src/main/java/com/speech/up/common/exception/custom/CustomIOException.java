@@ -1,11 +1,15 @@
 package com.speech.up.common.exception.custom;
 
+import java.io.IOException;
+
+import org.springframework.http.HttpStatus;
+
 import com.speech.up.common.enums.StatusCode;
 
 import lombok.Getter;
 
 @Getter
-public class CustomIOException extends RuntimeException {
+public abstract class CustomIOException extends IOException {
 	private final StatusCode errorCode;
 
 	public CustomIOException(StatusCode errorCode) {

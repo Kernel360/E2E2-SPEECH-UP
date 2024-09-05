@@ -1,16 +1,5 @@
 package com.speech.up.record.service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.speech.up.api.converter.WavToRaw;
 import com.speech.up.record.entity.RecordEntity;
 import com.speech.up.record.repository.RecordRepository;
@@ -22,6 +11,16 @@ import com.speech.up.script.repository.ScriptRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 @Service
 @RequiredArgsConstructor
@@ -51,9 +50,9 @@ public class RecordService {
 			.orElseThrow(() -> new EntityNotFoundException("script not found by scriptId : " + scriptId));
 
 		WavToRaw wavToRaw = new WavToRaw();
-		Optional<byte[]> audio = wavToRaw.convertToRawPcm(file);
+		byte[] audio = wavToRaw.convertToRawPcm(file);
 		RecordAddDto.Request request = new RecordAddDto.Request(file, languageCode, scriptEntity);
-		RecordEntity recordEntity = RecordEntity.create(audio.orElse(null), request, scriptEntity);
+		RecordEntity recordEntity = RecordEntity.create(audio, request, scriptEntity);
 
 		return RecordAddDto.toResponse(recordRepository.save(recordEntity));
 	}
