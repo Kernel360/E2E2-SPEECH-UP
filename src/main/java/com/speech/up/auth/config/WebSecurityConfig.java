@@ -25,8 +25,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.speech.up.auth.filter.JwtAuthenticationFilter;
 import com.speech.up.auth.handler.OAuth2SuccessHandler;
-import com.speech.up.common.enums.StatusCode;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +69,7 @@ public class WebSecurityConfig {
 					"/report", "/scripts", "/script-write", "/scripts-list", "/replies/**",
 					"/admin/view", "/page/me", "/speech-record", "reports/**", "/").permitAll()
 				.requestMatchers("/api/boards").hasAnyRole("ADMIN_USER", "GENERAL_USER")
-				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER", "BAN_USER")
+				.requestMatchers("/users/me").hasAnyRole("ADMIN_USER", "GENERAL_USER","BAN_USER")
 				.requestMatchers("/speech-record").hasAnyRole("ADMIN_USER", "GENERAL_USER")
 				.requestMatchers("/speech-record/**").hasAnyRole("ADMIN_USER", "GENERAL_USER")
 				.requestMatchers("/speech-scripts/**").hasAnyRole("ADMIN_USER", "GENERAL_USER")
@@ -108,9 +108,9 @@ class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 		AuthenticationException authException) throws
-		IOException {
+		IOException, ServletException {
 		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-		response.getWriter().write(String.valueOf(StatusCode.NO_AUTHORIZATION));
+		response.getWriter().write("{\"code\" : \"NP\", \"message\" : \"No Permission\"}");
 	}
 }

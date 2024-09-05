@@ -8,7 +8,6 @@ public enum StatusCode {
 	IO_ERROR(1, "IO Error"),
 	NO_SCRIPTS(1001, "No Scripts"),
 	NO_RECORDS(2002, "No Records"),
-	NO_AUTHORIZATION(403, "No Authorization"),
 	NO_FILES(2003, "No Files");
 
 	private final int code;
