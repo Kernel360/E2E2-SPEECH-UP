@@ -5,7 +5,10 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +16,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class JwtProvider {
 	@Value("${jwt.secret.key}")
@@ -40,9 +45,8 @@ public class JwtProvider {
 				.getBody()
 				.getSubject();
 		} catch (NullPointerException nullPointerException) {
+			log.error("Invalid JWT");
 			throw new IllegalArgumentException("JwtProvider 클래스에 문제 있으니 확인해라.");
-		} catch (Exception exception) {
-			throw new IllegalArgumentException(exception);
 		}
 		return subject;
 	}
@@ -50,7 +54,7 @@ public class JwtProvider {
 	public String getHeader(HttpServletRequest request) {
 		String authorization = request.getHeader("Authorization");
 
-		if (authorization != null && authorization.startsWith("Bearer ")) {
+		if (Objects.nonNull(authorization) && authorization.startsWith("Bearer ")) {
 			authorization = authorization.substring(7);
 		}
 

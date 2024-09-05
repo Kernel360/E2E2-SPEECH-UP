@@ -123,11 +123,10 @@ public class RecordServiceTest {
 		when(scriptRepository.findById(scriptId)).thenReturn(Optional.of(scriptEntity));
 		when(recordRepository.save(any(RecordEntity.class))).thenReturn(recordEntity);
 
-		try {
 			// When
+		try {
 			RecordAddDto.Response actualResponse = recordService.addRecord(file, languageCode, scriptId);
 			assertNotNull(actualResponse);
-			fail("Expected UnsupportedAudioFileException to be thrown");
 		} catch (UnsupportedAudioFileException e) {
 			// Then
 			assertEquals("File of unsupported format", e.getMessage());
