@@ -18,7 +18,8 @@ class CustomOAuth2UserTest {
 	void testGetName() {
 		// Given
 		String userId = "test-user";
-		CustomOAuth2User customOAuth2User = new CustomOAuth2User(userId);
+		String authorities = "test-authorities";
+		CustomOAuth2User customOAuth2User = new CustomOAuth2User(userId,authorities);
 
 		// When
 		String name = customOAuth2User.getName();
