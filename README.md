@@ -12,6 +12,8 @@
     - 1대1 10분 멘토링 가능 (회당 3000₩)
     - 공유된 녹음에 대한 피드백 가능
 
+개발 : [이강민](https://github.com/km2535) , [김택준](https://github.com/xorwns118) , [이재윤](https://github.com/gooot)
+
 - rank
   - ~ 71%     <span style="color: yellow;">초급</span>
   - 70% ~ 41% <span style="color: skyblue;">중급</span>
